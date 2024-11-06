@@ -1,0 +1,20 @@
+.navbar bg-black {
+    height: 100px;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+.logo  {
+    height: 100px;
+    width: auto;
+    max-width: 150px;
+}
+
+  .form-control {
+    width: 500px; /* Limita el ancho del campo de búsqueda */
+  }
+  
