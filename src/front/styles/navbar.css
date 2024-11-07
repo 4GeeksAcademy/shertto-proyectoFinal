@@ -1,7 +1,11 @@
-.navbar bg-black {
-    height: 100px;
+.navbar{
+    height: 120px;
+    background-color:  rgb(14, 14, 14);
 }
 
+.navbar navbar-expand-lg {
+  background-color:  rgb(14, 14, 14);
+}
 .container-fluid {
     display: flex;
     justify-content: center;
@@ -15,6 +19,6 @@
 }
 
   .form-control {
-    width: 500px; /* Limita el ancho del campo de búsqueda */
+    width: 500px; 
   }
   

@@ -8,7 +8,7 @@ export const Navbar = () => {
 	return (
 		<div>  
 			 <div> 
-			 <nav className="navbar bg-black">
+			 <nav className="navbar">
                 <div className="container-fluid justify-content-center">
                     <img className="logo"
                         src="https://trello.com/1/cards/672522b2189991a04481785d/attachments/672b4ebad45932b7b79f4510/previews/672b4ebcd45932b7b79f479c/download/Color_logo_-_no_background.webp" 
@@ -18,7 +18,7 @@ export const Navbar = () => {
             </nav>
 			</div> 
 
-			<nav className="navbar navbar-expand-lg bg-black">
+			<nav className="navbar navbar-expand-lg">
 			<div className="container-fluid">
 				<a className="navbar-brand text-white" href="#">ruta</a>
 				<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
