@@ -91,7 +91,7 @@ def get_category():
 
 @app.route('/payment', methods=['GET'])
 def get_payment():
-    people = Payment.query.all()
+    payments = Payment.query.all()
     result = [payment.serialize() for payment in payments]
     return jsonify(result), 200
 
@@ -164,7 +164,7 @@ def delete_product(product_id):
 
 
 @app.route('/<path:path>', methods=['GET'])
-def serve_any_other_file(path):
+def serve_any_other_file_path(path):
     if not os.path.isfile(os.path.join(static_file_dir, path)):
         path = 'index.html'
     response = send_from_directory(static_file_dir, path)

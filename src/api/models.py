@@ -34,6 +34,8 @@ class Product(db.Model):
     #orders_details = relationship('Order', secondary=order_products, back_populates='products')
     category = db.relationship('Category', back_populates='products')
      
+    def __repr__(self):
+            return f'<Product {self.name}>'
 
     def serialize(self):
         return {
@@ -55,6 +57,10 @@ class Order(db.Model):
     user = db.relationship('User', back_populates='orders')
     order_details = db.relationship('Order_details', back_populates='order')
 
+    def __repr__(self):
+        return f'<Order {self.id}>'
+
+
     def serialize(self):
         return {
             "id": self.id,
@@ -75,6 +81,10 @@ class Order_details(db.Model):
     order = db.relationship('Order', back_populates='order_details')
     product = db.relationship('Product', backref = 'details')
 
+    def __repr__(self):
+        return f'<Order_details {self.id}>'
+
+
     def serialize(self):
         return {
             "id": self.id,
@@ -89,6 +99,10 @@ class Category(db.Model):
     
     products = db.relationship('Product', back_populates='category')
 
+    def __repr__(self):
+        return f'<Category {self.name}>'
+
+
     def serialize(self):
         return {
             "id": self.id,
@@ -102,6 +116,10 @@ class Payment(db.Model):
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
     amount = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(50), nullable=False)  # ejemplo: 'paid', 'pending', 'failed'
+
+    def __repr__(self):
+        return f'<Payment {self.order_id}>'
+
 
     #AGREGAR MÉTODOS DE PAGO (EJ PAYPAL)
 
@@ -123,6 +141,10 @@ class Address(db.Model):
     country = db.Column(db.String(50), nullable=False)
 
     user = db.relationship('User', back_populates='addresses')
+
+    def __repr__(self):
+        return f'<Address {self.street}>'
+
 
     def serialize(self):
         return {
