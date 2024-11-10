@@ -8,8 +8,12 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Cart } from "./component/Cart.js";
 
 //first component
 const Layout = () => {
@@ -26,8 +30,11 @@ const Layout = () => {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/cart" element={<Cart />} />
                     <Route path="/demo" element={<Demo />} />
                     <Route path="/single/:theid" element={<Single />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                     <Route path="*" element={<h1>Not found!</h1>} />
                 </Routes>
                 <Footer />

@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
+
 //include your index.scss file into the bundle
 import "../styles/index.css";
 
