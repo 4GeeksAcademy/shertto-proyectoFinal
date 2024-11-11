@@ -1,0 +1,24 @@
+.navbar{
+    height: 120px;
+    background-color:  rgb(14, 14, 14);
+}
+
+.navbar navbar-expand-lg {
+  background-color:  rgb(14, 14, 14);
+}
+.container-fluid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+.logo  {
+    height: 100px;
+    width: auto;
+    max-width: 150px;
+}
+
+  .form-control {
+    width: 500px; 
+  }
+  
