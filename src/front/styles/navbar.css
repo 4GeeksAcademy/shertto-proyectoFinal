@@ -1,24 +1,37 @@
-.navbar{
-    height: 120px;
-    background-color:  rgb(14, 14, 14);
+.navbar {
+  height: 120px;
+  background-color: rgb(14, 14, 14);
+  color: white;
 }
 
-.navbar navbar-expand-lg {
-  background-color:  rgb(14, 14, 14);
-}
-.container-fluid {
-    display: flex;
-    justify-content: center;
-    align-items: center;
- }
-
-.logo  {
-    height: 100px;
-    width: auto;
-    max-width: 150px;
+.logo {
+  height: 100px;
+  width: auto;
+  max-width: 150px;
+  margin-right: 10px; 
 }
 
-  .form-control {
-    width: 500px; 
-  }
-  
+.form-control {
+  width: 500px;
+}
+
+.navbar-toggler {
+  background-color: #fff;
+}
+
+.btn-outline-light {
+  border-color: white;
+  color: white;
+}
+
+.cart-count {
+  margin-left: 5px;
+}
+
+.navbar-nav .nav-item {
+  margin-right: 15px; 
+}
+
+.navbar-brand {
+  margin-left: 15px; 
+}
