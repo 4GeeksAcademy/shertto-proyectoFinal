@@ -1,5 +1,5 @@
 .navbar{
-    height: 120px;
+    height: 12vh;
     background-color:  rgb(14, 14, 14);
 }
 
@@ -20,5 +20,13 @@
 
   .form-control {
     width: 500px; 
+  }
+  
+  .nav-link:hover {
+    color: #ff6347; /* Cambia el color cuando el mouse pasa sobre el icono */
+  }
+  
+  .nav-link svg:hover {
+    color: #ff6347; /* Cambia el color también para los iconos */
   }
   
