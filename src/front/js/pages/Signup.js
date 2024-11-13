@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/auth.css";
 
-const Register = () => {
+const Signup = () => {
     const { actions } = useContext(Context);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -11,7 +11,7 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const success = await actions.register(email, password);
+        const success = await actions.signup(email, password);
         if (success) navigate("/login");
         else alert("Error de registro.");
     };
@@ -38,4 +38,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Signup;

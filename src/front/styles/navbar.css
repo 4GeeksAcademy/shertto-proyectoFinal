@@ -1,21 +1,41 @@
+
 .navbar{
     height: 12vh;
     background-color:  rgb(14, 14, 14);
+
 }
 
-.navbar navbar-expand-lg {
-  background-color:  rgb(14, 14, 14);
+.logo {
+  height: 100px;
+  width: auto;
+  max-width: 150px;
+  margin-right: 10px; 
 }
-.container-fluid {
-    display: flex;
-    justify-content: center;
-    align-items: center;
- }
 
-.logo  {
-    height: 100px;
-    width: auto;
-    max-width: 150px;
+.form-control {
+  width: 500px;
+}
+
+
+.navbar-toggler {
+  background-color: #fff;
+}
+
+.btn-outline-light {
+  border-color: white;
+  color: white;
+}
+
+.cart-count {
+  margin-left: 5px;
+}
+
+.navbar-nav .nav-item {
+  margin-right: 15px; 
+}
+
+.navbar-brand {
+  margin-left: 15px; 
 }
 
   .form-control {
@@ -30,3 +50,4 @@
     color: #ff6347; /* Cambia el color también para los iconos */
   }
   
+

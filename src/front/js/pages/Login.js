@@ -13,7 +13,7 @@ const Login = () => {
         e.preventDefault();
         const success = await actions.login(email, password);
         if (success) {
-            navigate("/"); //redirige al home
+            navigate("/profile"); 
         } else {
             alert("Inicio de sesión fallido. Comprueba que los campos email y contraseña sean correctos.");
         }
