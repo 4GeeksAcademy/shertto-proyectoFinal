@@ -108,6 +108,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			register: async (email, password) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({ email, password })
+					});
+
+					if (!response.ok) throw new Error("Register failed");
+
+					const data = await response.json();
+        			setStore({ userToken: data.token });
+        			localStorage.setItem("token", data.token);
+        			return true;
+					
+
+				} catch (error) {
+					console.error("Error during registration:", error);
+					return false;
+					
+				}
+			},
+
 			getUserProfile: async () => {
 				try {
 					const store = getStore();
