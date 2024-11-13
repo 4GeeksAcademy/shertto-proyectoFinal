@@ -72,7 +72,7 @@ export const Navbar = () => {
                   {/* Aplicamos la clase dropdown-menu-dark para que el menú sea oscuro */}
                   <Dropdown.Menu className="dropdown-menu-dark">
                     <Dropdown.Item href="#action1">Perfil</Dropdown.Item>
-                    <Dropdown.Item href="#action2">Configuraciones</Dropdown.Item>
+                    <Dropdown.Item href="#action2">Mis pedidos</Dropdown.Item>
                     <Dropdown.Item href="#action3">Cerrar sesión</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
