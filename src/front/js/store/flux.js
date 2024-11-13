@@ -3,9 +3,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			
 			cart: JSON.parse(localStorage.getItem("cart")) || [],
-			
 			message: null,
-			
+			userToken: null,
+			user: null,
 			demo: [
 				{
 					title: "FIRST",
@@ -51,7 +51,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+					const resp = await fetch(process.env.BACKEND_URL + "/api/message")
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
@@ -61,12 +61,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			register: async (email, password) => {
+			signup: async (email, password) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/register`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/signup`, {
 						method: "POST",
 						headers: {
-							"Content-Type": "aplication/json"
+							"Content-Type": "application/json"
 						},
 						body: JSON.stringify({ email, password })
 					});
@@ -83,21 +83,64 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			login: async (email, password) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({ email, password })
+					});
 
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+					if (!response.ok) throw new Error("Login failed");
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+					const data = await response.json();
+        			setStore({ userToken: data.token });
+        			localStorage.setItem("token", data.token);
+        			return true;
+					
 
-				//reset the global store
-				setStore({ demo: demo });
+				} catch (error) {
+					console.error("Error during registration:", error);
+					return false;
+					
+				}
+			},
+
+			getUserProfile: async () => {
+				try {
+					const store = getStore();
+					const response = await fetch(`${process.env.BACKEND_URL}/api/profile`, {
+						method: "GET",
+						headers: {
+							"Authorization": `Bearer ${store.userToken}`
+						}
+					});
+
+					if (!response.ok) throw new Error("Failed to fetch Profile");
+
+					const data = await response.json();
+					setStore({ user: data });
+				} catch (error) {
+					console.error("Error fetching profile:", error);
+				}
 			}
+
+			// changeColor: (index, color) => {
+			// 	//get the store
+			// 	const store = getStore();
+
+			// 	//we have to loop the entire demo array to look for the respective index
+			// 	//and change its color
+			// 	const demo = store.demo.map((elm, i) => {
+			// 		if (i === index) elm.background = color;
+			// 		return elm;
+			// 	});
+
+			// 	//reset the global store
+			// 	setStore({ demo: demo });
+			//}
 		}
 	};
 };

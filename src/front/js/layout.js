@@ -9,11 +9,13 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Signup from "./pages/Signup.js";
+import Profile from "./pages/Profile.js";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Cart } from "./component/Cart.js";
+
 
 //first component
 const Layout = () => {
@@ -34,8 +36,9 @@ const Layout = () => {
                     <Route path="/demo" element={<Demo />} />
                     <Route path="/single/:theid" element={<Single />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
+                    <Route path="/signup" element={<Signup />} />
                     <Route path="*" element={<h1>Not found!</h1>} />
+                    <Route path="/profile" element={<Profile />} />
                 </Routes>
                 <Footer />
             </ScrollToTop>
