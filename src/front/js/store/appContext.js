@@ -26,7 +26,7 @@ const injectContext = (PassedComponent) => {
 			if (token) {
 				setState((prevState) => ({
 					...prevState,
-					store: { ...prevState.store, token }
+					store: { ...prevState.store, userToken: token }
 				}));
 			} 
 		}, []);
