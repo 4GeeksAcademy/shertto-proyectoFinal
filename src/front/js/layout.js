@@ -2,7 +2,9 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-import { Home } from "./pages/home";
+
+
+import {Home} from './pages/home';
 
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
@@ -13,8 +15,11 @@ import Signup from "./pages/Signup.js";
 import Profile from "./pages/Profile.js";
 
 import { Navbar } from "./component/navbar";
+import CarouselTextBanner from './component/carousel-text-banner.js';
 import { Footer } from "./component/footer";
 import { Cart } from "./component/Cart.js";
+import AboutUs from './pages/aboutUs.js';
+
 
 import ProductPage from "./component/ProductPage.js";
 
@@ -31,6 +36,7 @@ const Layout = () => {
         <div>
             <ScrollToTop>
                 <Navbar />
+                <CarouselTextBanner />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/cart" element={<Cart />} />
@@ -38,10 +44,18 @@ const Layout = () => {
                     <Route path="/single/:theid" element={<Single />} />
                     <Route path="/login" element={<Login />} />
 
+
+                    <Route path="/signup" element={<Signup />} />
+
+                    <Route path="/aboutUs" element={<AboutUs />} />
+                    <Route path="/register" element={<Register />} />
+
+
                     <Route path="/register" element={<Register />} />
                     <Route path="/products" element={<ProductPage />} />
 
                     <Route path="/signup" element={<Signup />} />
+
 
                     <Route path="*" element={<h1>Not found!</h1>} />
                     <Route path="/profile" element={<Profile />} />

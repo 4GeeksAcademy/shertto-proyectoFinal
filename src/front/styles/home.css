@@ -5,3 +5,75 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+.zoom-image {
+	transition: transform 0.3s ease; /* Hace que el cambio sea suave */
+}
+
+.zoom-image:hover {
+	transform: scale(1.15); /* Aumenta la escala al 110% al pasar el cursor */
+}
+
+p {
+    text-align: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Hace que las tarjetas se estiren y tengan la misma altura */
+}
+
+.card-body {
+    flex-grow: 1; /* Hace que el contenido de la tarjeta ocupe todo el espacio disponible */
+}
+
+.card-img-top {
+    object-fit: contain;
+    height: 200px; /* Puedes ajustar la altura para que las imágenes no distorsionen */
+}
+
+/* Estilo básico para las flechas */
+.featured-carousel .carousel-control-prev-icon,
+.featured-carousel .carousel-control-next-icon {
+    background-color: black;
+    border-radius: 50%; 
+    width: 40px; 
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+.countdown-box {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    width: 80px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.countdown-time {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.countdown-label {
+    font-size: 0.9em;
+    color: #6c757d;
+    text-transform: uppercase;
+}
+
+
+
