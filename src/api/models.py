@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -77,6 +78,7 @@ class Order_details(db.Model):
     amount = db.Column(db.String(50), nullable=False)
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
     
+    
     #user = relationship('User', back_populates='orders')
     order = db.relationship('Order', back_populates='order_details')
     product = db.relationship('Product', backref = 'details')
@@ -89,6 +91,26 @@ class Order_details(db.Model):
         return {
             "id": self.id,
             "status": self.status,
+        }
+
+class Return(db.Model):
+    __tablename__ = 'return'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer,db.ForeignKey("user.id"),nullable=False)
+    order_id = db.Column(db.Integer,db.ForeignKey("order.id"),nullable=False)
+    reason = db.Column(db.String(120),nullable=False)
+    order = db.relationship('Order', backref='returns')
+
+    def __repr__(self):
+        return f'<Return {self.id}>'
+
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "order_id" : self.order_id,
+            "reason" : self.reason
+            
         }
 
 class Category(db.Model):
