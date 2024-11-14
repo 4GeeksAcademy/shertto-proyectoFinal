@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { Dropdown } from "react-bootstrap"; // Importamos los componentes de Bootstrap para el Dropdown
 
@@ -66,7 +67,7 @@ export const Navbar = () => {
           </a>
 
 
-          <a className="navbar-brand text-white" href="#">ruta</a>
+          <Link className="navbar-brand text-white" to="/products">Products</Link>
 
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
@@ -80,7 +81,7 @@ export const Navbar = () => {
 
               <li className="nav-item">
 
-                <a className="nav-link active text-white" aria-current="page" href="#">ruta</a>
+              <Link className="navbar-brand text-white" to="/earphones">Auriculares, Accesorios</Link>
 
               </li>
 
@@ -168,11 +169,11 @@ export const Navbar = () => {
 
             <li className="nav-item">
 
-              <a className="nav-link text-white" href="#">
+              <Link className="nav-link text-white" to="/cart">
 
                 <FaShoppingCart style={iconStyle} />
 
-              </a>
+              </Link>
 
             </li>
 
