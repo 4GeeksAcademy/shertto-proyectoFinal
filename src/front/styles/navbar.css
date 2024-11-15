@@ -1,53 +1,67 @@
-
-.navbar{
-    height: 12vh;
-    background-color:  rgb(14, 14, 14);
-
+/* Estilo para el navbar */
+.navbar {
+  height: 12vh;
+  background-color: rgb(14, 14, 14);
+  display: flex;
+  flex-direction: column; /* Cambiar a columna para apilar logo, búsqueda y enlaces */
+  justify-content: center; /* Centrar contenido verticalmente */
 }
 
+/* Logo */
 .logo {
   height: 100px;
   width: auto;
   max-width: 150px;
-  margin-right: 10px; 
+  margin-right: 10px;
+}
+
+/* Contenedor de búsqueda */
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
 }
 
 .form-control {
-  width: 500px;
-}
-
-
-.navbar-toggler {
-  background-color: #fff;
+  width: 400px; /* Ajuste del ancho de la barra de búsqueda */
 }
 
 .btn-outline-light {
   border-color: white;
   color: white;
+  margin-left: 10px; /* Espacio entre el campo de búsqueda y la lupa */
 }
 
-.cart-count {
-  margin-left: 5px;
+/* Estilo para los enlaces de la barra de rutas */
+.navbar-routes {
+  display: flex;
+  justify-content: flex-start; /* Alinear a la izquierda */
+  align-items: center;
+  background-color: rgb(14, 14, 14);
+  padding-left: 100px; /* Ajustar el padding izquierdo para alinear los enlaces */
+  margin-top: 0; /* Eliminar el margen superior para acercarlo más al buscador */
 }
 
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  padding: 10px 10px;
+  margin: 0 5px; /* Reducir el margen para acercar los enlaces */
+  font-size: 1em;
+  display: inline-block;
+}
+
+.navbar-link:hover {
+  color: #ffee00; /* Cambia el color cuando el mouse pasa sobre el enlace */
+}
+
+/* Asegurarse de que los elementos estén alineados */
 .navbar-nav .nav-item {
-  margin-right: 15px; 
+  margin-right: 15px;
 }
-
-.navbar-brand {
-  margin-left: 15px; 
-}
-
-  .form-control {
-    width: 500px; 
-  }
-  
-  .nav-link:hover {
-    color: #ff6347; /* Cambia el color cuando el mouse pasa sobre el icono */
-  }
-  
-  .nav-link svg:hover {
-    color: #ff6347; /* Cambia el color también para los iconos */
-  }
-  
-

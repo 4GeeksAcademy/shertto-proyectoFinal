@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "../../styles/footer.css";
+import { Link } from "react-router-dom";
+
 
 export const Footer = () => (
 		<footer className="footer mt-auto py-3 text-center">
@@ -70,7 +72,7 @@ export const Footer = () => (
 									<div className="footer-section">
 										<h4>About Us</h4>
 											<ul>
-												<li><a href="/about-us">About Us</a></li>
+												<Link to="/aboutUs">About Us</Link>
 												<li><a href="/affiliate-program">Affiliate Program</a></li>
 												<li><a href="/blog">Blog</a></li>
 												<li><a href="/contact">Contact</a></li>

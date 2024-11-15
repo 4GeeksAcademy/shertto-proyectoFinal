@@ -1,0 +1,153 @@
+/* Estilos para las tarjetas de productos */
+.product-card {
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+  margin: 15px;
+  position: relative;
+  text-align: left;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;  /* Puedes ajustar esta altura para adaptarlo a tus necesidades */
+  overflow: hidden; /* Asegura que nada se salga del contenedor */
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;  /* Asegura que la imagen ocupe toda la altura disponible */
+  object-fit: contain; /* Ajusta la imagen dentro del contenedor sin recortarla */
+  border-bottom: 2px solid #f2f2f2;
+}
+
+.product-info {
+  padding: 15px;
+}
+
+.product-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #333;
+}
+
+.product-category {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.product-description {
+  font-size: 0.95em;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 10px; /* Espacio debajo del precio */
+}
+
+/* Contenedor para el precio y el botón */
+.price-button-container {
+  display: block; /* Se asegura que el precio y el botón estén en bloque */
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Selector de cantidad */
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.quantity-selector label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.quantity-input {
+  padding: 5px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 60px;
+}
+
+/* Botón de Añadir al Carrito con fondo amarillo */
+.btn-buy {
+  background-color: #ffcc00; /* Fondo amarillo */
+  color: black;
+  border: none;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
+  transition: background-color 0.3s ease;
+  text-align: center; /* Asegura que el texto esté centrado en el botón */
+}
+
+.btn-buy:hover {
+  background-color: #e6b800;
+}
+
+/* Estilo para el contenedor de cantidad */
+/* Estilo para el contenedor de cantidad */
+.quantity-container {
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2; /* Fondo gris claro */
+  border-radius: 15px;
+  padding: 0px 2px; /* Reducimos padding superior e inferior para menor altura */
+  margin-bottom: 10px;
+  width: auto;
+  max-width: 150px
+}
+
+/* Alineación de la etiqueta y el selector */
+.quantity-label {
+  font-size: 0.95em;
+  color: #333;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+/* Selector de cantidad con ancho completo */
+.quantity-selector {
+  border: none;
+  background: none;
+  font-size: 1em;
+  color: #333;
+  cursor: pointer;
+  width: 80%; /* Ancho completo dentro del contenedor */
+  padding: 3px 0; /* Ajuste para evitar desplazamiento vertical */
+  box-sizing: border-box; /* Para que el ancho incluya el relleno */
+  padding: 2px 0; /* Ajuste de relleno para reducir espacio vertical en el selector */
+  text-align: center; /* Asegura que el número esté centrado */
+  vertical-align: middle; /* Alinea el número verticalmente en el centro */
+  line-height: 5; /* Ajusta la altura de línea para alinear mejor el número */
+}
+
+
+/* Cuando el usuario pasa el ratón */
+.quantity-favorite-container {
+  display: flex;  /* Usamos flexbox para colocar cantidad y favorito en la misma fila */
+  justify-content: space-between;  /* Se asegura que haya espacio entre la cantidad y el ícono de favorito */
+  align-items: center;  /* Alinea verticalmente ambos elementos */
+  margin-bottom: 10px;
+}
+
