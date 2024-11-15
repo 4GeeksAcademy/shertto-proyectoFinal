@@ -26,7 +26,8 @@ import AboutUs from './pages/aboutUs.js';
 import ProductsPage from "./component/ProductsPage.js";
 import EarphonesPage from "./component/earphonesPage.js";
 import PhotographyPage from "./component/photographypage.js";
-import GamingPage from "./pages/gamingPages.js";
+import GamingPage from "./component/gamingPages.js";
+import WearablesPage from "./component/wearablesPage.js";
 //first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -60,6 +61,7 @@ const Layout = () => {
                     <Route path="/earphones" element={<EarphonesPage />} />
                     <Route path="/photographypage" element={<PhotographyPage />} />
                     <Route path="/gamingPages" element={<GamingPage />} />
+                    <Route path="//wearablesPage" element={<WearablesPage />} />
                     
                     
                     

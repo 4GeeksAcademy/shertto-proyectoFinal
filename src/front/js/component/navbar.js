@@ -110,6 +110,18 @@ export const Navbar = () => {
         <Link className="navbar-link" to="/gamingPages">
         Productos Gaming
         </Link>
+        <Link className="navbar-link" to="/wearablesPage">
+        Wearables
+        </Link>
+        <Link className="navbar-link" to="/">
+        Cargadores y Adaptadores
+        </Link>
+        <Link className="navbar-link" to="/">
+        Electrodomésticos inteligentes
+        </Link>
+        <Link className="navbar-link" to="/">
+        Accesorios para PC
+        </Link>
         {/* Puedes añadir más rutas aquí */}
       </div>
     </div>
