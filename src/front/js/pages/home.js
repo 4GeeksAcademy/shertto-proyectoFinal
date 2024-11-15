@@ -1,7 +1,7 @@
 // Home.js
 import React from "react";
 import { Row, Col, Card, Button, Carousel } from 'react-bootstrap';
-import CountdownTimer from './CountdownTimer'; // Importar el componente CountdownTimer
+import CountdownTimer from './CountdownTimer';
 import "../../styles/home.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
