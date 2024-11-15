@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../../styles/earphonedetails.css";
 
-const EarphoneDetails = ({ name, description, price, image, category }) => {
+const GamingDetails = ({ name, description, price, image, category }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (e) => {
@@ -47,11 +47,11 @@ const EarphoneDetails = ({ name, description, price, image, category }) => {
                       </button>
                   </div>
 
-                  <button className="btn-buy">Añadir a la cesta</button>
+                  <button className="btn-buy">Añadir al carrito</button>
               </div>
           </div>
       </div>
   );
 };
 
-export default EarphoneDetails;
+export default GamingDetails;

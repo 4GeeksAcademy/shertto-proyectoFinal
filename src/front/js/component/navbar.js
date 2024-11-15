@@ -107,6 +107,9 @@ export const Navbar = () => {
         <Link className="navbar-link" to="/photographypage">
         Fotografía y Videocámaras
         </Link>
+        <Link className="navbar-link" to="/gamingPages">
+        Productos Gaming
+        </Link>
         {/* Puedes añadir más rutas aquí */}
       </div>
     </div>
