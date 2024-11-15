@@ -141,3 +141,13 @@
   vertical-align: middle; /* Alinea el número verticalmente en el centro */
   line-height: 5; /* Ajusta la altura de línea para alinear mejor el número */
 }
+
+
+/* Cuando el usuario pasa el ratón */
+.quantity-favorite-container {
+  display: flex;  /* Usamos flexbox para colocar cantidad y favorito en la misma fila */
+  justify-content: space-between;  /* Se asegura que haya espacio entre la cantidad y el ícono de favorito */
+  align-items: center;  /* Alinea verticalmente ambos elementos */
+  margin-bottom: 10px;
+}
+

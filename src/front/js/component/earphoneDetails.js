@@ -1,8 +1,5 @@
-// EarphoneDetails.js
-
 import React, { useState } from 'react';
-import "../../styles/earphonedetails.css"; // Asegúrate de importar el archivo de estilos correspondiente
-
+import "../../styles/earphonedetails.css";
 
 const EarphoneDetails = ({ name, description, price, image, category }) => {
   const [quantity, setQuantity] = useState(1);
@@ -10,6 +7,8 @@ const EarphoneDetails = ({ name, description, price, image, category }) => {
   const handleQuantityChange = (e) => {
       setQuantity(e.target.value);
   };
+
+ 
 
   return (
       <div className="product-card">
@@ -24,19 +23,28 @@ const EarphoneDetails = ({ name, description, price, image, category }) => {
               <div className="price-button-container">
                   <div className="product-price">${price}</div>
 
-                  <div className="quantity-container">
-                      <label className="quantity-label">Cantidad: </label>
-                      <select 
-                          value={quantity} 
-                          onChange={handleQuantityChange}
-                          className="quantity-selector"
-                      >
-                          {[1, 2, 3, 4, 5].map((num) => (
-                              <option key={num} value={num}>
-                                  {num}
-                              </option>
-                          ))}
-                      </select>
+                  {/* Contenedor con flexbox para cantidad y corazón */}
+                  <div className="quantity-favorite-container">
+                      <div className="quantity-container">
+                          <label className="quantity-label">Cantidad: </label>
+                          <select 
+                              value={quantity} 
+                              onChange={handleQuantityChange}
+                              className="quantity-selector"
+                          >
+                              {[1, 2, 3, 4, 5].map((num) => (
+                                  <option key={num} value={num}>
+                                      {num}
+                                  </option>
+                              ))}
+                          </select>
+                      </div>
+
+                      {/* Ícono de corazón separado a la derecha */}
+                      <button className="btn btn-outline-danger">
+                          {/* Usamos el ícono SVG de Bootstrap */}
+                          <i className="fas fa-heart"></i>
+                      </button>
                   </div>
 
                   <button className="btn-buy">Añadir al carrito</button>
