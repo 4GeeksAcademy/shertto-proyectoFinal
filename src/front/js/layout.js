@@ -23,13 +23,14 @@ import AboutUs from './pages/aboutUs.js';
 
 
 
-import ProductsPage from "./component/ProductsPage.js";
+
 import EarphonesPage from "./component/earphonesPage.js";
 import PhotographyPage from "./component/photographypage.js";
 import GamingPage from "./component/gamingPages.js";
 import WearablesPage from "./component/wearablesPage.js";
 import ChargerPage from "./component/chargerPage.js";
 import SmartPage from "./component/smartPage.js";
+import PcPage from "./component/pcPage.js";
 //first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -59,13 +60,14 @@ const Layout = () => {
 
 
                     <Route path="/register" element={<Register />} />
-                    <Route path="/products" element={<ProductsPage />} />
+                    
                     <Route path="/earphones" element={<EarphonesPage />} />
                     <Route path="/photographypage" element={<PhotographyPage />} />
                     <Route path="/gamingPages" element={<GamingPage />} />
                     <Route path="//wearablesPage" element={<WearablesPage />} />
                     <Route path="//chargerPage" element={<ChargerPage />} />
                     <Route path="//smartPage" element={<SmartPage />} />
+                    <Route path="//pcPage" element={<PcPage />} />
                     
                     
 

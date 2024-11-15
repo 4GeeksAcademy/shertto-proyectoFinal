@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Dropdown } from "react-bootstrap"; // Importamos los componentes de Bootstrap para el Dropdown
 import { FaUser, FaHeart, FaShoppingCart } from "react-icons/fa"; // Usamos los iconos de react-icons
 import "../../styles/navbar.css";
 
@@ -61,23 +60,12 @@ export const Navbar = () => {
 
           {/* Dropdown del icono de usuario */}
           <ul className="nav justify-content-end">
-            <li className="nav-item">
-              <div
-                className="nav-link text-white"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
+            <Link className="nav-item" to="/register">
+              <div >
                 <FaUser style={iconStyle} />
-                <Dropdown show={showDropdown} autoClose="outside">
-                  {/* Aplicamos la clase dropdown-menu-dark para que el menú sea oscuro */}
-                  <Dropdown.Menu className="dropdown-menu-dark">
-                    <Dropdown.Item href="#action1">Perfil</Dropdown.Item>
-                    <Dropdown.Item href="#action2">Mis pedidos</Dropdown.Item>
-                    <Dropdown.Item href="#action3">Cerrar sesión</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+               
               </div>
-            </li>
+            </Link>
 
             {/* Icono de Corazón */}
             <li className="nav-item">
@@ -98,7 +86,7 @@ export const Navbar = () => {
 
       {/* Rutas debajo del buscador */}
       <div className="navbar-routes">
-        <Link className="navbar-link" to="/products">
+        <Link className="navbar-link" to="/">
           Products
         </Link>
         <Link className="navbar-link" to="/earphones">
@@ -119,7 +107,7 @@ export const Navbar = () => {
         <Link className="navbar-link" to="/smartPage">
         Electrodomésticos inteligentes
         </Link>
-        <Link className="navbar-link" to="/">
+        <Link className="navbar-link" to="/pcPage">
         Accesorios para PC
         </Link>
         {/* Puedes añadir más rutas aquí */}
