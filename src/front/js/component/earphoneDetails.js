@@ -53,5 +53,4 @@ const EarphoneDetails = ({ name, description, price, image, category }) => {
       </div>
   );
 };
-
 export default EarphoneDetails;
