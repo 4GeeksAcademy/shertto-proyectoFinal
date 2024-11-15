@@ -113,10 +113,10 @@ export const Navbar = () => {
         <Link className="navbar-link" to="/wearablesPage">
         Wearables
         </Link>
-        <Link className="navbar-link" to="/">
+        <Link className="navbar-link" to="/chargerPage">
         Cargadores y Adaptadores
         </Link>
-        <Link className="navbar-link" to="/">
+        <Link className="navbar-link" to="/smartPage">
         Electrodomésticos inteligentes
         </Link>
         <Link className="navbar-link" to="/">
