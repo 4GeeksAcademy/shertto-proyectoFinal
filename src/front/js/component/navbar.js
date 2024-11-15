@@ -104,9 +104,9 @@ export const Navbar = () => {
         <Link className="navbar-link" to="/earphones">
           Auriculares y accesorios
         </Link>
-        <a className="navbar-link" href="#">
-          Ruta
-        </a>
+        <Link className="navbar-link" to="/photographypage">
+        Fotografía y Videocámaras
+        </Link>
         {/* Puedes añadir más rutas aquí */}
       </div>
     </div>
