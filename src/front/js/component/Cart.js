@@ -6,10 +6,6 @@ import "../../styles/cart.css";
 export const Cart = () => {
     const { store, actions } = useContext(Context);
 
-    // este producto es de prueba para ver la renderización
-    store.cart = [{ id: 1, name: "Producto de prueba", price: 10 }];
-
-    console.log(store.cart);
     
     return (
         <div className="cart-container">
