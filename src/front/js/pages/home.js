@@ -4,6 +4,7 @@ import { Row, Col, Card, Button, Carousel } from 'react-bootstrap';
 import CountdownTimer from './CountdownTimer';
 import "../../styles/home.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
     const featuredProducts = [
@@ -20,36 +21,43 @@ export const Home = () => {
             id: 1,
             name: "Auriculares y Accesorios",
             imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731435335/categoria_auriculares-removebg-preview_akqmze.png",
+            path:"/earphones"
         },
         {
             id: 2,
             name: "Fotografía y Videocámaras",
             imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731436387/71OC3bVqbuL._AC_SL1500_-removebg-preview_f9lsa9.png",
+            path:"/photographypage"
         },
         {
             id: 3,
             name: "Productos Gaming",
             imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731437141/silla_gaming-removebg-preview_i7jgwd.png",
+            path:"/gamingPages"
         },
         {
             id: 4,
             name: "Wearables",
             imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731438764/reloj-removebg-preview_kyowl3.png",
+            path:"/wearablesPage"
         },
         {
             id: 5,
             name: "Cargadores y Adaptadores",
             imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731439092/cargador_wveqyh.jpg",
+            path:"/chargerPage"
         },
         {
             id: 6,
             name: "Electrodomésticos inteligentes",
             imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731345781/71W2eDGsAJL._AC_SX569__lr1lgu.jpg",
+            path:"/smartPage"
         },
         {
             id: 7,
             name: "Accesorios para PC",
             imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731439769/teclado_grdafp.jpg",
+            path:"/pcPage"
         },
     ];
 
@@ -77,9 +85,11 @@ export const Home = () => {
 
     const renderCategory = (category) => (
         <Col key={category.id} md={3} className="category-item text-center">
+             <Link to={category.path} className="text-decoration-none text-dark">
             <img className="zoom-image" src={category.imageUrl} alt={category.name} style={{ width: "100%", height: "auto", maxHeight: "150px", objectFit: "contain" }} />
             <h5 className="mt-2">{category.name}</h5>
-        </Col>
+        </Link>
+    </Col>
     );
 
     return (
