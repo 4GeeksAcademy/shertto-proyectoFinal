@@ -8,12 +8,14 @@ import PayPalButton from "./PayPalButton";
 export const Cart = () => {
     const { store, actions } = useContext(Context);
 
+
     // este producto es de prueba para ver la renderización
     store.cart = [{ id: 1, name: "Producto de prueba", price: 10 }];
 
     const totalAmount = store.cart.reduce((acc, product) => acc + product.price, 0).toFixed(2); // Calcula el total del carrito
 
     console.log(store.cart);
+
     
     return (
         <div className="cart-container">

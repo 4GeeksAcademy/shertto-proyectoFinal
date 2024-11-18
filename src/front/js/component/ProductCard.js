@@ -9,7 +9,7 @@ export const ProductCard = ({ product }) => {
     return (
         <div className="product-card">
             <h3>{product.name}</h3>
-            <p>{product.price}</p>
+            <p>{product.price.toFixed(2)}</p>
             <button onClick={ () => actions.addToCart(product)}>Añadir al carrito</button>
         </div>
     );
