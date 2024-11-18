@@ -6,7 +6,7 @@ from api.models import db, User, Order, Return, Order_details
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-import paypalrestsdk
+# import paypalrestsdk
 
 api = Blueprint('api', __name__)
 
@@ -14,11 +14,11 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 # Configuración de PayPal (sandbox para pruebas)
-paypalrestsdk.configure({
-    'mode': 'sandbox',  # Cambia a 'live' para producción
-    'client_id': 'AU1dWBeEAWpy3eV3ZOD9TnL-W6RxX10DA3XgyM9nLuRhgyv_Me582aRk7eGwLJ5q932mmRhtYdpDpcQ1',  
-    'client_secret': 'EIyaa_4QWSGH3KAvLIYhSV3y6qTQxaCuXgmpe789Bt8jgjpVh_4i0xv2wteYDIWlBvgVmm46UKVMViyt'  
-})
+# paypalrestsdk.configure({
+#     'mode': 'sandbox',  # Cambia a 'live' para producción
+#     'client_id': 'AU1dWBeEAWpy3eV3ZOD9TnL-W6RxX10DA3XgyM9nLuRhgyv_Me582aRk7eGwLJ5q932mmRhtYdpDpcQ1',  
+#     'client_secret': 'EIyaa_4QWSGH3KAvLIYhSV3y6qTQxaCuXgmpe789Bt8jgjpVh_4i0xv2wteYDIWlBvgVmm46UKVMViyt'  
+# })
 
 # Ruta de login
 @api.route('/login', methods=['POST'])
@@ -106,68 +106,68 @@ def create_return(order_id):
 
     return jsonify({"message": "Return created successfully"}), 201
 
-# Ruta para crear una orden de pago en PayPal
-@api.route('/paypal/create-order', methods=['POST'])
-@jwt_required()
-def create_paypal_order():
-    # Obtener la cantidad del pedido
-    data = request.get_json()
-    amount = data.get('amount')
+# # Ruta para crear una orden de pago en PayPal
+# @api.route('/paypal/create-order', methods=['POST'])
+# @jwt_required()
+# def create_paypal_order():
+#     # Obtener la cantidad del pedido
+#     data = request.get_json()
+#     amount = data.get('amount')
 
-    if not amount:
-        return jsonify({"error": "Amount is required"}), 400
+#     if not amount:
+#         return jsonify({"error": "Amount is required"}), 400
 
-    # Crear un objeto de pago en PayPal
-    payment = paypalrestsdk.Payment({
-        "intent": "sale",
-        "payer": {
-            "payment_method": "paypal"
-        },
-        "transactions": [{
-            "amount": {
-                "total": str(amount), 
-                "currency": "EU"
-            },
-            "description": "Compra en tu tienda ecommerce"
-        }],
-        "redirect_urls": {
-            "return_url": url_for('api.execute_paypal_payment', _external=True),
-            "cancel_url": url_for('api.cancel_paypal_payment', _external=True)
-        }
-    })
+#     # Crear un objeto de pago en PayPal
+#     payment = paypalrestsdk.Payment({
+#         "intent": "sale",
+#         "payer": {
+#             "payment_method": "paypal"
+#         },
+#         "transactions": [{
+#             "amount": {
+#                 "total": str(amount), 
+#                 "currency": "EU"
+#             },
+#             "description": "Compra en tu tienda ecommerce"
+#         }],
+#         "redirect_urls": {
+#             "return_url": url_for('api.execute_paypal_payment', _external=True),
+#             "cancel_url": url_for('api.cancel_paypal_payment', _external=True)
+#         }
+#     })
 
-    if payment.create():
-        # Redirigir a la URL de aprobación proporcionada por PayPal
-        approval_url = next(link.href for link in payment.links if link.rel == "approval_url")
-        return jsonify({
-            "approval_url": approval_url,  # URL de redirección
-            "payment_id": payment.id  # ID del pago
-        })
-    else:
-        return jsonify({"error": "Error creando el pago en PayPal"}), 500
+#     if payment.create():
+#         # Redirigir a la URL de aprobación proporcionada por PayPal
+#         approval_url = next(link.href for link in payment.links if link.rel == "approval_url")
+#         return jsonify({
+#             "approval_url": approval_url,  # URL de redirección
+#             "payment_id": payment.id  # ID del pago
+#         })
+#     else:
+#         return jsonify({"error": "Error creando el pago en PayPal"}), 500
 
-@api.route('/paypal/execute-payment', methods=['POST'])
-@jwt_required()
-def execute_paypal_payment():
-    # Recuperar paymentId y PayerID de la URL
-    data = request.get_json()
-    payment_id = data.get('paymentId')
-    payer_id = data.get('payerId')
+# @api.route('/paypal/execute-payment', methods=['POST'])
+# @jwt_required()
+# def execute_paypal_payment():
+#     # Recuperar paymentId y PayerID de la URL
+#     data = request.get_json()
+#     payment_id = data.get('paymentId')
+#     payer_id = data.get('payerId')
 
-    if not payment_id or not payer_id:
-        return jsonify({"error": "PaymentId and PayerId are required"}), 400
+#     if not payment_id or not payer_id:
+#         return jsonify({"error": "PaymentId and PayerId are required"}), 400
 
-    # Buscar el pago en PayPal
-    payment = paypalrestsdk.Payment.find(payment_id)
+#     # Buscar el pago en PayPal
+#     payment = paypalrestsdk.Payment.find(payment_id)
 
-    if payment.execute({"payer_id": payer_id}):
-        # Aquí puedes actualizar el estado del pedido como "pagado"
-        return jsonify({"message": "Pago ejecutado exitosamente"}), 200
-    else:
-        return jsonify({"error": "Error al ejecutar el pago"}), 500
+#     if payment.execute({"payer_id": payer_id}):
+#         # Aquí puedes actualizar el estado del pedido como "pagado"
+#         return jsonify({"message": "Pago ejecutado exitosamente"}), 200
+#     else:
+#         return jsonify({"error": "Error al ejecutar el pago"}), 500
 
-@api.route('/paypal/cancel', methods=['GET'])
-def cancel_paypal_payment():
-    return jsonify({"message": "El pago fue cancelado por el usuario"}), 200
+# @api.route('/paypal/cancel', methods=['GET'])
+# def cancel_paypal_payment():
+#     return jsonify({"message": "El pago fue cancelado por el usuario"}), 200
 
 
