@@ -2,9 +2,13 @@
 import React, { useEffect, useState } from "react";
 import EarphoneDetails from "./earphoneDetails"
 import "../../styles/productpage.css"; // Asegúrate de tener estilos personalizados
+import OffCanvasDetails from "./offcanvasdetails"; // Nuevo componente
+
 
 const SmartPage = () => {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null); // Para manejar el producto seleccionado
+
 
   useEffect(() => {
     // Simulación de productos específicos para auriculares y accesorios
@@ -22,14 +26,33 @@ const SmartPage = () => {
     ]);
   }, []);
 
+  const handleProductClick = (product) => {
+    setSelectedProduct(product); // Actualiza el producto seleccionado
+  };
+
+  const handleCloseOffCanvas = () => {
+    setSelectedProduct(null); // Cierra el off-canvas
+  };
+
   return (
     <div className="product-page">
       <h1 className="title">Electrodomesticos Inteligentes</h1>
       <div className="product-list">
         {products.map((product) => (
-          <EarphoneDetails key={product.id} {...product} />
+           <div
+           key={product.id}
+           onClick={() => handleProductClick(product)} // Maneja el clic para abrir el off-canvas
+         >
+           <EarphoneDetails {...product} />
+         </div>
         ))}
       </div>
+      {selectedProduct && (
+        <OffCanvasDetails
+          product={selectedProduct}
+          onClose={handleCloseOffCanvas} // Pasa la función de cierre
+        />
+      )}
     </div>
   );
 };
