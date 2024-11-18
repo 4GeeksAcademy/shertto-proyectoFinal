@@ -75,5 +75,12 @@ p {
     text-transform: uppercase;
 }
 
+.home {
+    overflow-x: hidden; /* Evita el scroll horizontal */
+}
+
+.row {
+    margin: 0; /* Elimina los márgenes entre filas que pueden generar desbordamiento */
+}
 
 
