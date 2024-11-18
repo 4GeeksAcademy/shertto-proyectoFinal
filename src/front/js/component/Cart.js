@@ -1,13 +1,17 @@
+// cart.js
+
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/cart.css";
-
+import PayPalButton from "./PayPalButton"; 
 
 export const Cart = () => {
     const { store, actions } = useContext(Context);
 
     // este producto es de prueba para ver la renderización
     store.cart = [{ id: 1, name: "Producto de prueba", price: 10 }];
+
+    const totalAmount = store.cart.reduce((acc, product) => acc + product.price, 0).toFixed(2); // Calcula el total del carrito
 
     console.log(store.cart);
     
@@ -35,11 +39,17 @@ export const Cart = () => {
                 </>
             )}
             <div>
-                {/* Calcular el total sumado del precio del producto en el carrito */}
-                Total: $
-                {store.cart.reduce((acc, product) => acc + product.price, 0).toFixed(2)}
+                {/* Total calculado */}
+                <h3>Total: ${totalAmount}</h3>
             </div>
+
+            {/* Botón de PayPal */}
+            {store.cart.length > 0 && (
+                <div className="paypal-button-container">
+                    <PayPalButton amount={totalAmount} />
+                </div>
+            )}
         </div>
     );
-    
 };
+
