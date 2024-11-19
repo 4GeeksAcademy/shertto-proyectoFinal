@@ -61,27 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			signup: async (email, password) => {
-				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/signup`, {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify({ email, password })
-					});
-
-					if (!response.ok) throw new Error("Register failed");
-
-					alert("Registro exitoso. Ahora puede iniciar sesión.");
-					return true;
-
-				} catch (error) {
-					console.error("Error during registration:", error);
-					return false;
-					
-				}
-			},
+			
 
 			login: async (email, password) => {
 				try {
@@ -110,7 +90,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			register: async (email, password) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/registre`, {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json"
@@ -139,6 +119,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/profile`, {
 						method: "GET",
 						headers: {
+							"Content-Type": "application/json",
 							"Authorization": `Bearer ${store.userToken}`
 						}
 					});

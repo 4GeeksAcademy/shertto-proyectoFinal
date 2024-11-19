@@ -12,7 +12,6 @@ import injectContext from "./store/appContext";
 import Register from "./pages/Register.js";
 
 import Login from "./pages/Login";
-import Signup from "./pages/Signup.js";
 import Profile from "./pages/Profile.js";
 
 import { Navbar } from "./component/navbar";
@@ -53,16 +52,8 @@ const Layout = () => {
                     <Route path="/demo" element={<Demo />} />
                     <Route path="/single/:theid" element={<Single />} />
                     <Route path="/login" element={<Login />} />
-
-
-                    <Route path="/signup" element={<Signup />} />
-
                     <Route path="/aboutUs" element={<AboutUs />} />
                     <Route path="/register" element={<Register />} />
-
-
-                    <Route path="/register" element={<Register />} />
-                    
                     <Route path="/earphones" element={<EarphonesPage />} />
                     <Route path="/photographypage" element={<PhotographyPage />} />
                     <Route path="/gamingPages" element={<GamingPage />} />
@@ -71,12 +62,6 @@ const Layout = () => {
                     <Route path="//smartPage" element={<SmartPage />} />
                     <Route path="//pcPage" element={<PcPage />} />
                     <Route path="//offcanvasdetails" element={<OffCanvasDetails />} />
-                    
-                    
-
-                    <Route path="/signup" element={<Signup />} />
-
-
                     <Route path="*" element={<h1>Not found!</h1>} />
                     <Route path="/profile" element={<Profile />} />
                 </Routes>

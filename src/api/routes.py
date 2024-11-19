@@ -4,14 +4,12 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Order, Return, Order_details
 from api.utils import generate_sitemap, APIException
-from flask_cors import CORS
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 # import paypalrestsdk
 
 api = Blueprint('api', __name__)
 
-# Allow CORS requests to this API
-CORS(api)
+
 
 # Configuración de PayPal (sandbox para pruebas)
 # paypalrestsdk.configure({
@@ -41,7 +39,7 @@ def login():
 def signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    is_active = request.json.get("is_active", None)
+    is_active = request.json.get("is_active", True)
     user_exist = User.query.filter_by(email=email).first()
 
     if user_exist is None:
