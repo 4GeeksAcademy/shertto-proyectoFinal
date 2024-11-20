@@ -4,6 +4,10 @@ const PayPalButton = ({ amount }) => {
     useEffect(() => {
         // Verifica que el SDK de PayPal esté cargado
         if (window.paypal) {
+            // Limpia el contenedor antes de renderizar el botón
+            const container = document.getElementById("paypal-button-container");
+            if (container) container.innerHTML = "";
+
             // Asegúrate de que el token JWT esté disponible
             const token = localStorage.getItem('token'); // O desde donde esté almacenado tu token
 
@@ -19,7 +23,6 @@ const PayPalButton = ({ amount }) => {
                 // Crear la orden en el backend
                 createOrder: async (data, actions) => {
                     try {
-                        // Enviar la cantidad y detalles del carrito al backend para crear la orden
                         const response = await fetch("/api/paypal/create-order", {
                             method: "POST",
                             headers: {
@@ -41,10 +44,8 @@ const PayPalButton = ({ amount }) => {
                     }
                 },
 
-                // Cuando el pago es aprobado por el usuario
                 onApprove: async (data, actions) => {
                     try {
-                        // Ejecutar el pago con el ID de la orden
                         const response = await fetch(`/api/paypal/execute-payment`, {
                             method: "POST",
                             headers: {
@@ -70,12 +71,10 @@ const PayPalButton = ({ amount }) => {
                     }
                 },
 
-                // Cuando el usuario cancela el pago
                 onCancel: (data) => {
                     alert('El pago fue cancelado.');
                 },
 
-                // En caso de error
                 onError: (err) => {
                     console.error('Error en el pago:', err);
                     alert('Ocurrió un error al procesar el pago.');
@@ -88,4 +87,5 @@ const PayPalButton = ({ amount }) => {
 };
 
 export default PayPalButton;
+
 

@@ -1,19 +1,22 @@
 // Home.js
-import React from "react";
+import React, {useContext} from "react";
 import { Row, Col, Card, Button, Carousel } from 'react-bootstrap';
+import { Context } from "../store/appContext";
 import CountdownTimer from './CountdownTimer';
 import "../../styles/home.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
+    const { actions } = useContext(Context);
+
     const featuredProducts = [
         { id: 1, name: "PACK SmartWatch Auriculares Inalambricos", price: 29.99, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731500027/pack_kvjfjk.jpg" },
         { id: 2, name: "PACK Gaming", price: 49.99, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731501776/pack_gaming-removebg-preview_jrqiei.png" },
-        { id: 3, name: "Producto 3", price: 19.99, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731345782/51Y-4YTJrZL._AC_SX679__qv7wcr.jpg" },
-        { id: 4, name: "Producto 4", price: 99.99, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731500027/pack_kvjfjk.jpg" },
-        { id: 5, name: "Producto 5", price: 89.99, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731501776/pack_gaming-removebg-preview_jrqiei.png" },
-        { id: 6, name: "Producto 6", price: 89.99, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731501776/pack_gaming-removebg-preview_jrqiei.png" },
+        { id: 3, name: "Presonus AudioBox USB 96 ", price: 285, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732111324/3_sin_fondo_mpamw5.png" },
+        { id: 4, name: "Focusrite Scarlett 2i2 Studio 4th Gen ", price: 277, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732111058/4_sin_fondo_zo7dpj.png" },
+        { id: 5, name: "ESI U22 XT cosMik Set ", price: 95, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732111065/5_sin_fondo_p4bq0d.png" },
+        { id: 6, name: "Silla Gaming + Auricular", price: 169, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732111084/6_sin_fondo_i6upes.png" },
     ];
 
     const categories = [
@@ -71,10 +74,10 @@ export const Home = () => {
     
                     {/* Contenedor de botones centrados */}
                     <div className="d-flex justify-content-center gap-3 mt-auto">
-                        <Button variant="outline-warning" className="d-flex align-items-center">
+                        <Button variant="outline-warning" className="d-flex align-items-center" onClick={() => actions.addToCart(product)}>
                             <i className="fas fa-shopping-cart"></i>
                         </Button>
-                        <Button variant="outline-danger" className="d-flex align-items-center">
+                        <Button variant="outline-danger" className="d-flex align-items-center" onClick={() => actions.addToFavorites(product)}>
                             <i className="fas fa-heart"></i>
                         </Button>
                     </div>
@@ -96,7 +99,6 @@ export const Home = () => {
         <div className="home">
             {/* Categorías de productos */}
             <section className="categories mt-4">
-                <h2 className="text-center">Categorías</h2>
                 <Row className="justify-content-center">
                     {categories.map(renderCategory)}
                 </Row>

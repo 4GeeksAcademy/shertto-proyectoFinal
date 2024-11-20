@@ -1,18 +1,52 @@
-/* Estilo para el navbar */
-.navbar {
-  height: 12vh;
-  background-color: rgb(14, 14, 14);
+.navbar-routes {
   display: flex;
-  flex-direction: column; /* Cambiar a columna para apilar logo, búsqueda y enlaces */
-  justify-content: center; /* Centrar contenido verticalmente */
+  justify-content: center; /* Centrado de las categorías */
+  align-items: center;
+  background-color: rgb(14, 14, 14); /* Fondo negro */
+  padding: 10px 20px; 
+  position: fixed; 
+  top: 6vh; 
+  width: 100%; 
+  z-index: 999; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Agrega un sutil sombreado */
+}
+
+.navbar-link {
+  color: white; 
+  text-decoration: none; 
+  padding: 8px 15px; 
+  margin: 0 5px; 
+  font-size: 1em; 
+  font-weight: 500; 
+  transition: color 0.3s ease; /* Transición suave para hover */
+}
+
+.navbar-link:hover {
+  color: darkorchid;
+}
+
+/* Estilo para el navbar principal */
+.navbar {
+  height: 6vh; 
+  background-color: #0e0e0e; 
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 0 20px; 
+  position: fixed; /* Fijar el navbar en la parte superior */
+  top: 0;
+  left: 0;
+  width: 100%; 
+  z-index: 1000; /* Por encima de otros elementos */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para diferenciarlo del contenido */
 }
 
 /* Logo */
 .logo {
-  height: 100px;
+  height: 70px; 
   width: auto;
-  max-width: 150px;
-  margin-right: 10px;
+  cursor: pointer;
+  margin-top: 50px;
 }
 
 /* Contenedor de búsqueda */
@@ -20,7 +54,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+  flex-grow: 1; /* El buscador ocupa el espacio restante */
 }
 
 .search-form {
@@ -29,39 +63,73 @@
 }
 
 .form-control {
-  width: 400px; /* Ajuste del ancho de la barra de búsqueda */
+  width: 300px; 
+  border-radius: 20px; 
 }
 
 .btn-outline-light {
   border-color: white;
   color: white;
-  margin-left: 10px; /* Espacio entre el campo de búsqueda y la lupa */
+  margin-left: 10px; 
+  border-radius: 50%; 
+  padding: 5px 10px; 
 }
 
-/* Estilo para los enlaces de la barra de rutas */
-.navbar-routes {
+/* Iconos del navbar */
+.nav-item {
+  position: relative;
   display: flex;
-  justify-content: flex-start; /* Alinear a la izquierda */
-  align-items: center;
-  background-color: rgb(14, 14, 14);
-  padding-left: 100px; /* Ajustar el padding izquierdo para alinear los enlaces */
-  margin-top: 0; /* Eliminar el margen superior para acercarlo más al buscador */
+  justify-content: center;
+  align-items: center; 
+  margin-right: 20px; 
+  height: 100%; 
 }
 
-.navbar-link {
+.nav-item a {
   color: white;
-  text-decoration: none;
-  padding: 10px 10px;
-  margin: 0 5px; /* Reducir el margen para acercar los enlaces */
-  font-size: 1em;
-  display: inline-block;
+  font-size: 26px; 
+  transition: color 0.3s ease;
 }
 
-.navbar-link:hover {
-  color: #ffee00; /* Cambia el color cuando el mouse pasa sobre el enlace */
+
+/* Animación de rebote para el carrito y favoritos*/
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-/* Asegurarse de que los elementos estén alineados */
-.navbar-nav .nav-item {
-  margin-right: 15px;
+.cart-icon.bounce {
+  animation: bounce 0.5s ease; /* Efecto de rebote para el carrito */
 }
+
+/* Efecto de rebote para los favoritos */
+.favorites-icon.bounce {
+  animation: bounce 0.5s ease; /* Efecto de rebote para favoritos */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
