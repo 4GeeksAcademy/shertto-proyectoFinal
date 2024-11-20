@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../../styles/earphonedetails.css";
 
-const EarphoneDetails = ({ name, description, price, image, category }) => {
+const EarphoneDetails = ({  product, onImageClick  }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (e) => {
@@ -13,13 +13,14 @@ const EarphoneDetails = ({ name, description, price, image, category }) => {
   return (
     <div className="product-card">
       <div className="product-image-container">
-        <img src={image} alt={name} className="product-image" />
+        <img src={product.image} alt={product.name} className="product-image"  onClick={() => onImageClick(product)} // Llama a la función con el producto como argumento
+        /> 
       </div>
       <div className="product-info">
-        <div className="product-name">{name}</div>
-        <div className="product-description">{description}</div>
+        <div className="product-name">{product.name}</div>
+        <div className="product-description">{product.description}</div>
         <div className="price-button-container">
-          <div className="product-price">${price}</div>
+          <div className="product-price">${product.price}</div>
           <div className="quantity-favorite-container">
             <div className="quantity-container">
               <label className="quantity-label">Cantidad: </label>
