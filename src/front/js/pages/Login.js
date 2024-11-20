@@ -11,6 +11,8 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        console.log("hola");
+        
         const success = await actions.login(email, password);
         if (success) {
             navigate("/profile"); 

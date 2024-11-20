@@ -70,21 +70,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							"Content-Type": "application/json"
 						},
-						body: JSON.stringify({ email, password })
+						body: JSON.stringify({ email: email, password: password })
 					});
-
-					if (!response.ok) throw new Error("Login failed");
-
+					// if (response.ok) {
+					// 	return true;
+					// }
 					const data = await response.json();
-        			setStore({ userToken: data.token });
-        			localStorage.setItem("token", data.token);
-        			return true;
+					setStore({ userToken: data.token }); 
+					console.log(data);
 					
-
+					localStorage.setItem("jwt-token", data.token);
+					localStorage.setItem("user", JSON.stringify(data.user_id));
+					
+					return true; 
 				} catch (error) {
-					console.error("Error during registration:", error);
-					return false;
-					
+					console.log(error)
 				}
 			},
 
@@ -95,15 +95,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							"Content-Type": "application/json"
 						},
-						body: JSON.stringify({ email, password })
+						body: JSON.stringify({ email: email, password: password })
 					});
 
 					if (!response.ok) throw new Error("Register failed");
 
 					const data = await response.json();
-        			setStore({ userToken: data.token });
-        			localStorage.setItem("token", data.token);
-        			return true;
+        			setStore({ user: data });
+					return data
+        			// localStorage.setItem("token", data.token);
+        			// return true;
 					
 
 				} catch (error) {
@@ -114,19 +115,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getUserProfile: async () => {
+				const token = localStorage.getItem("jwt-token")
+				console.log("token obtenido", token);
+				
 				try {
 					const store = getStore();
 					const response = await fetch(`${process.env.BACKEND_URL}/api/profile`, {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
-							"Authorization": `Bearer ${store.userToken}`
+							"Authorization": `Bearer ${token}`
 						}
 					});
 
 					if (!response.ok) throw new Error("Failed to fetch Profile");
 
 					const data = await response.json();
+					console.log("datos del servidor", data);
+					
 					setStore({ user: data });
 				} catch (error) {
 					console.error("Error fetching profile:", error);
