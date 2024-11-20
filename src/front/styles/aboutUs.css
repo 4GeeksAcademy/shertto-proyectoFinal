@@ -1,0 +1,79 @@
+/* Estilo para el contenedor principal */
+.about-us-container {
+    padding: 50px 20px;
+    background-color: #f9f9f9; /* Fondo suave */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el contenido ocupe toda la pantalla */
+    position: relative;
+  }
+  
+  /* Estilo para la sección de contenido */
+  .about-us-content {
+    max-width: 900px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para crear profundidad */
+    text-align: center; /* Centrado del contenido */
+    margin-top: 20px;
+  }
+  
+  /* Logo */
+  .about-us-logo {
+    width: 150px; 
+    height: auto;
+    margin-bottom: 20px; 
+  }
+  
+  /* Título principal */
+  .about-us-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase; 
+    letter-spacing: 2px;
+  }
+  
+  /* Estilo para los párrafos */
+  .about-us-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .about-us-content strong {
+    font-weight: bold;
+    color: #3a3a3a;
+  }
+  
+  /* Agregar estilo cuando el logo y título estén centrados */
+  .about-us-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Estilo para los enlaces de navegación */
+  .navbar-link {
+    text-decoration: none;
+    color: #555;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    font-weight: 500;
+  }
+  
+  .navbar-link:hover {
+    background-color: #3a3a3a;
+    color: darkorchid;
+    border-radius: 50%;
+  }
+  

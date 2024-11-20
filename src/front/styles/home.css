@@ -5,6 +5,10 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+.home {
+    margin-top: 60px;
+}
+
 .zoom-image {
 	transition: transform 0.3s ease; /* Hace que el cambio sea suave */
 }
@@ -20,16 +24,16 @@ p {
 .card {
     display: flex;
     flex-direction: column;
-    height: 100%; /* Hace que las tarjetas se estiren y tengan la misma altura */
+    height: 100%; 
 }
 
 .card-body {
-    flex-grow: 1; /* Hace que el contenido de la tarjeta ocupe todo el espacio disponible */
+    flex-grow: 1; 
 }
 
 .card-img-top {
     object-fit: contain;
-    height: 200px; /* Puedes ajustar la altura para que las imágenes no distorsionen */
+    height: 200px; 
 }
 
 /* Estilo básico para las flechas */
