@@ -48,6 +48,28 @@ def signup():
         db.session.commit()
     return jsonify({"msg": "User created successfully"}), 201
 
+
+@api.route('/profile', methods=['GET'])
+@jwt_required()
+def get_profile():
+    try:
+        current_user_id = get_jwt_identity()
+        user = User.query.get(current_user_id)
+
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        # Devuelve los detalles del usuario
+        return jsonify({
+            "id": user.id,
+            "email": user.email,
+            "is_active": user.is_active
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 # Ruta protegida (requiere JWT)
 @api.route("/protected", methods=["GET"])
 @jwt_required()
