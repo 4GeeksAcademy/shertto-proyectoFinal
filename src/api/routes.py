@@ -34,6 +34,29 @@ def login():
     access_token = create_access_token(identity=check_user.id)
     return jsonify({"token": access_token, "user_id": check_user.id})
 
+@api.route('/profile', methods=['GET'])
+@jwt_required()
+def get_profile():
+    try:
+        current_user_id = get_jwt_identity()
+        user = User.query.get(current_user_id)
+
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+      
+        return jsonify({
+            "id": user.id,
+            "email": user.email,
+            "is_active": user.is_active
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+
 # Ruta de registro
 @api.route('/registre', methods=['POST'])
 def signup():

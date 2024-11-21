@@ -22,7 +22,7 @@ const injectContext = (PassedComponent) => {
 
 		useEffect(() => {
 			state.actions.getMessage();
-			const token = sessionStorage.getItem("token");
+			const token = localStorage.getItem("token");
 			console.log("Token cargado desde sessionStorage:", token); // Depuración
 			if (token) {
 				setState((prevState) => ({

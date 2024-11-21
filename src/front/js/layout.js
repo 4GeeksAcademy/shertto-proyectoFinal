@@ -34,6 +34,7 @@ import SmartPage from "./component/smartPage.js";
 import PcPage from "./component/pcPage.js";
 import OffCanvasDetails from "./component/offcanvasdetails.js";
 
+
 //first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain

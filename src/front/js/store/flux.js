@@ -1,4 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
+
     return {
         store: {
             cart: JSON.parse(localStorage.getItem("cart")) || [], //estado para agregar productos al carrito
@@ -89,7 +90,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     const data = await response.json();
                     setStore({ userToken: data.token });
-                    localStorage.setItem("token", data.token);
+                    console.log(data);
+                  
+                    localStorage.setItem("jwt-token", data.token);
+					          localStorage.setItem("user", JSON.stringify(data.user_id));
                     return true;
                 } catch (error) {
                     console.error("Error during registration:", error);
@@ -110,9 +114,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (!response.ok) throw new Error("Register failed");
 
                     const data = await response.json();
-                    setStore({ userToken: data.token });
-                    localStorage.setItem("token", data.token);
-                    return true;
+                    setStore({ user: data });
+                  return data //verificar con Mario
+                    // setStore({ userToken: data.token });
+                    //localStorage.setItem("token", data.token);
+                   // return true;   quitar? (resolviendo conflictos)
                 } catch (error) {
                     console.error("Error during registration:", error);
                     return false;
@@ -120,13 +126,16 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             getUserProfile: async () => {
+              const token = localStorage.getItem("jwt-token")
+				      console.log("token obtenido", token);
+              
                 try {
                     const store = getStore();
                     const response = await fetch(`${process.env.BACKEND_URL}/api/profile`, {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",
-                            "Authorization": `Bearer ${store.userToken}`
+                            "Authorization": `Bearer ${token}`
                         }
                     });
 
@@ -140,6 +149,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
         }
     };
+
 };
 
 export default getState;
