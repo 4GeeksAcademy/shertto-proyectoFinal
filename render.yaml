@@ -31,3 +31,29 @@ databases: # Render PostgreSQL database
       region: ohio
       ipAllowList: [] # only allow internal connections
       plan: free # optional; defaults to starter
+
+# Exported from Render on 2024-11-21T20:35:48Z
+services:
+- type: web
+  name: sample-service-name
+  runtime: python
+  repo: https://github.com/4GeeksAcademy/shertto-proyectoFinal
+  plan: free
+  envVars:
+  - key: DATABASE_URL
+    sync: false
+  - key: PYTHON_VERSION
+    sync: false
+  - key: FLASK_APP_KEY
+    sync: false
+  - key: FLASK_DEBUG
+    sync: false
+  - key: FLASK_APP
+    sync: false
+  - key: BASENAME
+    sync: false
+  region: ohio
+  buildCommand: ./render_build.sh
+  startCommand: gunicorn wsgi --chdir ./src/
+  version: "1"
+  
