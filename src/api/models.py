@@ -12,6 +12,7 @@ class User(db.Model):
     #favorites = relationship('Product', secondary=user_favorites, back_populates='favorited_by')
     addresses = db.relationship('Address', back_populates='user')
     orders = db.relationship('Order', back_populates='user') 
+    cart = db.relationship('Cart', back_populates='user') 
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -45,6 +46,22 @@ class Product(db.Model):
             "description": self.description,
         }
     
+class Cart(db.Model):
+    __tablename__ = 'cart'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship("User", back_populates='cart')
+    items = db.relationship("CartItems", back_populates='cart')
+
+class CartItems(db.Model):
+    __tablename__ = 'cart_items'
+    id = db.Column(db.Integer, primary_key=True)
+    cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'), nullable=False)
+    cart = db.relationship("Cart", back_populates='items')
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    product = db.relationship("Product")
+
+    
 class Order(db.Model):
     __tablename__ = 'order'
     
@@ -76,7 +93,10 @@ class Order_details(db.Model):
     price = db.Column(db.Integer)
     quantity = db.Column(db.Integer)
     amount = db.Column(db.String(50), nullable=False)
+    status = db.Column(db.String(50), nullable=False)
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
+
+
     
     
     #user = relationship('User', back_populates='orders')
@@ -90,6 +110,10 @@ class Order_details(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "product_id": self.product_id,
+            "price": self.price,
+            "quantity": self.quantity,
+            "amount": self.amount,
             "status": self.status,
         }
 
