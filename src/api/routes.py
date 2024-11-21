@@ -1,8 +1,8 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Order, Return, Order_details
+from flask import Flask, request, jsonify, url_for, Blueprint,session
+from api.models import db, User, Order, Return, Order_details,Cart,CartItems,Product
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 # import paypalrestsdk
@@ -127,6 +127,90 @@ def create_return(order_id):
     db.session.commit()
 
     return jsonify({"message": "Return created successfully"}), 201
+
+@api.route('/cart', methods=['GET'])
+def get_cart():
+    cart = session.get("cart", None)
+    if not cart:
+        return jsonify({"message": "el carrito esta vacio"}),200
+    
+    return jsonify({"cart": cart}),200
+
+    # user_id = 
+    # cart = Cart.query.filter_by(user_id=user_id).first()
+
+    # if not cart or not cart.items:
+    #     return jsonify({"message": "el carrito esta vacio"}),404
+    
+
+    # return jsonify({
+    #     "id": cart.id,
+    #     "user_id": cart.user_id,
+    #     "items": [{
+    #         "id": CartItems.id,
+    #         "product_name": CartItems.product.name,
+    #     }for items in cart.items]
+    # }),200
+
+@api.route('/cart', methods=['POST'])
+def add_to_cart():
+    data = request.get_json()
+    product_id = data.get("product_id")
+    quantity = data.get("quantity")
+
+    if not product_id:
+        return jsonify({"message": "no se encuentra el producto"}),400
+    
+    user_id = data.get("user_id")
+
+    cart = Cart.query.filter_by(user_id=user_id).first()
+
+    if not cart:
+        cart = Cart(user_id=user_id)
+        
+        db.session.add(cart)
+        db.session.commit 
+    
+    product = Product.query.get(product_id)
+
+    if not product:
+        return jsonify({"message": "el producto no existe"})
+    
+    session.setdefault("cart", [])
+    
+    for item in session["cart"]:
+        if item["product_id"] == product_id:
+            item["quantity"] += quantity
+            session.modified = True
+            return jsonify({"message": "cantidad actualizada"})
+        
+    session["cart"].append({
+        "product_id": product_id,
+        "product_name": product.name,
+        "price": product.price,
+        "quantity": quantity,
+
+    })
+
+    session.modified = True
+    return jsonify({"message": "producto agregado al carrito"}),201
+
+
+@api.route('/products', methods=['GET'])
+def get_products():
+    products = Product.query.all()
+
+    if not products:
+        return jsonify({"message": "no hay productos disponibles"}),404
+    
+    products_data =[{
+        "id": product.id,
+        "name": product.name,
+
+    }
+    for product in products]
+
+    return jsonify(products_data),200
 
 # # Ruta para crear una orden de pago en PayPal
 # @api.route('/paypal/create-order', methods=['POST'])
