@@ -1,6 +1,6 @@
 /* Estilo para el contenedor principal */
 .about-us-container {
-    padding: 50px 20px;
+    padding: 20px;
     background-color: #f9f9f9; /* Fondo suave */
     text-align: center;
     display: flex;
@@ -9,6 +9,7 @@
     flex-direction: column;
     min-height: 100vh; /* Asegura que el contenido ocupe toda la pantalla */
     position: relative;
+    margin-top: 80px;
   }
   
   /* Estilo para la sección de contenido */

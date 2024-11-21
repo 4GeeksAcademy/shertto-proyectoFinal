@@ -3,7 +3,7 @@
   justify-content: center; /* Centrado de las categorías */
   align-items: center;
   background-color: rgb(14, 14, 14); /* Fondo negro */
-  padding: 10px 20px; 
+  padding: 0; 
   position: fixed; 
   top: 6vh; 
   width: 100%; 
@@ -27,10 +27,10 @@
 
 /* Estilo para el navbar principal */
 .navbar {
-  height: 6vh; 
+  height: 70px; 
   background-color: #0e0e0e; 
   display: flex;
-  justify-content: space-between; 
+  justify-content: flex-end; 
   align-items: center; 
   padding: 0 20px; 
   position: fixed; /* Fijar el navbar en la parte superior */
@@ -43,10 +43,10 @@
 
 /* Logo */
 .logo {
-  height: 70px; 
+  height: 50px; 
   width: auto;
   cursor: pointer;
-  margin-top: 50px;
+  margin-top: 0px;
 }
 
 /* Contenedor de búsqueda */
@@ -63,7 +63,7 @@
 }
 
 .form-control {
-  width: 300px; 
+  width: 250px; 
   border-radius: 20px; 
 }
 
@@ -81,13 +81,12 @@
   display: flex;
   justify-content: center;
   align-items: center; 
-  margin-right: 20px; 
-  height: 100%; 
+
 }
 
 .nav-item a {
   color: white;
-  font-size: 26px; 
+  font-size: 20px; 
   transition: color 0.3s ease;
 }
 
@@ -114,6 +113,17 @@
   animation: bounce 0.5s ease; /* Efecto de rebote para favoritos */
 }
 
+/* Estilo del badge */
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red; /* Color del fondo del badge */
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+}
 
 
 
