@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaHeart, FaShoppingCart } from "react-icons/fa"; // Usamos los iconos de react-icons
 import "../../styles/navbar.css";
 import { Context } from "../store/appContext";
@@ -7,6 +7,8 @@ import { Context } from "../store/appContext";
 export const Navbar = () => {
   const { store } = useContext(Context);
   const [bounce, setBounce] = useState(false); // Estado para manejar el efecto de rebote
+
+  const navigate = useNavigate();
 
   // Efecto para manejar el rebote cuando cambia el carrito
   useEffect(() => {
@@ -24,7 +26,7 @@ export const Navbar = () => {
 
   // Función para recargar la página al hacer clic en el logo
   const handleLogoClick = () => {
-    window.location.reload();
+    navigate("/");
   };
 
   return (

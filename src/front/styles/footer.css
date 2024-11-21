@@ -1,5 +1,8 @@
 .footer {
     background-color: rgb(14, 14, 14);
+    padding: 10px 20px;
+    overflow: hidden;
+    margin-top: auto;
 }
 
 
@@ -8,7 +11,7 @@ footer ul {
 }
 
 footer ul li {
-    margin-bottom: 10px; 
+    margin-bottom: 5px; 
 }
 
 footer .footer-section h4 {
@@ -63,7 +66,7 @@ footer .footer-section-icon ul li a svg {
     height: 0.1px; 
     background-color: #ffffff; 
     width: 80%; 
-    margin: 20px auto; 
+    margin: 10px auto; 
 }
 
 footer .footer-section ul li {

@@ -6,7 +6,8 @@
     on that page only (the ones not reused in other pages).
 */
 .home {
-    margin-top: 60px;
+    margin-top: 80px;
+    padding: 20px;
 }
 
 .zoom-image {

@@ -1,7 +1,8 @@
 /* Estilos generales para las autenticaciones */
 .auth-container {
     max-width: 400px;
-    margin: 0 auto;
+    width: 90%;
+    margin: 50px auto;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
