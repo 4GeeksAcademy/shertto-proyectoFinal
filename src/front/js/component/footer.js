@@ -82,8 +82,8 @@ export const Footer = () => (
 						</div>
 							
 					</div>
-					<div class="separator-line"></div>
-					 <div class="text-center text-light">
+					<div className="separator-line"></div>
+					 <div className="text-center text-light">
 						<h6>©2025, Shertto.com.</h6>
 					 </div>
 					

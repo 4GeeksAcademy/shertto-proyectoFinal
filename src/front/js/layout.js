@@ -18,7 +18,9 @@ import { Navbar } from "./component/navbar";
 import CarouselTextBanner from './component/carousel-text-banner.js';
 import { Footer } from "./component/footer";
 import { Cart } from "./component/Cart.js";
+import {Favorites} from "./component/Favorites.js"
 import AboutUs from './pages/aboutUs.js';
+import Faqs from './pages/Faqs.js';
 
 
 
@@ -50,10 +52,12 @@ const Layout = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/favorites" element={<Favorites />} />
                     <Route path="/demo" element={<Demo />} />
                     <Route path="/single/:theid" element={<Single />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/aboutUs" element={<AboutUs />} />
+                    <Route path="/faq" element={<Faqs />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/earphones" element={<EarphonesPage />} />
                     <Route path="/photographypage" element={<PhotographyPage />} />

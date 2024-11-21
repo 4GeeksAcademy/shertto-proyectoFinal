@@ -36,7 +36,7 @@ const CarouselTextBanner = () => {
                     backgroundColor: '#f8f9fa'
                 }}>
                     <p>
-                    <i class="fa-solid fa-dollar-sign" style={{ marginRight: '10px' }}></i>
+                    <i className="fa-solid fa-dollar-sign" style={{ marginRight: '10px' }}></i>
                         Devoluciones y entregas <strong>gratuitas</strong>.
                         <br />
                         Como cliente, tienes envíos y devoluciones gratis en un plazo de 30 días en todos los pedidos.

@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaUser, FaHeart, FaShoppingCart } from "react-icons/fa"; // Usamos los iconos de react-icons
 import "../../styles/navbar.css";
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
-  // Estado para controlar la visibilidad del dropdown
-  const [showDropdown, setShowDropdown] = useState(false);
+  const { store } = useContext(Context);
+  const [bounce, setBounce] = useState(false); // Estado para manejar el efecto de rebote
 
-  // Funciones para manejar el hover
-  const handleMouseEnter = () => setShowDropdown(true);
-  const handleMouseLeave = () => setShowDropdown(false);
+  // Efecto para manejar el rebote cuando cambia el carrito
+  useEffect(() => {
+    if (store.cart.length > 0) {
+      setBounce(true); // Activa el efecto de rebote
+      const timer = setTimeout(() => setBounce(false), 500); // Desactiva el efecto después de 0.5s
+      return () => clearTimeout(timer); // Limpia el temporizador al desmontar
+    }
+  }, [store.cart.length]); // Escucha los cambios en la longitud del carrito
 
   const iconStyle = {
-    fontSize: "30px", // Tamaño uniforme de los iconos
+    fontSize: "26px", // Tamaño uniforme de los iconos
     color: "white", // Color uniforme de los iconos
   };
 
@@ -31,10 +37,11 @@ export const Navbar = () => {
               className="logo"
               src="https://res.cloudinary.com/dsgltzpu7/image/upload/v1731426426/logo_sin_fondo_o2pjsc.png"
               alt="Logo"
-              style={{ cursor: "pointer" }} // Hace que el logo tenga estilo de cursor clickeable
+              style={{ cursor: "pointer" }}
             />
           </a>
 
+          {/* Buscador centrado */}
           <div className="search-container">
             <form className="search-form" role="search">
               <input
@@ -58,60 +65,77 @@ export const Navbar = () => {
             </form>
           </div>
 
-          {/* Dropdown del icono de usuario */}
+          {/* Iconos a la derecha */}
           <ul className="nav justify-content-end">
             <Link className="nav-item" to="/register">
-              <div >
+              <div>
                 <FaUser style={iconStyle} />
-               
+              </div>
+            </Link>
+            <Link to="/favorites">
+              <div className={`favorites-icon ${bounce ? "bounce" : ""}`}>
+                <FaHeart style={iconStyle} />
+                {store.favorites.length > 0 && (
+                  <span className="badge">{store.favorites.length}</span>
+                )}
               </div>
             </Link>
 
-            {/* Icono de Corazón */}
-            <li className="nav-item">
-              <a className="nav-link text-white" href="#">
-                <FaHeart style={iconStyle} />
-              </a>
-            </li>
-
-            {/* Icono de Carrito */}
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/cart">
+            <Link to="/cart">
+              <div className={`cart-icon ${bounce ? "bounce" : ""}`}>
                 <FaShoppingCart style={iconStyle} />
-              </Link>
-            </li>
+                {store.cart.length > 0 && (
+                  <span className="badge">{store.cart.length}</span>
+                )}
+              </div>
+            </Link>
           </ul>
         </div>
       </nav>
 
       {/* Rutas debajo del buscador */}
-      <div className="navbar-routes">
+      <div className="navbar-routes fixed">
         <Link className="navbar-link" to="/">
-          Products
+          Categorías
         </Link>
         <Link className="navbar-link" to="/earphones">
-          Auriculares y accesorios
+          Auriculares
         </Link>
         <Link className="navbar-link" to="/photographypage">
-        Fotografía y Videocámaras
+          Fotografía
         </Link>
         <Link className="navbar-link" to="/gamingPages">
-        Productos Gaming
+          Gaming
         </Link>
         <Link className="navbar-link" to="/wearablesPage">
-        Wearables
+          Wearables
         </Link>
         <Link className="navbar-link" to="/chargerPage">
-        Cargadores y Adaptadores
+          Cargadores/Adaptadores
         </Link>
         <Link className="navbar-link" to="/smartPage">
-        Electrodomésticos inteligentes
+          Electrodomésticos
         </Link>
         <Link className="navbar-link" to="/pcPage">
-        Accesorios para PC
+          Accesorios para PC
         </Link>
-        {/* Puedes añadir más rutas aquí */}
       </div>
     </div>
   );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -13,11 +13,14 @@ const OffCanvasDetails = ({ product, onClose }) => {
         <img src={product.image} alt={product.name} />
         <p>{product.description}</p>
         <div className="product-price">Precio: ${product.price}</div>
+        <button className="btn-buy">Añadir a la cesta</button>
          {/* Información adicional, solo visible aquí */}
-         {product.additionalInfo && (
+         {product.additionalInfo1 && product.additionalInfo2 && product.additionalInfo3 &&(
           <div className="product-additional-info">
-            <h4>Información adicional</h4>
-            <p>{product.additionalInfo}</p>
+            <h6>Acerca de este producto</h6>
+            <p>• {product.additionalInfo1}</p>
+            <p>• {product.additionalInfo2}</p>
+            <p>• {product.additionalInfo3}</p>
           </div>
         )}
         <button className="btn-buy">Añadir a la cesta</button>
