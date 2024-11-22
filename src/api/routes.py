@@ -161,7 +161,7 @@ def add_to_cart():
     if not product_id:
         return jsonify({"message": "no se encuentra el producto"}),400
     
-    # user_id = data.get("user_id")
+    user_id = data.get("user_id")
 
     cart = Cart.query.filter_by(user_id=user_id).first()
 
