@@ -1,5 +1,5 @@
 // Home.js
-import React, {useContext} from "react";
+import React, { useContext, useEffect } from "react";
 import { Row, Col, Card, Button, Carousel } from 'react-bootstrap';
 import { Context } from "../store/appContext";
 import CountdownTimer from './CountdownTimer';
@@ -8,16 +8,15 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
 
-    const featuredProducts = [
-        { id: 1, name: "PACK SmartWatch Auriculares Inalambricos", price: 29.99, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731500027/pack_kvjfjk.jpg" },
-        { id: 2, name: "PACK Gaming", price: 49.99, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1731501776/pack_gaming-removebg-preview_jrqiei.png" },
-        { id: 3, name: "Presonus AudioBox USB 96 ", price: 285, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732111324/3_sin_fondo_mpamw5.png" },
-        { id: 4, name: "Focusrite Scarlett 2i2 Studio 4th Gen ", price: 277, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732111058/4_sin_fondo_zo7dpj.png" },
-        { id: 5, name: "ESI U22 XT cosMik Set ", price: 95, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732111065/5_sin_fondo_p4bq0d.png" },
-        { id: 6, name: "Silla Gaming + Auricular", price: 169, imageUrl: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732111084/6_sin_fondo_i6upes.png" },
-    ];
+    useEffect(() => {
+        // Obtener productos desde el backend cuando el componente se monte
+        actions.getProducts();
+    }, [actions]);
+
+    // Comprobamos si los productos están cargados desde el backend
+    const featuredProducts = store.products || [];
 
     const categories = [
         {
@@ -128,5 +127,6 @@ export const Home = () => {
         </div>
     );
 };
+
 
 
