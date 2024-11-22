@@ -1,5 +1,4 @@
 const getState = ({ getStore, getActions, setStore }) => {
-
     return {
         store: {
             cart: JSON.parse(localStorage.getItem("cart")) || [], //estado para agregar productos al carrito
@@ -21,12 +20,50 @@ const getState = ({ getStore, getActions, setStore }) => {
             ]
         },
         actions: {
-            //funciones para el carrito
-            addToCart: (product) => {
+    
+            addToCart: async (product) => {
                 const store = getStore();
-                const updatedCart = [...store.cart, product];
-                setStore({ cart: updatedCart });
-                localStorage.setItem("cart", JSON.stringify(updatedCart));
+                const token = localStorage.getItem("jwt-token");
+
+                
+                if (!token) {
+                    setStore({ message: "Usuario no autenticado" });
+                    return;  
+                }
+
+                try {
+                    
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/cart/add`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            product_id: product.id,  
+                            quantity: 1  
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("Error al agregar al carrito");
+                    }
+
+                    const data = await response.json();
+                    if (data.msg === "Producto agregado al carrito con éxito") {
+                        // Si el producto se agregó correctamente al carrito en el backend
+                        const updatedCart = [...store.cart, product];
+                        setStore({ cart: updatedCart });
+                        localStorage.setItem("cart", JSON.stringify(updatedCart));
+                        setStore({ message: "Producto agregado al carrito" });
+                    } else {
+                        
+                        setStore({ message: "Error al agregar producto al carrito" });
+                    }
+                } catch (error) {
+                    console.error("Error al agregar al carrito:", error);
+                    setStore({ message: "Error al agregar producto al carrito" });
+                }
             },
 
             removeFromCart: (productId) => {
@@ -36,13 +73,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.setItem("cart", JSON.stringify(updatedCart));
             },
 
-            //vaciar el carrito
+            
             clearCart: () => {
                 setStore({ cart: [] });
                 localStorage.removeItem("cart");
             },
 
-            //Funciones para favoritos
+        
             addToFavorites: (product) => {
                 const store = getStore();
                 const updatedFavorites = [...store.favorites, product]; // Añadir el producto a favoritos
@@ -91,12 +128,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json();
                     setStore({ userToken: data.token });
                     console.log(data);
-                  
+
                     localStorage.setItem("jwt-token", data.token);
-					          localStorage.setItem("user", JSON.stringify(data.user_id));
+                    localStorage.setItem("user", JSON.stringify(data.user_id));
                     return true;
                 } catch (error) {
-                    console.error("Error during registration:", error);
+                    console.error("Error during login:", error);
                     return false;
                 }
             },
@@ -115,10 +152,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     const data = await response.json();
                     setStore({ user: data });
-                  return data //verificar con Mario
-                    // setStore({ userToken: data.token });
-                    //localStorage.setItem("token", data.token);
-                   // return true;   quitar? (resolviendo conflictos)
+                    return data;
                 } catch (error) {
                     console.error("Error during registration:", error);
                     return false;
@@ -126,9 +160,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             getUserProfile: async () => {
-              const token = localStorage.getItem("jwt-token")
-				      console.log("token obtenido", token);
-              
+                const token = localStorage.getItem("jwt-token");
+                console.log("token obtenido", token);
+
                 try {
                     const store = getStore();
                     const response = await fetch(`${process.env.BACKEND_URL}/api/profile`, {
@@ -149,8 +183,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
         }
     };
-
 };
 
 export default getState;
+
 
