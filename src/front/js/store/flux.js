@@ -1,8 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            cart: JSON.parse(localStorage.getItem("cart")) || [], //estado para agregar productos al carrito
+            cart: JSON.parse(localStorage.getItem("cart")) || [], // estado para agregar productos al carrito
             favorites: JSON.parse(localStorage.getItem("favorites")) || [], // Lo mismo para agregar a favoritos
+            products: [], // Guardar los productos obtenidos del backend
             message: null,
             userToken: null,
             user: null,
@@ -20,19 +21,37 @@ const getState = ({ getStore, getActions, setStore }) => {
             ]
         },
         actions: {
-    
+            // Obtener los productos desde el backend
+            getProducts: async () => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/product`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    });
+
+                    if (!response.ok) throw new Error("Error al obtener los productos");
+
+                    const data = await response.json();
+                    setStore({ products: data.products });
+                } catch (error) {
+                    console.error("Error al obtener productos:", error);
+                    setStore({ message: "Error al obtener productos" });
+                }
+            },
+
+            // Agregar producto al carrito
             addToCart: async (product) => {
                 const store = getStore();
                 const token = localStorage.getItem("jwt-token");
 
-                
                 if (!token) {
                     setStore({ message: "Usuario no autenticado" });
-                    return;  
+                    return;
                 }
 
                 try {
-                    
                     const response = await fetch(`${process.env.BACKEND_URL}/api/cart/add`, {
                         method: "POST",
                         headers: {
@@ -57,7 +76,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         localStorage.setItem("cart", JSON.stringify(updatedCart));
                         setStore({ message: "Producto agregado al carrito" });
                     } else {
-                        
                         setStore({ message: "Error al agregar producto al carrito" });
                     }
                 } catch (error) {
@@ -66,6 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            // Eliminar producto del carrito
             removeFromCart: (productId) => {
                 const store = getStore();
                 const updatedCart = store.cart.filter((item) => item.id !== productId);
@@ -73,13 +92,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.setItem("cart", JSON.stringify(updatedCart));
             },
 
-            
+            // Limpiar carrito
             clearCart: () => {
                 setStore({ cart: [] });
                 localStorage.removeItem("cart");
             },
 
-        
+            // Agregar producto a favoritos
             addToFavorites: (product) => {
                 const store = getStore();
                 const updatedFavorites = [...store.favorites, product]; // Añadir el producto a favoritos
@@ -87,6 +106,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.setItem("favorites", JSON.stringify(updatedFavorites)); // Guardar en localStorage
             },
 
+            // Eliminar producto de favoritos
             removeFromFavorites: (productId) => {
                 const store = getStore();
                 const updatedFavorites = store.favorites.filter(
@@ -96,12 +116,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.setItem("favorites", JSON.stringify(updatedFavorites)); // Actualizar en localStorage
             },
 
+            // Limpiar favoritos
             clearFavorites: () => {
                 setStore({ favorites: [] }); // Limpiar la lista de deseos
                 localStorage.removeItem("favorites"); // Limpiar también en localStorage
             },
 
-            // Otros métodos (login, register, etc.)
+            // Obtener mensaje del backend
             getMessage: async () => {
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "/api/message");
@@ -113,6 +134,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            // Iniciar sesión
             login: async (email, password) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
@@ -138,6 +160,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            // Registrar nuevo usuario
             register: async (email, password) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/api/registre`, {
@@ -159,6 +182,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            // Obtener el perfil del usuario
             getUserProfile: async () => {
                 const token = localStorage.getItem("jwt-token");
                 console.log("token obtenido", token);
