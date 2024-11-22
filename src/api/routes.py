@@ -1,24 +1,11 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
-from flask import Flask, request, jsonify, url_for, Blueprint,session
-from api.models import db, User, Order, Return, Order_details,Cart,CartItems,Product
+from flask import Flask, request, jsonify, url_for, Blueprint, session
+from api.models import db, User, Order, Return, Order_details, Cart, Product, Category, CartItems
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-# import paypalrestsdk
 
 api = Blueprint('api', __name__)
 
 
-
-# Configuración de PayPal (sandbox para pruebas)
-# paypalrestsdk.configure({
-#     'mode': 'sandbox',  # Cambia a 'live' para producción
-#     'client_id': 'AU1dWBeEAWpy3eV3ZOD9TnL-W6RxX10DA3XgyM9nLuRhgyv_Me582aRk7eGwLJ5q932mmRhtYdpDpcQ1',  
-#     'client_secret': 'EIyaa_4QWSGH3KAvLIYhSV3y6qTQxaCuXgmpe789Bt8jgjpVh_4i0xv2wteYDIWlBvgVmm46UKVMViyt'  
-# })
-
-# Ruta de login
 @api.route('/login', methods=['POST'])
 def login():
     email = request.json.get("email", None)
@@ -26,13 +13,14 @@ def login():
     check_user = User.query.filter_by(email=email).first()
 
     if check_user is None:
-        return jsonify({"msg": "doesn't exist"}), 404
-    
-    if email != check_user.email or password != check_user.password:
+        return jsonify({"msg": "User doesn't exist"}), 404
+
+    if password != check_user.password:
         return jsonify({"msg": "Clave o email incorrecto"}), 401
     
     access_token = create_access_token(identity=check_user.id)
     return jsonify({"token": access_token, "user_id": check_user.id})
+
 
 @api.route('/profile', methods=['GET'])
 @jwt_required()
@@ -44,7 +32,6 @@ def get_profile():
         if not user:
             return jsonify({"error": "User not found"}), 404
 
-      
         return jsonify({
             "id": user.id,
             "email": user.email,
@@ -55,22 +42,20 @@ def get_profile():
         return jsonify({"error": str(e)}), 500
 
 
-
-
-# Ruta de registro
 @api.route('/registre', methods=['POST'])
 def signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     is_active = request.json.get("is_active", True)
-    user_exist = User.query.filter_by(email=email).first()
 
-    if user_exist is None:
-        new_user = User(email=email, password=password, is_active=is_active)
-        db.session.add(new_user)
-        db.session.commit()
+    if User.query.filter_by(email=email).first() is not None:
+        return jsonify({"msg": "El correo ya está registrado"}), 400
+
+    new_user = User(email=email, password=password, is_active=is_active)
+    db.session.add(new_user)
+    db.session.commit()
+
     return jsonify({"msg": "User created successfully"}), 201
-
 
 # Ruta protegida (requiere JWT)
 @api.route("/protected", methods=["GET"])
@@ -80,7 +65,7 @@ def protected():
     user = User.query.get(current_user_id)
     return jsonify({"id": user.id}), 200
 
-# Ruta para ver el historial de órdenes
+
 @api.route('/orders/history', methods=['GET'])
 @jwt_required()
 def get_order_history():
@@ -96,7 +81,7 @@ def get_order_history():
     } for order in orders]
     return jsonify(orders_list), 200
 
-# Ruta para ver el historial de devoluciones
+
 @api.route('/returns/history', methods=['GET'])
 @jwt_required()
 def get_return_history():
@@ -110,7 +95,7 @@ def get_return_history():
     } for ret in returns]
     return jsonify(returns_list), 200
 
-# Ruta para crear una devolución
+
 @api.route('/orders/<int:order_id>/return', methods=['POST'])
 @jwt_required()
 def create_return(order_id):
@@ -128,152 +113,227 @@ def create_return(order_id):
 
     return jsonify({"message": "Return created successfully"}), 201
 
-@api.route('/cart', methods=['GET'])
-def get_cart():
-    cart = session.get("cart", None)
-    if not cart:
-        return jsonify({"message": "el carrito esta vacio"}),200
-    
-    return jsonify({"cart": cart}),200
 
-    # user_id = 
-    # cart = Cart.query.filter_by(user_id=user_id).first()
-
-    # if not cart or not cart.items:
-    #     return jsonify({"message": "el carrito esta vacio"}),404
-    
-
-    # return jsonify({
-    #     "id": cart.id,
-    #     "user_id": cart.user_id,
-    #     "items": [{
-    #         "id": CartItems.id,
-    #         "product_name": CartItems.product.name,
-    #     }for items in cart.items]
-    # }),200
-
-@api.route('/cart', methods=['POST'])
-def add_to_cart():
-    data = request.get_json()
-    product_id = data.get("product_id")
-    quantity = data.get("quantity")
-
-    if not product_id:
-        return jsonify({"message": "no se encuentra el producto"}),400
-    
-    user_id = data.get("user_id")
-
-    cart = Cart.query.filter_by(user_id=user_id).first()
-
-    if not cart:
-        cart = Cart(user_id=user_id)
-        
-        db.session.add(cart)
-        db.session.commit 
-    
-    product = Product.query.get(product_id)
-
-    if not product:
-        return jsonify({"message": "el producto no existe"})
-    
-    session.setdefault("cart", [])
-    
-    for item in session["cart"]:
-        if item["product_id"] == product_id:
-            item["quantity"] += quantity
-            session.modified = True
-            return jsonify({"message": "cantidad actualizada"})
-        
-    session["cart"].append({
-        "product_id": product_id,
-        "product_name": product.name,
-        "price": product.price,
-        "quantity": quantity,
-
-    })
-
-    session.modified = True
-    return jsonify({"message": "producto agregado al carrito"}),201
-
-
-@api.route('/products', methods=['GET'])
+@api.route('/product', methods=['GET'])
 def get_products():
     products = Product.query.all()
-
     if not products:
-        return jsonify({"message": "no hay productos disponibles"}),404
-    
-    products_data =[{
+        return jsonify({"message": "No hay productos disponibles"}), 404
+
+    products_data = [{
         "id": product.id,
         "name": product.name,
+        "description": product.description,
+        "price": product.price,
+        "category_id": product.category_id
+    } for product in products]
 
-    }
-    for product in products]
+    return jsonify(products_data), 200
 
-    return jsonify(products_data),200
 
-# # Ruta para crear una orden de pago en PayPal
-# @api.route('/paypal/create-order', methods=['POST'])
+@api.route('/product', methods=['POST'])
+def create_product():
+    try:
+        # Obtener los datos de la solicitud
+        data = request.get_json()
+
+        # Validar que todos los campos necesarios están presentes
+        name = data.get('name')
+        description = data.get('description')
+        price = data.get('price')
+        category_id = data.get('category_id')
+
+        if not all([name, price, category_id]):
+            return jsonify({"error": "Faltan campos obligatorios"}), 400
+
+        # Crear el nuevo producto
+        new_product = Product(name=name, description=description, price=price, category_id=category_id)
+
+        # Agregar el producto a la base de datos
+        db.session.add(new_product)
+        db.session.commit()
+
+        # Retornar el producto creado como respuesta
+        return jsonify(new_product.serialize()), 201
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@api.route('/cart/add', methods=['POST'])
+@jwt_required()
+def add_to_cart():
+    try:
+        user_id = get_jwt_identity()
+        data = request.json
+
+        product_id = data.get('product_id')
+        quantity = data.get('quantity', 1)  
+
+        if not product_id:
+            return jsonify({"error": "Se requiere el ID del producto"}), 400
+
+        # Verifica si el producto existe
+        product = Product.query.get(product_id)
+        if not product:
+            return jsonify({"error": "El producto no existe"}), 404
+
+        # Busca el carrito del usuario
+        cart = Cart.query.filter_by(user_id=user_id).first()
+        if not cart:
+            cart = Cart(user_id=user_id)
+            db.session.add(cart)
+            db.session.commit()
+
+        cart_item = CartItems.query.filter_by(cart_id=cart.id, product_id=product_id).first()
+
+        if cart_item:
+            cart_item.quantity += quantity
+        else:
+            # Agrega un nuevo ítem al carrito
+            cart_item = CartItems(cart_id=cart.id, product_id=product_id, quantity=quantity)
+            db.session.add(cart_item)
+
+        db.session.commit()
+
+        return jsonify({"msg": "Producto agregado al carrito con éxito"}), 200
+
+    except Exception as e:
+        print(f"Error: {str(e)}")  # Log para depuración
+        return jsonify({"error": "Hubo un error al agregar el producto al carrito"}), 500
+
+
+# @api.route('/cart', methods=['POST'])
 # @jwt_required()
-# def create_paypal_order():
-#     # Obtener la cantidad del pedido
+# def add_to_cart():
+#     current_user_id = get_jwt_identity()  # Obtiene el ID del usuario autenticado
 #     data = request.get_json()
-#     amount = data.get('amount')
+#     product_id = data.get("product_id")
+#     quantity = data.get("quantity", 1)  # Si no se especifica cantidad, por defecto es 1
 
-#     if not amount:
-#         return jsonify({"error": "Amount is required"}), 400
+#     if not product_id or quantity <= 0:
+#         return jsonify({"message": "Se requiere un ID de producto válido y cantidad mayor a 0"}), 400
 
-#     # Crear un objeto de pago en PayPal
-#     payment = paypalrestsdk.Payment({
-#         "intent": "sale",
-#         "payer": {
-#             "payment_method": "paypal"
-#         },
-#         "transactions": [{
-#             "amount": {
-#                 "total": str(amount), 
-#                 "currency": "EU"
-#             },
-#             "description": "Compra en tu tienda ecommerce"
-#         }],
-#         "redirect_urls": {
-#             "return_url": url_for('api.execute_paypal_payment', _external=True),
-#             "cancel_url": url_for('api.cancel_paypal_payment', _external=True)
-#         }
-#     })
+#     # Verificar si el producto existe
+#     product = Product.query.get(product_id)
+#     if not product:
+#         return jsonify({"message": "El producto no existe"}), 404
 
-#     if payment.create():
-#         # Redirigir a la URL de aprobación proporcionada por PayPal
-#         approval_url = next(link.href for link in payment.links if link.rel == "approval_url")
-#         return jsonify({
-#             "approval_url": approval_url,  # URL de redirección
-#             "payment_id": payment.id  # ID del pago
-#         })
+#     # Buscar el carrito del usuario
+#     cart = Cart.query.filter_by(user_id=current_user_id).first()
+
+#     if not cart:
+#         # Si no existe el carrito, crearlo
+#         cart = Cart(user_id=current_user_id)
+#         db.session.add(cart)  # Añadir el carrito a la sesión
+#         db.session.commit()  # Cometer los cambios a la base de datos correctamente
+
+#     # Verificar si el producto ya está en el carrito
+#     cart_item = CartItems.query.filter_by(cart_id=cart.id, product_id=product_id).first()
+
+#     if cart_item:
+#         # Si ya está en el carrito, solo actualizar la cantidad
+#         cart_item.quantity += quantity
 #     else:
-#         return jsonify({"error": "Error creando el pago en PayPal"}), 500
+#         # Si no está en el carrito, agregarlo
+#         new_item = CartItems(cart_id=cart.id, product_id=product_id, quantity=quantity)
+#         db.session.add(new_item)
 
-# @api.route('/paypal/execute-payment', methods=['POST'])
-# @jwt_required()
-# def execute_paypal_payment():
-#     # Recuperar paymentId y PayerID de la URL
-#     data = request.get_json()
-#     payment_id = data.get('paymentId')
-#     payer_id = data.get('payerId')
+#     db.session.commit()  # Asegurarse de hacer commit después de modificar la base de datos
 
-#     if not payment_id or not payer_id:
-#         return jsonify({"error": "PaymentId and PayerId are required"}), 400
+#     return jsonify({"message": "Producto agregado al carrito exitosamente"}), 201
 
-#     # Buscar el pago en PayPal
-#     payment = paypalrestsdk.Payment.find(payment_id)
 
-#     if payment.execute({"payer_id": payer_id}):
-#         # Aquí puedes actualizar el estado del pedido como "pagado"
-#         return jsonify({"message": "Pago ejecutado exitosamente"}), 200
-#     else:
-#         return jsonify({"error": "Error al ejecutar el pago"}), 500
+@api.route('/cart', methods=['GET'])
+@jwt_required()
+def get_cart():
+    current_user_id = get_jwt_identity()
+    cart_items = Cart.query.filter_by(user_id=current_user_id).all()
 
-# @api.route('/paypal/cancel', methods=['GET'])
-# def cancel_paypal_payment():
-#     return jsonify({"message": "El pago fue cancelado por el usuario"}), 200
+    if not cart_items:
+        return jsonify({"message": "El carrito está vacío"}), 404
+
+    return jsonify([{
+        "id": item.id,
+        "product_id": item.product_id,
+        "product_name": item.product.name,
+        "quantity": item.quantity,
+        "price": item.product.price
+    } for item in cart_items]), 200
+
+
+@api.route('/category', methods=['POST'])
+def create_category():
+    try:
+        data = request.get_json()
+        name = data.get('name')
+
+        if not name:
+            return jsonify({"error": "Nombre de la categoría es requerido"}), 400
+
+       
+        new_category = Category(name=name)
+        db.session.add(new_category)
+        db.session.commit()
+
+        return jsonify({"message": "Categoría creada con éxito", "id": new_category.id}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@api.route('/category', methods=['GET'])
+def get_categories():
+    try:
+        categories = Category.query.all()
+        categories_data = [{"id": category.id, "name": category.name} for category in categories]
+        return jsonify(categories_data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@api.route('/category/<int:id>', methods=['GET'])
+def get_category(id):
+    try:
+        category = Category.query.get(id)
+        if not category:
+            return jsonify({"error": "Categoría no encontrada"}), 404
+        
+        return jsonify({"id": category.id, "name": category.name}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@api.route('/category/<int:id>', methods=['PUT'])
+def update_category(id):
+    try:
+        category = Category.query.get(id)
+        if not category:
+            return jsonify({"error": "Categoría no encontrada"}), 404
+
+        data = request.get_json()
+        name = data.get('name')
+
+        if name:
+            category.name = name
+
+        db.session.commit()
+        return jsonify({"message": "Categoría actualizada con éxito"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@api.route('/category/<int:id>', methods=['DELETE'])
+def delete_category(id):
+    try:
+        category = Category.query.get(id)
+        if not category:
+            return jsonify({"error": "Categoría no encontrada"}), 404
+        
+        db.session.delete(category)
+        db.session.commit()
+
+        return jsonify({"message": "Categoría eliminada con éxito"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 

@@ -23,6 +23,7 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+    
 class Product(db.Model):
     __tablename__ = 'product'
     
@@ -50,15 +51,31 @@ class Cart(db.Model):
     __tablename__ = 'cart'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    # Relación con User
     user = db.relationship("User", back_populates='cart')
-    items = db.relationship("CartItems", back_populates='cart')
+    
+    # Relación con CartItems
+    items = db.relationship("CartItems", back_populates='cart')  # Bidireccional con CartItems
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+        }
 
 class CartItems(db.Model):
     __tablename__ = 'cart_items'
     id = db.Column(db.Integer, primary_key=True)
     cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'), nullable=False)
-    cart = db.relationship("Cart", back_populates='items')
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    
+    # Relación con Cart
+    cart = db.relationship("Cart", back_populates='items')  # Bidireccional con Cart
+    
+    # Relación con Product
     product = db.relationship("Product")
 
     
