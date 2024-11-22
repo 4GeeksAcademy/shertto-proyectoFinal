@@ -1,61 +1,89 @@
+/* Contenedor general */
 .offcanvas-container {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .offcanvas-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  
-  .offcanvas-content {
-    position: relative;
-    width: 300px;
-    max-width: 100%;
-    background: #fff;
-    padding: 20px;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-    overflow-y: auto;
-  }
-  
-  .offcanvas-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-  }
-  
-  .offcanvas-content img {
-    width: 100%;
-    height: auto;
-    margin-bottom: 20px;
-  }
-  
-  .btn-buy {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #ffcc00;
-    color: #fff;
-    text-align: center;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .btn-buy:hover {
-    background-color: #ffcc00;
-  }
-  
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  color: #b9b9b9;
+}
+
+.offcanvas-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.offcanvas-content {
+  position: relative;
+  width: 300px;
+  max-width: 100%;
+  background: #000000;
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(255, 255, 255, 0.5);
+  overflow-y: auto;
+}
+
+.offcanvas-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.offcanvas-content img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Contenedor para los detalles adicionales */
+.product-additional-info {
+  margin-top: 15px;
+  margin-left: 0; /* Alineado con el contenedor principal */
+  margin-right: 0;
+  text-align: left; /* Texto alineado completamente a la izquierda */
+  color: #b9b9b9;
+}
+
+.product-additional-info h6 {
+  color: #fff; /* Color blanco para el título */
+  font-size: 1em;
+  margin-bottom: 10px; /* Espaciado debajo del título */
+}
+
+.product-additional-info p {
+  margin: 0; /* Elimina márgenes verticales */
+  padding: 5px 0; /* Ajusta espaciado interno entre líneas */
+  font-size: 0.9em;
+  line-height: 1.5; /* Mejora la legibilidad del texto */
+}
+
+/* Botón de Añadir a la cesta */
+.btn-buy {
+  display: block;
+  width: 100%;
+  max-width: 150px; /* Ancho máximo del botón */
+  margin: 20px auto; /* Espaciado vertical y centrado horizontal */
+  padding: 10px;
+  background-color: #808080; /* Gris por defecto */
+  color: #fff;
+  text-align: center;
+  border-radius: 70%; /* Botón circular */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transición suave */
+}
+
+.btn-buy:hover {
+  background-color: darkorchid; /* Morado al pasar el cursor */
+  transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el cursor */
+}
