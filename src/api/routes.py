@@ -334,6 +334,51 @@ def delete_category(id):
         return jsonify({"message": "Categoría eliminada con éxito"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@api.route('/order/create', methods=['POST'])
+@jwt_required()
+def create_order():
+    user_id = get_jwt_identity()
+    data = request.json
+
+    try:
+        cart_items = data.get('cart_items', [])
+        sub_amount = sum(item['price'] * item['quantity'] for item in cart_items)
+        tax = round(sub_amount * 0.1, 2)  # Supongamos un 10% de impuestos
+        total_amount = round(sub_amount + tax, 2)
+
+        # Crear la orden
+        new_order = Order(
+            user_id=user_id,
+            status="pending",
+            sub_amount=sub_amount,
+            tax=tax,
+            total_amount=total_amount
+        )
+        db.session.add(new_order)
+        db.session.commit()
+
+        # Crear los detalles de la orden
+        for item in cart_items:
+            order_detail = Order_details(
+                order_id=new_order.id,
+                product_id=item['product_id'],
+                price=item['price'],
+                quantity=item['quantity'],
+                amount=item['price'] * item['quantity'],
+                status="pending"
+            )
+            db.session.add(order_detail)
+
+        db.session.commit()
+
+        return jsonify({"message": "Orden creada exitosamente", "order_id": new_order.id}), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
 
 
 

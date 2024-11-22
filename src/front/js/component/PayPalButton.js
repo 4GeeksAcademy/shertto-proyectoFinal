@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from "react";
+import { Context } from "../store/appContext";
 
 const PayPalButton = ({ amount }) => {
+    const { actions } = useContext(Context);
+
     useEffect(() => {
-        // Verifica que el SDK de PayPal esté cargado
         if (window.paypal) {
-            // Limpia el contenedor antes de renderizar el botón
             const container = document.getElementById("paypal-button-container");
             if (container) container.innerHTML = "";
 
-            // Asegúrate de que el token JWT esté disponible
-            const token = localStorage.getItem('token'); // O desde donde esté almacenado tu token
+            const token = localStorage.getItem('jwt-token');
 
             window.paypal.Buttons({
                 style: {
@@ -20,21 +20,20 @@ const PayPalButton = ({ amount }) => {
                     shape: "pill",
                 },
 
-                // Crear la orden en el backend
                 createOrder: async (data, actions) => {
                     try {
                         const response = await fetch("/api/paypal/create-order", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
-                                Authorization: `Bearer ${token}` // Usamos el token JWT en los headers
+                                Authorization: `Bearer ${token}`
                             },
-                            body: JSON.stringify({ amount }) // Solo enviamos el monto
+                            body: JSON.stringify({ amount })
                         });
 
                         const orderData = await response.json();
                         if (orderData && orderData.payment_id) {
-                            return orderData.payment_id;  // Retorna el ID de la orden de PayPal
+                            return orderData.payment_id;
                         } else {
                             throw new Error('Error al crear la orden en el backend');
                         }
@@ -62,6 +61,7 @@ const PayPalButton = ({ amount }) => {
 
                         if (result.message === 'Pago ejecutado exitosamente') {
                             alert('¡Pago completado con éxito!');
+                            await actions.checkout();  // Llamar al checkout después del pago
                         } else {
                             alert('Error al ejecutar el pago.');
                         }
@@ -87,5 +87,3 @@ const PayPalButton = ({ amount }) => {
 };
 
 export default PayPalButton;
-
-
