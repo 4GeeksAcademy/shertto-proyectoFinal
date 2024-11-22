@@ -180,7 +180,46 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     console.error("Error fetching profile:", error);
                 }
+            },
+
+            checkout: async () => {
+                const store = getStore();
+                const token = localStorage.getItem("jwt-token");
+            
+                if (!token) {
+                    setStore({ message: "Usuario no autenticado" });
+                    return;
+                }
+            
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/order/create`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            cart_items: store.cart.map((product) => ({
+                                product_id: product.id,
+                                price: product.price,
+                                quantity: 1 // Puedes ajustar esto según la lógica del carrito
+                            }))
+                        })
+                    });
+            
+                    if (!response.ok) throw new Error("Error al crear la orden");
+            
+                    const data = await response.json();
+                    console.log("Orden creada con éxito:", data);
+            
+                    // Limpiar el carrito
+                    actions.clearCart();
+                    alert("Orden creada con éxito");
+                } catch (error) {
+                    console.error("Error al realizar el checkout:", error);
+                }
             }
+            
         }
     };
 };
