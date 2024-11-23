@@ -62,11 +62,11 @@ const Layout = () => {
                     <Route path="/earphones" element={<EarphonesPage />} />
                     <Route path="/photographypage" element={<PhotographyPage />} />
                     <Route path="/gamingPages" element={<GamingPage />} />
-                    <Route path="//wearablesPage" element={<WearablesPage />} />
-                    <Route path="//chargerPage" element={<ChargerPage />} />
-                    <Route path="//smartPage" element={<SmartPage />} />
-                    <Route path="//pcPage" element={<PcPage />} />
-                    <Route path="//offcanvasdetails" element={<OffCanvasDetails />} />
+                    <Route path="/wearablesPage" element={<WearablesPage />} />
+                    <Route path="/chargerPage" element={<ChargerPage />} />
+                    <Route path="/smartPage" element={<SmartPage />} />
+                    <Route path="/pcPage" element={<PcPage />} />
+                    <Route path="/offcanvasdetails" element={<OffCanvasDetails />} />
                     <Route path="*" element={<h1>Not found!</h1>} />
                     <Route path="/profile" element={<Profile />} />
                 </Routes>

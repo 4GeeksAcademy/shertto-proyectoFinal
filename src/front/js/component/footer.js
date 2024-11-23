@@ -52,10 +52,7 @@ export const Footer = () => (
 									<div className="footer-section">
 										<h4>Customer Service</h4>
 											<ul>
-												<li><a href="/return-policy">Return Policy</a></li>
-												<li><a href="/shipping-policy">Shipping Policy</a></li>
-												<li><a href="/warranty-policy">Warranty Policy</a></li>
-												<li><a href="/faq">FAQ</a></li>
+												<li><a href="/faq">FAQ(s)</a></li>
 											</ul>
 									</div>
 								</div>
