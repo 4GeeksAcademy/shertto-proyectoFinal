@@ -1,5 +1,3 @@
-// cart.js
-
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/cart.css";
@@ -8,8 +6,7 @@ import PayPalButton from "./PayPalButton";
 export const Cart = () => {
     const { store, actions } = useContext(Context);
 
-    // Calculamos el total
-    const totalAmount = store.cart.reduce((acc, product) => acc + product.price, 0).toFixed(2); // Calcula el total del carrito
+    const totalAmount = store.cart.reduce((acc, product) => acc + product.price, 0).toFixed(2);
 
     return (
         <div className="cart-container">
@@ -28,7 +25,7 @@ export const Cart = () => {
                                         className="cart-item-image" 
                                     />
                                     <div className="cart-item-details">
-                                        <span>{product.name}</span> 
+                                        <span>{product.name}</span>
                                         <span>${product.price.toFixed(2)}</span>
                                     </div>
                                     <button onClick={() => actions.removeFromCart(product.id)} className="remove-button">
@@ -47,15 +44,17 @@ export const Cart = () => {
                 <h3>Total: ${totalAmount}</h3>
             </div>
 
-            {/* Mostrar el botón de PayPal solo si hay productos en el carrito */}
             {store.cart.length > 0 && (
                 <div className="paypal-button-container">
                     <PayPalButton amount={totalAmount} />
                 </div>
             )}
+
+            {store.cart.length > 0 && (
+                <button onClick={actions.checkout} className="checkout-button">
+                    Realizar compra
+                </button>
+            )}
         </div>
     );
 };
-
-
-
