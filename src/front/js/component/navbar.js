@@ -1,27 +1,37 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaUser, FaHeart, FaShoppingCart } from "react-icons/fa"; // Usamos los iconos de react-icons
+import { FaUser, FaHeart, FaShoppingCart } from "react-icons/fa"; // Iconos de react-icons
 import "../../styles/navbar.css";
 import { Context } from "../store/appContext";
 
 export const Navbar = () => {
   const { store } = useContext(Context);
-  const [bounce, setBounce] = useState(false); // Estado para manejar el efecto de rebote
+  const [cartBounce, setCartBounce] = useState(false); // Estado para rebote del carrito
+  const [favoritesBounce, setFavoritesBounce] = useState(false); // Estado para rebote de favoritos
 
   const navigate = useNavigate();
 
-  // Efecto para manejar el rebote cuando cambia el carrito
+  // Efecto de rebote para carrito
   useEffect(() => {
     if (store.cart.length > 0) {
-      setBounce(true); // Activa el efecto de rebote
-      const timer = setTimeout(() => setBounce(false), 500); // Desactiva el efecto después de 0.5s
-      return () => clearTimeout(timer); // Limpia el temporizador al desmontar
+      setCartBounce(true);
+      const timer = setTimeout(() => setCartBounce(false), 500);
+      return () => clearTimeout(timer);
     }
-  }, [store.cart.length]); // Escucha los cambios en la longitud del carrito
+  }, [store.cart.length]);
+
+  // Efecto de rebote para favoritos
+  useEffect(() => {
+    if (store.favorites.length > 0) {
+      setFavoritesBounce(true);
+      const timer = setTimeout(() => setFavoritesBounce(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [store.favorites.length]);
 
   const iconStyle = {
     fontSize: "26px", // Tamaño uniforme de los iconos
-    color: "white", // Color uniforme de los iconos
+    color: "white", // Color de los iconos
   };
 
   // Función para recargar la página al hacer clic en el logo
@@ -75,7 +85,7 @@ export const Navbar = () => {
               </div>
             </Link>
             <Link to="/favorites">
-              <div className={`favorites-icon ${bounce ? "bounce" : ""}`}>
+              <div className={`favorites-icon ${favoritesBounce ? "bounce" : ""}`}>
                 <FaHeart style={iconStyle} />
                 {store.favorites.length > 0 && (
                   <span className="badge">{store.favorites.length}</span>
@@ -84,7 +94,7 @@ export const Navbar = () => {
             </Link>
 
             <Link to="/cart">
-              <div className={`cart-icon ${bounce ? "bounce" : ""}`}>
+              <div className={`cart-icon ${cartBounce ? "bounce" : ""}`}>
                 <FaShoppingCart style={iconStyle} />
                 {store.cart.length > 0 && (
                   <span className="badge">{store.cart.length}</span>
@@ -125,6 +135,7 @@ export const Navbar = () => {
     </div>
   );
 };
+
 
 
 

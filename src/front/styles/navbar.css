@@ -97,7 +97,7 @@
     transform: scale(1);
   }
   50% {
-    transform: scale(1.5);
+    transform: scale(2);
   }
   100% {
     transform: scale(1);
@@ -113,17 +113,6 @@
   animation: bounce 0.5s ease; /* Efecto de rebote para favoritos */
 }
 
-/* Estilo del badge */
-.badge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: red; /* Color del fondo del badge */
-  color: white;
-  border-radius: 50%;
-  padding: 5px;
-  font-size: 12px;
-}
 
 
 

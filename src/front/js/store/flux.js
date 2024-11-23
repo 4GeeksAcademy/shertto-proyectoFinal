@@ -1,9 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            cart: JSON.parse(localStorage.getItem("cart")) || [], // estado para agregar productos al carrito
-            favorites: JSON.parse(localStorage.getItem("favorites")) || [], // Lo mismo para agregar a favoritos
-            products: [], // Guardar los productos obtenidos del backend
+            cart: JSON.parse(localStorage.getItem("cart")) || [], // Carrito almacenado en el estado y en localStorage
+            favorites: JSON.parse(localStorage.getItem("favorites")) || [], // Lista de favoritos
+            products: [], // Productos obtenidos del backend
             message: null,
             userToken: null,
             user: null,
@@ -22,65 +22,47 @@ const getState = ({ getStore, getActions, setStore }) => {
         },
         actions: {
             // Obtener los productos desde el backend
-            getProducts: async () => {
-                try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/product`, {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    });
-
-                    if (!response.ok) throw new Error("Error al obtener los productos");
-
-                    const data = await response.json();
-                    setStore({ products: data.products });
-                } catch (error) {
-                    console.error("Error al obtener productos:", error);
-                    setStore({ message: "Error al obtener productos" });
-                }
+            // Obtener productos desde la base de datos
+getProductsFromAPI: async () => {
+    try {
+        const response = await fetch('https://ubiquitous-space-garbanzo-4jgq6rw76p4j2qwr6-3001.app.github.dev/api/product', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
             },
+        });
+
+        if (!response.ok) throw new Error("Error al obtener productos desde la API");
+
+        const data = await response.json();
+        setStore({ products: data }); // Asumimos que la respuesta es un array de productos
+    } catch (error) {
+        console.error("Error al obtener productos desde la API", error);
+    }
+},
 
             // Agregar producto al carrito
-            addToCart: async (product) => {
+            addToCart: (product) => {
                 const store = getStore();
-                const token = localStorage.getItem("jwt-token");
 
-                if (!token) {
-                    setStore({ message: "Usuario no autenticado" });
-                    return;
-                }
+                // Verificar si el producto ya está en el carrito
+                const existingProduct = store.cart.find((item) => item.id === product.id);
 
-                try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/cart/add`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
-                            product_id: product.id,  
-                            quantity: 1  
-                        })
+                if (existingProduct) {
+                    // Si ya existe, actualizar la cantidad
+                    const updatedCart = store.cart.map((item) => {
+                        if (item.id === product.id) {
+                            return { ...item, quantity: item.quantity + 1 };
+                        }
+                        return item;
                     });
-
-                    if (!response.ok) {
-                        throw new Error("Error al agregar al carrito");
-                    }
-
-                    const data = await response.json();
-                    if (data.msg === "Producto agregado al carrito con éxito") {
-                        // Si el producto se agregó correctamente al carrito en el backend
-                        const updatedCart = [...store.cart, product];
-                        setStore({ cart: updatedCart });
-                        localStorage.setItem("cart", JSON.stringify(updatedCart));
-                        setStore({ message: "Producto agregado al carrito" });
-                    } else {
-                        setStore({ message: "Error al agregar producto al carrito" });
-                    }
-                } catch (error) {
-                    console.error("Error al agregar al carrito:", error);
-                    setStore({ message: "Error al agregar producto al carrito" });
+                    setStore({ cart: updatedCart });
+                    localStorage.setItem("cart", JSON.stringify(updatedCart));
+                } else {
+                    // Si no existe, agregar el producto con cantidad 1
+                    const updatedCart = [...store.cart, { ...product, quantity: 1 }];
+                    setStore({ cart: updatedCart });
+                    localStorage.setItem("cart", JSON.stringify(updatedCart));
                 }
             },
 
@@ -101,9 +83,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Agregar producto a favoritos
             addToFavorites: (product) => {
                 const store = getStore();
-                const updatedFavorites = [...store.favorites, product]; // Añadir el producto a favoritos
+                const updatedFavorites = [...store.favorites, product];
                 setStore({ favorites: updatedFavorites });
-                localStorage.setItem("favorites", JSON.stringify(updatedFavorites)); // Guardar en localStorage
+                localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
             },
 
             // Eliminar producto de favoritos
@@ -111,15 +93,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const store = getStore();
                 const updatedFavorites = store.favorites.filter(
                     (product) => product.id !== productId
-                ); // Filtrar el producto a eliminar
+                );
                 setStore({ favorites: updatedFavorites });
-                localStorage.setItem("favorites", JSON.stringify(updatedFavorites)); // Actualizar en localStorage
+                localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
             },
 
             // Limpiar favoritos
             clearFavorites: () => {
-                setStore({ favorites: [] }); // Limpiar la lista de deseos
-                localStorage.removeItem("favorites"); // Limpiar también en localStorage
+                setStore({ favorites: [] });
+                localStorage.removeItem("favorites");
             },
 
             // Obtener mensaje del backend
@@ -210,5 +192,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
+
+  
+
+
 
 
