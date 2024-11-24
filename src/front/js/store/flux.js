@@ -1,9 +1,10 @@
+// flux.js
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            cart: JSON.parse(localStorage.getItem("cart")) || [], // Carrito almacenado en el estado y en localStorage
-            favorites: JSON.parse(localStorage.getItem("favorites")) || [], // Lista de favoritos
-            products: [], // Productos obtenidos del backend
+            cart: JSON.parse(localStorage.getItem("cart")) || [],
+            favorites: JSON.parse(localStorage.getItem("favorites")) || [],
+            products: [],
             message: null,
             userToken: null,
             user: null,
@@ -21,35 +22,37 @@ const getState = ({ getStore, getActions, setStore }) => {
             ]
         },
         actions: {
-            // Obtener los productos desde el backend
-            // Obtener productos desde la base de datos
-getProductsFromAPI: async () => {
-    try {
-        const response = await fetch('https://ubiquitous-space-garbanzo-4jgq6rw76p4j2qwr6-3001.app.github.dev/api/product', {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
+            // Función para obtener productos por categoría desde la API
+            getProductsByCategoryFromAPI: async (categoryId) => {
+                try {
+                    const response = await fetch(
+                        `https://super-duper-succotash-x59rx4vwx74qf5w7-3001.app.github.dev/api/product/category/${categoryId}`,
+                        {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        }
+                    );
+
+                    if (!response.ok) throw new Error("Error al obtener productos de la API");
+
+                    const data = await response.json();
+
+                    setStore({ products: data });
+                    return data;
+                } catch (error) {
+                    console.error("Error al obtener productos por categoría desde la API", error);
+                    return [];
+                }
             },
-        });
-
-        if (!response.ok) throw new Error("Error al obtener productos desde la API");
-
-        const data = await response.json();
-        setStore({ products: data }); // Asumimos que la respuesta es un array de productos
-    } catch (error) {
-        console.error("Error al obtener productos desde la API", error);
-    }
-},
 
             // Agregar producto al carrito
             addToCart: (product) => {
                 const store = getStore();
-
-                // Verificar si el producto ya está en el carrito
                 const existingProduct = store.cart.find((item) => item.id === product.id);
 
                 if (existingProduct) {
-                    // Si ya existe, actualizar la cantidad
                     const updatedCart = store.cart.map((item) => {
                         if (item.id === product.id) {
                             return { ...item, quantity: item.quantity + 1 };
@@ -59,25 +62,10 @@ getProductsFromAPI: async () => {
                     setStore({ cart: updatedCart });
                     localStorage.setItem("cart", JSON.stringify(updatedCart));
                 } else {
-                    // Si no existe, agregar el producto con cantidad 1
                     const updatedCart = [...store.cart, { ...product, quantity: 1 }];
                     setStore({ cart: updatedCart });
                     localStorage.setItem("cart", JSON.stringify(updatedCart));
                 }
-            },
-
-            // Eliminar producto del carrito
-            removeFromCart: (productId) => {
-                const store = getStore();
-                const updatedCart = store.cart.filter((item) => item.id !== productId);
-                setStore({ cart: updatedCart });
-                localStorage.setItem("cart", JSON.stringify(updatedCart));
-            },
-
-            // Limpiar carrito
-            clearCart: () => {
-                setStore({ cart: [] });
-                localStorage.removeItem("cart");
             },
 
             // Agregar producto a favoritos
@@ -87,6 +75,8 @@ getProductsFromAPI: async () => {
                 setStore({ favorites: updatedFavorites });
                 localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
             },
+
+            
 
             // Eliminar producto de favoritos
             removeFromFavorites: (productId) => {
@@ -98,10 +88,26 @@ getProductsFromAPI: async () => {
                 localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
             },
 
+            // Eliminar producto de favoritos
+            removeFromCart: (productId) => {
+                const store = getStore();
+                const updatedCart = store.cart.filter(
+                    (product) => product.id !== productId
+                );
+                setStore({ cart: updatedCart });
+                localStorage.setItem("cart", JSON.stringify(updatedCart));
+            },
+
             // Limpiar favoritos
             clearFavorites: () => {
                 setStore({ favorites: [] });
                 localStorage.removeItem("favorites");
+            },
+
+            // Limpiar favoritos
+            clearCart: () => {
+                setStore({ cart: [] });
+                localStorage.removeItem("cart");
             },
 
             // Obtener mensaje del backend
@@ -208,7 +214,7 @@ getProductsFromAPI: async () => {
                             cart_items: store.cart.map((product) => ({
                                 product_id: product.id,
                                 price: product.price,
-                                quantity: 1 // Puedes ajustar esto según la lógica del carrito
+                                quantity: 1 
                             }))
                         })
                     });
@@ -218,19 +224,19 @@ getProductsFromAPI: async () => {
                     const data = await response.json();
                     console.log("Orden creada con éxito:", data);
             
-                    // Limpiar el carrito
                     actions.clearCart();
                     alert("Orden creada con éxito");
                 } catch (error) {
                     console.error("Error al realizar el checkout:", error);
                 }
             }
-            
         }
     };
 };
 
 export default getState;
+
+
 
   
 

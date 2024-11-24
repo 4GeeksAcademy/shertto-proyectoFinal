@@ -7,14 +7,18 @@ import "../../styles/favorites.css";
 export const Favorites = () => {
     const { store, actions } = useContext(Context);
 
-    // Calculamos el total
-    const totalAmount = store.favorites.reduce((acc, product) => acc + product.price, 0).toFixed(2); // Calcula el total del carrito
+    // Calcular el total de la lista de deseos, asegurándose de que todos los productos tengan un precio válido
+    const totalAmount = store.favorites.reduce((acc, product) => {
+        // Verificamos si el precio del producto es válido
+        const price = product.price && !isNaN(product.price) ? product.price : 0;
+        return acc + price;
+    }, 0).toFixed(2); // Aseguramos que el resultado sea un número con dos decimales
 
     return (
         <div className="cart-container">
             <h2>Lista de deseos</h2>
             {store.favorites.length === 0 ? (
-                <p>Tu lista de deseos está vacia.</p>
+                <p>Tu lista de deseos está vacía.</p>
             ) : (
                 <>
                     <ul className="cart-items">
@@ -28,7 +32,10 @@ export const Favorites = () => {
                                     />
                                     <div className="favorites-item-details">
                                         <span>{product.name}</span> 
-                                        <span>${product.price.toFixed(2)}</span>
+                                        {/* Verificar si el precio es válido antes de intentar formatearlo */}
+                                        <span>
+                                            ${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}
+                                        </span>
                                     </div>
                                     <button 
                                         onClick={() => actions.removeFromFavorites(product.id)} 
@@ -52,7 +59,7 @@ export const Favorites = () => {
                 <h3>Total: ${totalAmount}</h3>
             </div>
 
-            {/* Mostrar el botón de PayPal solo si hay productos en el carrito */}
+            {/* Mostrar el botón de PayPal solo si hay productos en la lista de deseos */}
             {store.favorites.length > 0 && (
                 <div className="paypal-button-container">
                     <PayPalButton amount={totalAmount} />
@@ -61,3 +68,4 @@ export const Favorites = () => {
         </div>
     );
 };
+
