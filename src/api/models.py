@@ -30,22 +30,25 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
     description = db.Column(db.String(250))
-    price = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Float, nullable=False)  # El precio de cada producto
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     
-    #favorited_by = relationship('User', secondary=user_favorites, back_populates='favorites')
-    #orders_details = relationship('Order', secondary=order_products, back_populates='products')
+    # Relaciones con otras tablas
     category = db.relationship('Category', back_populates='products')
-     
+    
     def __repr__(self):
-            return f'<Product {self.name}>'
+        return f'<Product {self.name}>'
 
     def serialize(self):
+        # Incluye el campo price en el diccionario serializado
         return {
             "id": self.id,
             "name": self.name,
             "description": self.description,
+            "price": self.price,  # Agrega el precio aquí
+            "category_id": self.category_id,
         }
+
     
 class Cart(db.Model):
     __tablename__ = 'cart'

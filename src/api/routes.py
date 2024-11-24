@@ -378,6 +378,26 @@ def create_order():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+    
+@api.route('/product/category/<int:category_id>', methods=['GET'])
+def get_products_by_category(category_id):
+    try:
+        products = Product.query.filter_by(category_id=category_id).all()
+        
+        # Verificar qué productos se obtuvieron
+        print(f"Productos encontrados para categoría {category_id}: {products}")
+        
+        if not products:
+            return jsonify({"message": "No products found for this category"}), 404
+        
+        products_list = [product.serialize() for product in products]
+        return jsonify(products_list), 200
+    except Exception as e:
+        api.logger.error(f"Error getting products by category {category_id}: {str(e)}")
+        return jsonify({"error": "An error occurred while fetching products"}), 500
+
+
+
 
 
 

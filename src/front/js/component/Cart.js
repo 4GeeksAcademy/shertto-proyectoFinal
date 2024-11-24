@@ -6,7 +6,12 @@ import PayPalButton from "./PayPalButton";
 export const Cart = () => {
     const { store, actions } = useContext(Context);
 
-    const totalAmount = store.cart.reduce((acc, product) => acc + product.price, 0).toFixed(2);
+    // Calcular el total, asegurándose de que todos los productos tengan un precio válido
+    const totalAmount = store.cart.reduce((acc, product) => {
+        // Verificamos si el precio del producto es válido
+        const price = product.price && !isNaN(product.price) ? product.price : 0;
+        return acc + price;
+    }, 0).toFixed(2);
 
     return (
         <div className="cart-container">
@@ -26,7 +31,8 @@ export const Cart = () => {
                                     />
                                     <div className="cart-item-details">
                                         <span>{product.name}</span>
-                                        <span>${product.price.toFixed(2)}</span>
+                                        {/* Verificar que el precio esté presente antes de usar toFixed */}
+                                        <span>${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}</span>
                                     </div>
                                     <button onClick={() => actions.removeFromCart(product.id)} className="remove-button">
                                         X
