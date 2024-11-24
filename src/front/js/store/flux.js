@@ -26,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             getProductsByCategoryFromAPI: async (categoryId) => {
                 try {
                     const response = await fetch(
-                        `https://super-duper-succotash-x59rx4vwx74qf5w7-3001.app.github.dev/api/product/category/${categoryId}`,
+                        `${process.env.BACKEND_URL}/api/product/category/${categoryId}`,
                         {
                             method: "GET",
                             headers: {
@@ -200,7 +200,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             
                 if (!token) {
                     setStore({ message: "Usuario no autenticado" });
-                    return;
+                    console.log("Usuario no autenticado");
+                    return false;
                 }
             
                 try {
@@ -224,12 +225,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json();
                     console.log("Orden creada con éxito:", data);
             
+                    // Limpiar carrito después de crear la orden
                     actions.clearCart();
-                    alert("Orden creada con éxito");
+                    return true; // Asegurarse de retornar true si la orden fue creada con éxito
                 } catch (error) {
                     console.error("Error al realizar el checkout:", error);
+                    return false;
                 }
             }
+            
         }
     };
 };

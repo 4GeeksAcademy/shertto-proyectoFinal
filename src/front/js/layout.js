@@ -33,7 +33,7 @@ import ChargerPage from "./component/chargerPage.js";
 import SmartPage from "./component/smartPage.js";
 import PcPage from "./component/pcPage.js";
 import OffCanvasDetails from "./component/offcanvasdetails.js";
-
+import OrderSummary from "./component/OrderSummary.js";
 
 //first component
 const Layout = () => {
@@ -69,6 +69,7 @@ const Layout = () => {
                     <Route path="/offcanvasdetails" element={<OffCanvasDetails />} />
                     <Route path="*" element={<h1>Not found!</h1>} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/order-summary" element={<OrderSummary />} />
                 </Routes>
                 <Footer />
             </ScrollToTop>
