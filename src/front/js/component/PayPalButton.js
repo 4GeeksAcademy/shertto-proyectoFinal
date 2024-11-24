@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 
-const PayPalButton = ({ amount }) => {
+const PayPalButton = ({ amount, onSuccess }) => { // Añadimos la prop onSuccess
     const { actions } = useContext(Context);
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const PayPalButton = ({ amount }) => {
 
                 createOrder: async (data, actions) => {
                     try {
-                        const response = await fetch("/api/paypal/create-order", {
+                        const response = await fetch(`${process.env.BACKEND_URL}/api/paypal/create-order`, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
@@ -45,7 +45,7 @@ const PayPalButton = ({ amount }) => {
 
                 onApprove: async (data, actions) => {
                     try {
-                        const response = await fetch(`/api/paypal/execute-payment`, {
+                        const response = await fetch(`${process.env.BACKEND_URL}/api/paypal/execute-payment`, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
@@ -61,7 +61,9 @@ const PayPalButton = ({ amount }) => {
 
                         if (result.message === 'Pago ejecutado exitosamente') {
                             alert('¡Pago completado con éxito!');
-                            await actions.checkout();  // Llamar al checkout después del pago
+                            if (onSuccess) {
+                                onSuccess(); // Llamamos la función onSuccess después del pago
+                            }
                         } else {
                             alert('Error al ejecutar el pago.');
                         }
