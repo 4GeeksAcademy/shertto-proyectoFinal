@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "../../styles/register.css"; 
+import "../../styles/auth.css";
 
 const Login = () => {
     const { actions } = useContext(Context);
@@ -24,24 +24,19 @@ const Login = () => {
     return (
         <div className="auth-container">
             <form className="auth-form" onSubmit={handleLogin}>
-            <div className="input-group">
                 <input
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-            </div>
-                <div className="input-group">
                 <input
                     type="password"
                     placeholder="Contraseña"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                </div>
                 <button type="submit" className="submit-btn">Iniciar sesión</button>
-                
             </form>
         </div>
     );
