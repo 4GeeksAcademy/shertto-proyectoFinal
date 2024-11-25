@@ -23,7 +23,6 @@ const Login = () => {
 
     return (
         <div className="auth-container">
-            <h2>Inicie Sesión</h2>
             <form className="auth-form" onSubmit={handleLogin}>
                 <input
                     type="email"
@@ -37,7 +36,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit">Iniciar sesión</button>
+                <button type="submit" className="submit-btn">Iniciar sesión</button>
             </form>
         </div>
     );

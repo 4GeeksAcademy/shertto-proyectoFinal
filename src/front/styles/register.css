@@ -1,0 +1,115 @@
+/* Contenedor principal con animación de fondo */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; /* Altura más proporcional */
+    width: 600px; 
+    margin: 60px auto; 
+    background: linear-gradient(135deg, #6200ea, #4b367e, #a37897, #a18cd1);
+    background-size: 300% 300%;
+    animation: gradientAnimation 6s ease infinite;
+    padding: 40px; 
+    font-family: 'Arial', sans-serif;
+    border-radius: 20px; /* Bordes redondeados */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Sombra más visible */
+  }
+  
+  /* Animación de fondo */
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* Estilo del formulario */
+  .auth-form {
+    background-color: #fff;
+    padding: 40px; /* Más espacio interno */
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 600px; /* Más ancho máximo */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Grupo de los inputs */
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    font-size: 14px;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .input-group input:focus {
+    border-color: #6200ea;
+    box-shadow: 0 0 8px rgba(98, 0, 234, 0.2);
+  }
+  
+  /* Estilo del botón de registro */
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, #6200ea, #3700b3);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s ease-in-out;
+  }
+  
+  .submit-btn:hover {
+    background: linear-gradient(90deg, #3700b3, #6200ea);
+    transform: scale(1.05);
+  }
+  
+  .submit-btn:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(98, 0, 234, 0.5);
+  }
+  
+  /* Estilo del texto para redirigir */
+  .redirect-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .redirect-text a {
+    color: #6200ea;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .redirect-text a:hover {
+    text-decoration: underline;
+  }
+  
+  
+  
+  
