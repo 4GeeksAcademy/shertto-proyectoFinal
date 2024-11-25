@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect} from "react";
 import { Context } from "../store/appContext";
 import "../../styles/cart.css";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,11 @@ export const Cart = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate(); // Hook para redirigir al usuario
     const [loading, setLoading] = useState(false); // Para mostrar un indicador de carga
+
+    useEffect(() => {
+        // Obtener el carrito desde el backend al cargar el componente
+        actions.getCartFromAPI();
+    }, []);
 
     // Calcular el total del carrito
     const totalAmount = store.cart.reduce((acc, product) => {

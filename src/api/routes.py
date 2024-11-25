@@ -159,47 +159,6 @@ def create_product():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
-@api.route('/cart/add', methods=['POST'])
-@jwt_required()
-def add_to_cart():
-    try:
-        user_id = get_jwt_identity()
-        data = request.json
-
-        product_id = data.get('product_id')
-        quantity = data.get('quantity', 1)  
-
-        if not product_id:
-            return jsonify({"error": "Se requiere el ID del producto"}), 400
-
-        # Verifica si el producto existe
-        product = Product.query.get(product_id)
-        if not product:
-            return jsonify({"error": "El producto no existe"}), 404
-
-        # Busca el carrito del usuario
-        cart = Cart.query.filter_by(user_id=user_id).first()
-        if not cart:
-            cart = Cart(user_id=user_id)
-            db.session.add(cart)
-            db.session.commit()
-
-        cart_item = CartItems.query.filter_by(cart_id=cart.id, product_id=product_id).first()
-
-        if cart_item:
-            cart_item.quantity += quantity
-        else:
-            # Agrega un nuevo ítem al carrito
-            cart_item = CartItems(cart_id=cart.id, product_id=product_id, quantity=quantity)
-            db.session.add(cart_item)
-
-        db.session.commit()
-
-        return jsonify({"msg": "Producto agregado al carrito con éxito"}), 200
-
-    except Exception as e:
-        print(f"Error: {str(e)}")  # Log para depuración
-        return jsonify({"error": "Hubo un error al agregar el producto al carrito"}), 500
 
 
 # @api.route('/cart', methods=['POST'])
@@ -402,3 +361,44 @@ def get_products_by_category(category_id):
 
 
 
+@api.route('/cart/add', methods=['POST'])
+@jwt_required()
+def add_to_cart():
+    try:
+        user_id = get_jwt_identity()
+        data = request.json
+
+        product_id = data.get('product_id')
+        quantity = data.get('quantity', 1)  
+
+        if not product_id:
+            return jsonify({"error": "Se requiere el ID del producto"}), 400
+
+        # Verifica si el producto existe
+        product = Product.query.get(product_id)
+        if not product:
+            return jsonify({"error": "El producto no existe"}), 404
+
+        # Busca el carrito del usuario
+        cart = Cart.query.filter_by(user_id=user_id).first()
+        if not cart:
+            cart = Cart(user_id=user_id)
+            db.session.add(cart)
+            db.session.commit()
+
+        cart_item = CartItems.query.filter_by(cart_id=cart.id, product_id=product_id).first()
+
+        if cart_item:
+            cart_item.quantity += quantity
+        else:
+            # Agrega un nuevo ítem al carrito
+            cart_item = CartItems(cart_id=cart.id, product_id=product_id, quantity=quantity)
+            db.session.add(cart_item)
+
+        db.session.commit()
+
+        return jsonify({"msg": "Producto agregado al carrito con éxito"}), 200
+
+    except Exception as e:
+        print(f"Error: {str(e)}")  # Log para depuración
+        return jsonify({"error": "Hubo un error al agregar el producto al carrito"}), 500
