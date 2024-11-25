@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context } from "../store/appContext"; 
 import "../../styles/earphonedetails.css";
 
 const EarphoneDetails = ({ product, onImageClick }) => {
   const [quantity, setQuantity] = useState(1);
+  const { actions } = useContext(Context)
 
+  // Función para manejar el clic en el ícono de favoritos
+  const handleAddToFavorites = () => {
+    actions.addToFavorites(product); 
+  };
+
+  const handleAddToCart = () => {
+    actions.addToCart({ ...product, quantity }); 
+  };
 
   return (
     <div className="product-card">
@@ -24,11 +34,11 @@ const EarphoneDetails = ({ product, onImageClick }) => {
           {/* Contenedor para los íconos */}
           <div className="quantity-favorite-container">
             {/* Ícono de corazón */}
-            <div className="favorite-icon">
+            <div className="favorite-icon" onClick={handleAddToFavorites}>
               <i className="fas fa-heart"></i>
             </div>
             {/* Ícono de cesta */}
-            <div className="cart-icon">
+            <div className="cart-icon" onClick={handleAddToCart}>
               <i className="fa-sharp fa-solid fa-cart-plus"></i>
             </div>
           </div>

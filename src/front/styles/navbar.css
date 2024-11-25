@@ -88,6 +88,7 @@
   color: white;
   font-size: 20px; 
   transition: color 0.3s ease;
+  z-index: 1000
 }
 
 
@@ -106,6 +107,7 @@
 
 .cart-icon.bounce {
   animation: bounce 0.5s ease; /* Efecto de rebote para el carrito */
+  visibility: visible;
 }
 
 /* Efecto de rebote para los favoritos */
