@@ -9,14 +9,12 @@ import { Link } from "react-router-dom";
 export const Home = () => {
     const { actions, store } = useContext(Context);
 
-    // Obtener los productos por categoría al cargar la página
     useEffect(() => {
-        // Llamamos a la API para cargar productos de varias categorías si es necesario
-        const categoryIds = [1]; // Puedes modificar esto con las categorías que desees cargar
+        // Llamamos a la API para cargar productos de las categorias
+        const categoryIds = [1]; //En este caso los productos que estan en el home son los de la categoria con id=1 (Ofertas destacadas)
         categoryIds.forEach(id => actions.getProductsByCategoryFromAPI(id));
     }, [actions]);
 
-    // Si no hay productos disponibles aún, mostramos un cargando
     if (!store.products.length) {
         return <div>Loading...</div>;
     }
