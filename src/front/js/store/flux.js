@@ -47,27 +47,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Agregar producto al carrito
-            addToCart: (product) => {
-                const store = getStore();
-                const existingProduct = store.cart.find((item) => item.id === product.id);
-
-                if (existingProduct) {
-                    const updatedCart = store.cart.map((item) => {
-                        if (item.id === product.id) {
-                            return { ...item, quantity: item.quantity + 1 };
-                        }
-                        return item;
-                    });
-                    setStore({ cart: updatedCart });
-                    localStorage.setItem("cart", JSON.stringify(updatedCart));
-                } else {
-                    const updatedCart = [...store.cart, { ...product, quantity: 1 }];
-                    setStore({ cart: updatedCart });
-                    localStorage.setItem("cart", JSON.stringify(updatedCart));
-                }
-            },
-
+            
             // Agregar producto a favoritos
             addToFavorites: (product) => {
                 const store = getStore();
@@ -77,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             
-
+            
             // Eliminar producto de favoritos
             removeFromFavorites: (productId) => {
                 const store = getStore();
@@ -109,7 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ cart: [] });
                 localStorage.removeItem("cart");
             },
-
+            
             // Obtener mensaje del backend
             getMessage: async () => {
                 try {
@@ -138,7 +118,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json();
                     setStore({ userToken: data.token });
                     console.log(data);
-
+                    
                     localStorage.setItem("jwt-token", data.token);
                     localStorage.setItem("user", JSON.stringify(data.user_id));
                     return true;
@@ -158,7 +138,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify({ email, password })
                     });
-
+                    
                     if (!response.ok) throw new Error("Register failed");
 
                     const data = await response.json();
@@ -169,12 +149,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
-
+            
             // Obtener el perfil del usuario
             getUserProfile: async () => {
                 const token = localStorage.getItem("jwt-token");
                 console.log("token obtenido", token);
-
+                
                 try {
                     const store = getStore();
                     const response = await fetch(`${process.env.BACKEND_URL}/api/profile`, {
@@ -193,7 +173,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error fetching profile:", error);
                 }
             },
-
+            
             checkout: async () => {
                 const store = getStore();
                 const token = localStorage.getItem("jwt-token");
@@ -221,10 +201,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
             
                     if (!response.ok) throw new Error("Error al crear la orden");
-            
+                    
                     const data = await response.json();
                     console.log("Orden creada con éxito:", data);
-            
+                    
                     // Limpiar carrito después de crear la orden
                     actions.clearCart();
                     return true; // Asegurarse de retornar true si la orden fue creada con éxito
@@ -232,9 +212,66 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error al realizar el checkout:", error);
                     return false;
                 }
-            }
+            },
             
-        }
+        // Agregar producto al carrito
+        addToCart: async (product) => {
+            const store = getStore();
+            const existingProduct = store.cart.find((item) => item.id === product.id);
+        
+            const updatedCart = existingProduct
+                ? store.cart.map((item) => item.id === product.id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item)
+                : [...store.cart, { ...product, quantity: 1 }];
+            
+            setStore({ cart: updatedCart });
+            localStorage.setItem("cart", JSON.stringify(updatedCart));
+        
+            try {
+                const token = localStorage.getItem("jwt-token");
+                const response = await fetch(`${process.env.BACKEND_URL}/api/cart/add`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        product_id: product.id,
+                        quantity: existingProduct ? existingProduct.quantity + 1 : 1,
+                    })
+                });
+        
+                if (!response.ok) throw new Error("Error al agregar producto al carrito en el backend");
+            } catch (error) {
+                console.error("Error al sincronizar el carrito con el backend:", error);
+            }
+          },
+            
+          getCartFromAPI: async () => {
+            try {
+                const token = localStorage.getItem("jwt-token");
+                if (!token) return;
+        
+                const response = await fetch(`${process.env.BACKEND_URL}/api/cart`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+        
+                if (!response.ok) throw new Error("Error al obtener el carrito del backend");
+        
+                const cartItems = await response.json();
+                setStore({ cart: cartItems });
+                localStorage.setItem("cart", JSON.stringify(cartItems));
+            } catch (error) {
+                console.error("Error al obtener el carrito del backend:", error);
+            }
+        },
+
+        },
     };
 };
 
