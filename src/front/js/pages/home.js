@@ -1,19 +1,20 @@
 import React, { useContext, useEffect } from "react";
-import { Row, Col, Card, Button, Carousel } from "react-bootstrap";
+import { Row, Col, Card, Carousel } from "react-bootstrap";
 import { Context } from "../store/appContext"; 
 import CountdownTimer from "./CountdownTimer";
 import "../../styles/home.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Link } from "react-router-dom";
+import { imagenes } from "../../img/imagenes"; 
 
 export const Home = () => {
     const { actions, store } = useContext(Context);
 
     useEffect(() => {
-        // Llamamos a la API para cargar productos de las categorias
-        const categoryIds = [1]; //En este caso los productos que estan en el home son los de la categoria con id=1 (Ofertas destacadas)
+        // Llamamos a la API para cargar productos de las categorías
+        const categoryIds = [1]; // En este caso los productos que están en el home son de la categoría con id=1 (Ofertas destacadas)
         categoryIds.forEach(id => actions.getProductsByCategoryFromAPI(id));
-    }, [actions]);
+    }, []);
 
     if (!store.products.length) {
         return <div>Loading...</div>;
@@ -68,23 +69,43 @@ export const Home = () => {
 
     // Renderizar producto con validación de precio
     const renderProduct = (product) => {
+
+        const isFavorite = store.favorites.some((fav) => fav.id === product.id); // Comprueba si está en favoritos
+        const isInCart = store.cart.some((item) => item.id === product.id); // Comprueba si está en el carrito
+
+        const toggleFavorite = () => {
+            actions.addToFavorites(product); // Acción para añadir/quitar favoritos
+        };
+
+        const toggleCart = () => {
+            actions.addToCart(product); // Acción para añadir/quitar carrito
+        };
+
+
         const price = product.price && !isNaN(product.price) ? product.price.toFixed(2) : "N/A"; // Verifica que el precio sea válido
+        const imagen = imagenes.find(img => img.id === product.id)
 
         return (
             <Col key={product.id} md={4} className="mb-4">
                 <Card className="h-100">
-                    <Card.Img className="zoom-image card-img-top" variant="top" src={product.imageUrl || ""} alt={product.name} />
+                    <Card.Img className="zoom-image card-img-top" variant="top" src={imagen?.url || ""} alt={product.name} />
                     <Card.Body className="d-flex flex-column">
                         <Card.Title>{product.name}</Card.Title>
-                        <Card.Text>${price}</Card.Text> {/* Muestra el precio o "N/A" si no es válido */}
+                        <Card.Text>${product.price && !isNaN(product.price) ? product.price.toFixed(2) : "N/A"}</Card.Text>
 
                         <div className="d-flex justify-content-center gap-3 mt-auto">
-                            <Button variant="outline-warning" className="d-flex align-items-center" onClick={() => actions.addToCart(product)}>
+                            <div
+                                className={`cart-icon ${isInCart ? "active" : ""}`}
+                                onClick={toggleCart}
+                            >
                                 <i className="fas fa-shopping-cart"></i>
-                            </Button>
-                            <Button variant="outline-danger" className="d-flex align-items-center" onClick={() => actions.addToFavorites(product)}>
+                            </div>
+                            <div
+                                className={`favorite-icon ${isFavorite ? "active" : ""}`}
+                                onClick={toggleFavorite}
+                            >
                                 <i className="fas fa-heart"></i>
-                            </Button>
+                            </div>
                         </div>
                     </Card.Body>
                 </Card>
@@ -130,9 +151,3 @@ export const Home = () => {
         </div>
     );
 };
-
-
-
-
-
-

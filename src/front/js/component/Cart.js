@@ -51,24 +51,35 @@ export const Cart = () => {
 
     return (
         <div className="cart-container">
-            <h2>Mi carrito</h2>
             {store.cart.length === 0 ? (
-                <p>Tu carrito está vacío.</p>
+                <h2>Tu carrito está vacío.</h2>
             ) : (
                 <>
-                    <ul className="cart-items">
-                        {store.cart.map((product, index) => (
-                            <li key={index} className="cart-item">
-                                <div className="cart-item-container">
-                                    <img
-                                        src={product.imageUrl}
-                                        alt={product.name}
-                                        className="cart-item-image" />
-                                    <div className="cart-item-details">
-                                        <span>{product.name}</span>
-                                        <span>${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}</span>
-                                        <span>Cantidad: {product.quantity}</span>
+                    {/* Contenedor de productos */}
+                    <div className="cart-products">
+                        <h2>Productos</h2>
+                        <ul className="cart-items">
+                            {store.cart.map((product, index) => (
+                                <li key={index} className="cart-item">
+                                    <div className="cart-item-container">
+                                        <img
+                                            src={product.imageUrl}
+                                            alt={product.name}
+                                            className="cart-item-image"
+                                        />
+                                        <div className="cart-item-details">
+                                            <span>{product.name}</span>
+                                            <span>${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}</span>
+                                            <span>Cantidad: {product.quantity}</span>
+                                        </div>
+                                        <button
+                                            onClick={() => actions.removeFromCart(product.id)}
+                                            className="remove-button"
+                                        >
+                                            X
+                                        </button>
                                     </div>
+
                                     <button onClick={() => actions.removeFromCart(product.id)} className="remove-button">
                                         X
                                     </button>
@@ -94,10 +105,11 @@ export const Cart = () => {
                             <PayPalButtons 
                             style= {{color: "blue", label: "pay"}}/>
                         </PayPalScriptProvider>
+
                     </div>
                 </>
             )}
         </div>
     );
-};
+}
 

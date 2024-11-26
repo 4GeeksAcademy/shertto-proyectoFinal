@@ -11,7 +11,7 @@ const GamingPage = () => {
 
   useEffect(() => {
     actions.getProductsByCategoryFromAPI(4); 
-  }, [actions]); //Al utilizar postman veo que la categoria Auriculares y Accesorios corresponde a la categoria con id=4
+  }, []); //Al utilizar postman veo que la categoria Auriculares y Accesorios corresponde a la categoria con id=4
 
   if (!store.products.length) {
     return <div>Loading...</div>;
