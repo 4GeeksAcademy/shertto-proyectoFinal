@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect} from "react";
 import { Context } from "../store/appContext";
 import "../../styles/cart.css";
 import { useNavigate } from "react-router-dom";
+"useclient";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 export const Cart = () => {
     const { store, actions } = useContext(Context);
@@ -61,8 +63,7 @@ export const Cart = () => {
                                     <img
                                         src={product.imageUrl}
                                         alt={product.name}
-                                        className="cart-item-image"
-                                    />
+                                        className="cart-item-image" />
                                     <div className="cart-item-details">
                                         <span>{product.name}</span>
                                         <span>${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}</span>
@@ -85,10 +86,21 @@ export const Cart = () => {
             </div>
 
             {store.cart.length > 0 && (
-                <button onClick={handleCreateOrder} className="checkout-button" disabled={loading}>
-                    {loading ? "Procesando..." : "Realizar compra"}
-                </button>
+                <>
+                    <button onClick={handleCreateOrder} className="checkout-button" disabled={loading}>
+                        {loading ? "Procesando..." : "Realizar compra"}
+                    </button>
+
+                    {/* Contenedor de PayPal dentro del carrito */}
+                    <div className="paypal-button-container">
+                        <PayPalScriptProvider>
+                            <PayPalButtons 
+                            style= {{color: "blue", label: "pay"}}/>
+                        </PayPalScriptProvider>
+                    </div>
+                </>
             )}
         </div>
     );
 };
+

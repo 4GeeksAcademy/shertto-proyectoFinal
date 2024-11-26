@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/cart.css";
-import PayPalButton from "./PayPalButton"; 
 import "../../styles/favorites.css";
 
 export const Favorites = () => {
@@ -59,12 +58,6 @@ export const Favorites = () => {
                 <h3>Total: ${totalAmount}</h3>
             </div>
 
-            {/* Mostrar el botón de PayPal solo si hay productos en la lista de deseos */}
-            {store.favorites.length > 0 && (
-                <div className="paypal-button-container">
-                    <PayPalButton amount={totalAmount} />
-                </div>
-            )}
         </div>
     );
 };
