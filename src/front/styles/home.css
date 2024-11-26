@@ -89,3 +89,54 @@ p {
 }
 
 
+.favorite-icon {
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgb(0, 0, 0); /* Borde negro */
+    border-radius: 50%; /* Forma circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.favorite-icon:hover {
+    border-color: darkorchid; /* Cambia el borde a morado al pasar el ratón */
+}
+
+.favorite-icon i {
+    color: #333; /* Color del ícono */
+    font-size: 18px;
+}
+
+/* Estilo para el ícono de carrito */
+   .cart-icon {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #000000; /* Borde negro */
+    border-radius: 50%; /* Forma circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cart-icon:hover {
+    border-color: darkorchid; /* Cambia el borde a morado al pasar el ratón */
+}
+
+.cart-icon i {
+    color: #333; /* Color del ícono */
+    font-size: 18px;
+}
+
+.favorite-icon.active, .cart-icon.active {
+    background-color: darkorchid; /* Fondo relleno */
+    border-color: darkorchid; /* Borde morado */
+}
+
+.favorite-icon.active i, .cart-icon.active i {
+    color: white; /* Ícono blanco */
+}
