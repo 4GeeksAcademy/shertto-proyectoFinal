@@ -93,9 +93,15 @@ export const Cart = () => {
 
                     {/* Contenedor de PayPal dentro del carrito */}
                     <div className="paypal-button-container">
-                        <PayPalScriptProvider>
+                        <PayPalScriptProvider options={{
+                            clientId: "ATJCaAknFuveCgSzJhOyy5ZOLviAuWxXEPP518QPV60mJIxZkh8OJTaKnC3icv5jweOWBROONxqQGzTh"
+                        }}>
                             <PayPalButtons 
-                            style= {{color: "blue", label: "pay"}}/>
+                            style= {{color: "blue", label: "pay"}}
+                            // createOrder={() => {}}
+                            // onCancel={() => {}}
+                            // onApprove={() =>{}}
+                            />
                         </PayPalScriptProvider>
                     </div>
                 </>

@@ -213,69 +213,107 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+
+            // Agregar producto al carrito
+            addToCart: async (product) => {
+                const store = getStore();
+                const existingProduct = store.cart.find((item) => item.id === product.id);
             
-        // Agregar producto al carrito
-        addToCart: async (product) => {
-            const store = getStore();
-            const existingProduct = store.cart.find((item) => item.id === product.id);
-        
-            const updatedCart = existingProduct
-                ? store.cart.map((item) => item.id === product.id
-                    ? { ...item, quantity: item.quantity + 1 }
-                    : item)
-                : [...store.cart, { ...product, quantity: 1 }];
+                const updatedCart = existingProduct
+                    ? store.cart.map((item) => item.id === product.id
+                        ? { ...item, quantity: item.quantity + 1 }
+                        : item)
+                    : [...store.cart, { ...product, quantity: 1 }];
+                
+                setStore({ cart: updatedCart });
+                localStorage.setItem("cart", JSON.stringify(updatedCart));
             
-            setStore({ cart: updatedCart });
-            localStorage.setItem("cart", JSON.stringify(updatedCart));
-        
-            try {
+                try {
+                    const token = localStorage.getItem("jwt-token");
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/cart/add`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            product_id: product.id,
+                            quantity: existingProduct ? existingProduct.quantity + 1 : 1,
+                        })
+                    });
+            
+                    if (!response.ok) throw new Error("Error al agregar producto al carrito en el backend");
+                } catch (error) {
+                    console.error("Error al sincronizar el carrito con el backend:", error);
+                }
+            },
+            
+            getCartFromAPI: async () => {
+                try {
+                    const token = localStorage.getItem("jwt-token");
+                    if (!token) return;
+            
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/cart`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
+                    });
+            
+                    if (!response.ok) throw new Error("Error al obtener el carrito del backend");
+            
+                    const cartItems = await response.json();
+                    setStore({ cart: cartItems });
+                    localStorage.setItem("cart", JSON.stringify(cartItems));
+                } catch (error) {
+                    console.error("Error al obtener el carrito del backend:", error);
+                }
+            },
+
+            checkoutWithPaypal: async () => {
+                const store = getStore();
                 const token = localStorage.getItem("jwt-token");
-                const response = await fetch(`${process.env.BACKEND_URL}/api/cart/add`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        product_id: product.id,
-                        quantity: existingProduct ? existingProduct.quantity + 1 : 1,
-                    })
-                });
-        
-                if (!response.ok) throw new Error("Error al agregar producto al carrito en el backend");
-            } catch (error) {
-                console.error("Error al sincronizar el carrito con el backend:", error);
-            }
-          },
-            
-          getCartFromAPI: async () => {
-            try {
-                const token = localStorage.getItem("jwt-token");
-                if (!token) return;
-        
-                const response = await fetch(`${process.env.BACKEND_URL}/api/cart`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    }
-                });
-        
-                if (!response.ok) throw new Error("Error al obtener el carrito del backend");
-        
-                const cartItems = await response.json();
-                setStore({ cart: cartItems });
-                localStorage.setItem("cart", JSON.stringify(cartItems));
-            } catch (error) {
-                console.error("Error al obtener el carrito del backend:", error);
-            }
-        },
+
+                if (!token) {
+                    setStore({ message: "Usuario no autenticado" });
+                    console.log("Usuario no autenticado");
+                    return false;
+                }
+
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/pay`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({
+                            total_amount: store.cart.reduce((total, item) => total + item.price * item.quantity, 0), // Calcular el total
+                            currency: "USD",
+                        }),
+                    });
+
+                    if (!response.ok) throw new Error("Error al crear el pago de PayPal");
+
+                    const data = await response.json();
+                    console.log("Pago de PayPal creado", data);
+                    
+                    // Redirigir al usuario a PayPal para completar el pago
+                    window.location.href = data.approval_url;
+                    return true;
+                } catch (error) {
+                    console.error("Error al procesar el pago con PayPal", error);
+                    return false;
+                }
+            },
 
         },
     };
 };
 
 export default getState;
+
 
 
 
