@@ -1,7 +1,10 @@
 import React from "react";
 import "../../styles/offcanvas.css";
+import { imagenes } from '../../img/imagenes';
 
 const OffCanvasDetails = ({ product, onClose }) => {
+  const imagen = imagenes.find(img => img.id === product.id)
+
   return (
     <div className="offcanvas-container">
       <div className="offcanvas-overlay" onClick={onClose}></div>
@@ -10,7 +13,7 @@ const OffCanvasDetails = ({ product, onClose }) => {
           ×
         </button>
         <h2>{product.name}</h2>
-        <img src={product.image} alt={product.name} />
+        <img src= {imagen?.url} alt={product.name} />
         <p>{product.description}</p>
         <div className="product-price">Precio: ${product.price}</div>
         <button className="btn-buy">Añadir a la cesta</button>
