@@ -79,38 +79,33 @@ export const Cart = () => {
                                             X
                                         </button>
                                     </div>
-                                </li>
-                            ))}
-                        </ul>
-                        <button
-                            onClick={actions.clearCart}
-                            className="clear-cart-button"
-                        >
-                            Limpiar carrito
-                        </button>
-                    </div>
-    
-                    {/* Contenedor del total y botones */}
-                    <div className="cart-summary">
-                        <div className="total-container">
-                            <h3>Total: ${totalAmount}</h3>
-                        </div>
-                        <button
-                            onClick={handleCreateOrder}
-                            className="checkout-button"
-                            disabled={loading}
-                        >
-                            {loading ? "Procesando..." : "Realizar compra"}
-                        </button>
-                        <div className="paypal-button-container">
-                            <PayPalScriptProvider
-                                options={{
-                                    clientId: "ATJCaAknFuveCgSzJhOyy5ZOLviAuWxXEPP518QPV60mJIxZkh8OJTaKnC3icv5jweOWBROONxqQGzTh",
-                                }}
-                            >
-                                <PayPalButtons style={{ color: "blue", label: "pay" }} />
-                            </PayPalScriptProvider>
-                        </div>
+
+                                    <button onClick={() => actions.removeFromCart(product.id)} className="remove-button">
+                                        X
+                                    </button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                    <button onClick={actions.clearCart} className="clear-cart-button">
+                        Limpiar carrito
+                    </button>
+                </>
+            )}
+            <div className="total-container">
+                <h3>Total: ${totalAmount}</h3>
+            </div>
+
+            {store.cart.length > 0 && (
+                <>
+
+                    {/* Contenedor de PayPal dentro del carrito */}
+                    <div className="paypal-button-container">
+                        <PayPalScriptProvider>
+                            <PayPalButtons 
+                            style= {{color: "blue", label: "pay"}}/>
+                        </PayPalScriptProvider>
+
                     </div>
                 </>
             )}

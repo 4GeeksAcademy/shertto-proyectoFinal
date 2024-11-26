@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/auth.css";
 
+
 const Login = () => {
     const { actions } = useContext(Context);
     const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ const Login = () => {
         
         const success = await actions.login(email, password);
         if (success) {
-            navigate("/profile"); 
+            navigate("/"); 
         } else {
             alert("Inicio de sesión fallido. Comprueba que los campos email y contraseña sean correctos.");
         }
