@@ -1,9 +1,20 @@
+import paypalrestsdk
 from flask import Flask, request, jsonify, url_for, Blueprint, session
-from api.models import db, User, Order, Return, Order_details, Cart, Product, Category, CartItems
+from api.models import db, User, Order, Return, Order_details, Cart, Product, Category, CartItems, Pay
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
+
+# Configuración de PayPal (asegúrate de usar las credenciales correctas)
+paypalrestsdk.configure({
+    "mode": "sandbox",  # Cambia a "live" para producción
+    "client_id": "ATJCaAknFuveCgSzJhOyy5ZOLviAuWxXEPP518QPV60mJIxZkh8OJTaKnC3icv5jweOWBROONxqQGzTh",
+    "client_secret": "EOcoOfTKQtevfsmk0qXUnJHr5llDY_JE_82P2bsW8RhocwWTZZSUwt34_nlNJL7yPdnt5d-tAj4I802y"
+})
+
+
 api = Blueprint('api', __name__)
+
 
 
 @api.route('/login', methods=['POST'])
@@ -161,47 +172,6 @@ def create_product():
     
 
 
-# @api.route('/cart', methods=['POST'])
-# @jwt_required()
-# def add_to_cart():
-#     current_user_id = get_jwt_identity()  # Obtiene el ID del usuario autenticado
-#     data = request.get_json()
-#     product_id = data.get("product_id")
-#     quantity = data.get("quantity", 1)  # Si no se especifica cantidad, por defecto es 1
-
-#     if not product_id or quantity <= 0:
-#         return jsonify({"message": "Se requiere un ID de producto válido y cantidad mayor a 0"}), 400
-
-#     # Verificar si el producto existe
-#     product = Product.query.get(product_id)
-#     if not product:
-#         return jsonify({"message": "El producto no existe"}), 404
-
-#     # Buscar el carrito del usuario
-#     cart = Cart.query.filter_by(user_id=current_user_id).first()
-
-#     if not cart:
-#         # Si no existe el carrito, crearlo
-#         cart = Cart(user_id=current_user_id)
-#         db.session.add(cart)  # Añadir el carrito a la sesión
-#         db.session.commit()  # Cometer los cambios a la base de datos correctamente
-
-#     # Verificar si el producto ya está en el carrito
-#     cart_item = CartItems.query.filter_by(cart_id=cart.id, product_id=product_id).first()
-
-#     if cart_item:
-#         # Si ya está en el carrito, solo actualizar la cantidad
-#         cart_item.quantity += quantity
-#     else:
-#         # Si no está en el carrito, agregarlo
-#         new_item = CartItems(cart_id=cart.id, product_id=product_id, quantity=quantity)
-#         db.session.add(new_item)
-
-#     db.session.commit()  # Asegurarse de hacer commit después de modificar la base de datos
-
-#     return jsonify({"message": "Producto agregado al carrito exitosamente"}), 201
-
-
 @api.route('/cart', methods=['GET'])
 @jwt_required()
 def get_cart():
@@ -356,11 +326,6 @@ def get_products_by_category(category_id):
         return jsonify({"error": "An error occurred while fetching products"}), 500
 
 
-
-
-
-
-
 @api.route('/cart/add', methods=['POST'])
 @jwt_required()
 def add_to_cart():
@@ -402,3 +367,68 @@ def add_to_cart():
     except Exception as e:
         print(f"Error: {str(e)}")  # Log para depuración
         return jsonify({"error": "Hubo un error al agregar el producto al carrito"}), 500
+
+
+
+@api.route('/pay', methods=['POST'])
+@jwt_required()
+def create_payment():
+    try:
+        user_id = get_jwt_identity()
+        data = request.json
+
+        total_amount = data.get('total_amount')  # La cantidad total del pago
+        currency = data.get('currency', 'USD')   # Moneda predeterminada
+        description = data.get('description', 'Compra en la tienda')
+
+        # Crear un pago con PayPal
+        payment = paypalrestsdk.Payment({
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "transactions": [{
+                "amount": {
+                    "total": str(total_amount),
+                    "currency": currency
+                },
+                "description": description
+            }],
+            "redirect_urls": {
+                "return_url": url_for('api.payment_success', _external=True),
+                "cancel_url": url_for('api.payment_cancel', _external=True)
+            }
+        })
+
+       
+        if payment.create():
+            # Si el pago se crea exitosamente, redirige al usuario a la URL de PayPal
+            for link in payment.links:
+                if link.rel == "approval_url":
+                    approval_url = link.href
+                    return jsonify({"approval_url": approval_url})
+
+        else:
+            return jsonify({"error": "Error al crear el pago con PayPal"}), 500
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@api.route('/pay/success', methods=['GET'])
+def payment_success():
+    payment_id = request.args.get('paymentId')
+    payer_id = request.args.get('PayerID')
+
+    payment = paypalrestsdk.Payment.find(payment_id)
+
+    if payment.execute({"payer_id": payer_id}):
+        return jsonify({"message": "Pago completado exitosamente"}), 200
+    else:
+        return jsonify({"error": "Error al completar el pago"}), 500
+
+
+@api.route('/pay/cancel', methods=['GET'])
+def payment_cancel():
+    return jsonify({"message": "Pago cancelado"}), 400
+

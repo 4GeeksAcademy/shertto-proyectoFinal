@@ -175,7 +175,7 @@ class Category(db.Model):
             "name": self.name,
         }
 
-class Payment(db.Model):
+class Pay(db.Model):
     __tablename__ = 'payment'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -184,10 +184,8 @@ class Payment(db.Model):
     status = db.Column(db.String(50), nullable=False)  # ejemplo: 'paid', 'pending', 'failed'
 
     def __repr__(self):
-        return f'<Payment {self.order_id}>'
+        return f'<Pay {self.order_id}>'
 
-
-    #AGREGAR MÉTODOS DE PAGO (EJ PAYPAL)
 
     def serialize(self):
         return {
