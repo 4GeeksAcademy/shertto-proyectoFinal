@@ -25,6 +25,7 @@ import Faqs from './pages/Faqs.js';
 
 
 
+
 import EarphonesPage from "./component/earphonesPage.js";
 import PhotographyPage from "./component/photographypage.js";
 import GamingPage from "./component/gamingPages.js";
@@ -34,6 +35,8 @@ import SmartPage from "./component/smartPage.js";
 import PcPage from "./component/pcPage.js";
 import OffCanvasDetails from "./component/offcanvasdetails.js";
 import OrderSummary from "./component/OrderSummary.js";
+import TermsOfService from "./pages/termsOfService.js";
+import PrivacyPolicy from "./pages/privacyPolicy.js";
 
 //first component
 const Layout = () => {
@@ -70,6 +73,9 @@ const Layout = () => {
                     <Route path="*" element={<h1>Not found!</h1>} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/order-summary" element={<OrderSummary />} />
+                    <Route path="/termsOfService" element={<TermsOfService />} />
+                    <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+
                 </Routes>
                 <Footer />
             </ScrollToTop>

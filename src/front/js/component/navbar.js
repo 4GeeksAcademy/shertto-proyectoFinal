@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaUser, FaHeart, FaShoppingCart } from "react-icons/fa"; // Iconos de react-icons
+import { FaUser, FaHeart, FaShoppingCart, FaUserCircle } from "react-icons/fa"; // Iconos de react-icons
 import "../../styles/navbar.css";
 import { Context } from "../store/appContext";
 
@@ -80,28 +80,35 @@ export const Navbar = () => {
           {/* Iconos a la derecha */}
           <ul className="nav justify-content-end">
             <Link className="nav-item" to="/register">
-              <div>
+              <div className="nav-link" style={{ marginRight: "1px" }}>
                 <FaUser style={iconStyle} />
               </div>
             </Link>
             <Link to="/favorites">
-              <div className={`favorites-icon ${favoritesBounce ? "bounce" : ""}`}>
+              <div className={`nav-link ${favoritesBounce ? "bounce" : ""}`} style={{ marginRight: "0px" }}>
                 <FaHeart style={iconStyle} />
                 {store.favorites.length > 0 && (
                   <span className="badge">{store.favorites.length}</span>
                 )}
               </div>
             </Link>
-
             <Link to="/cart">
-              <div className={`cart-icon ${cartBounce ? "bounce" : ""}`}>
+              <div className={`nav-link ${cartBounce ? "bounce" : ""}`} style={{ marginRight: "0px" }}>
                 <FaShoppingCart style={iconStyle} />
                 {store.cart.length > 0 && (
                   <span className="badge">{store.cart.length}</span>
                 )}
               </div>
             </Link>
+            <Link to="/profile">
+              <div className="nav-link" style={{ marginRight: "0px" }}>
+                <FaUserCircle style={iconStyle} />
+              </div>
+            </Link>
           </ul>
+
+
+
         </div>
       </nav>
 

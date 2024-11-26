@@ -27,7 +27,8 @@
 
 /* Estilo para el navbar principal */
 .navbar {
-  height: 70px; 
+  position: fixed;
+  height: 40px; 
   background-color: #0e0e0e; 
   display: flex;
   justify-content: flex-end; 
@@ -41,9 +42,10 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para diferenciarlo del contenido */
 }
 
+
 /* Logo */
 .logo {
-  height: 50px; 
+  height: 40px; 
   width: auto;
   cursor: pointer;
   margin-top: 0px;

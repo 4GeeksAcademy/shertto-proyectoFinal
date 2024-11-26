@@ -87,9 +87,6 @@ export const Cart = () => {
 
             {store.cart.length > 0 && (
                 <>
-                    <button onClick={handleCreateOrder} className="checkout-button" disabled={loading}>
-                        {loading ? "Procesando..." : "Realizar compra"}
-                    </button>
 
                     {/* Contenedor de PayPal dentro del carrito */}
                     <div className="paypal-button-container">
