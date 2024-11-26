@@ -5,15 +5,22 @@ import { imagenes } from '../../img/imagenes';
 
 const EarphoneDetails = ({ product, onImageClick }) => {
   const [quantity, setQuantity] = useState(1);
-  const { actions } = useContext(Context)
+
+  const [isFavorite, setIsFavorite] = useState(false); // Estado para favoritos
+  const [isInCart, setIsInCart] = useState(false); // Estado para carrito
+  const { actions } = useContext(Context);
   const imagen = imagenes.find(img => img.id === product.id)
+
 
   // Función para manejar el clic en el ícono de favoritos
   const handleAddToFavorites = () => {
+    setIsFavorite(!isFavorite); // Alterna el estado
     actions.addToFavorites(product); 
   };
 
+  // Función para manejar el clic en el ícono de carrito
   const handleAddToCart = () => {
+    setIsInCart(!isInCart); // Alterna el estado
     actions.addToCart({ ...product, quantity }); 
   };
 
@@ -34,14 +41,18 @@ const EarphoneDetails = ({ product, onImageClick }) => {
           <div className="product-price">${product.price}</div>
           
           {/* Contenedor para los íconos */}
-          <div className="quantity-favorite-container">
-            {/* Ícono de corazón */}
-            <div className="favorite-icon" onClick={handleAddToFavorites}>
-              <i className="fas fa-heart"></i>
+          <div className="d-flex justify-content-center gap-3 mt-auto">
+            <div
+              className={`cart-icon ${isInCart ? "active" : ""}`} // Clase activa si está en el carrito
+              onClick={handleAddToCart}
+            >
+              <i className="fas fa-shopping-cart"></i>
             </div>
-            {/* Ícono de cesta */}
-            <div className="cart-icon" onClick={handleAddToCart}>
-              <i className="fa-sharp fa-solid fa-cart-plus"></i>
+            <div
+              className={`favorite-icon ${isFavorite ? "active" : ""}`} // Clase activa si es favorito
+              onClick={handleAddToFavorites}
+            >
+              <i className="fas fa-heart"></i>
             </div>
           </div>
         </div>
@@ -51,4 +62,3 @@ const EarphoneDetails = ({ product, onImageClick }) => {
 };
 
 export default EarphoneDetails;
-

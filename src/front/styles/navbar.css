@@ -3,7 +3,7 @@
   justify-content: center; /* Centrado de las categorías */
   align-items: center;
   background-color: rgb(14, 14, 14); /* Fondo negro */
-  padding: 0; 
+  padding-top : 70px; 
   position: fixed; 
   top: 6vh; 
   width: 100%; 
@@ -43,10 +43,10 @@
 
 /* Logo */
 .logo {
-  height: 50px; 
+  height: 75px; 
   width: auto;
   cursor: pointer;
-  margin-top: 0px;
+  margin-top: 20px;
 }
 
 /* Contenedor de búsqueda */
