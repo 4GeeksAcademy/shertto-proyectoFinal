@@ -1,8 +1,8 @@
 
 import React, { useEffect, useState, useContext } from "react";
 import EarphoneDetails from "./earphoneDetails"; // Importamos el componente para mostrar detalles individuales
-import "../../styles/productpage.css"; // Asegúrate de tener estilos personalizados
-import OffCanvasDetails from "./offcanvasdetails"; // Nuevo componente
+import "../../styles/productpage.css"; 
+import OffCanvasDetails from "./offcanvasdetails"; 
 import { Context } from "../store/appContext"; 
 
 
@@ -12,7 +12,7 @@ const PhotographyPage = () => {
 
   useEffect(() => {
     actions.getProductsByCategoryFromAPI(3); 
-  }, [actions]); //Al utilizar postman veo que la categoria Auriculares y Accesorios corresponde a la categoria con id=2
+  }, []); //Al utilizar postman veo que la categoria Auriculares y Accesorios corresponde a la categoria con id=2
 
   if (!store.products.length) {
     return <div>Loading...</div>;
