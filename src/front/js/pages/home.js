@@ -5,6 +5,7 @@ import CountdownTimer from "./CountdownTimer";
 import "../../styles/home.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Link } from "react-router-dom";
+import { imagenes } from "../../img/imagenes"; 
 
 export const Home = () => {
     const { actions, store } = useContext(Context);
@@ -13,7 +14,7 @@ export const Home = () => {
         // Llamamos a la API para cargar productos de las categorias
         const categoryIds = [1]; //En este caso los productos que estan en el home son los de la categoria con id=1 (Ofertas destacadas)
         categoryIds.forEach(id => actions.getProductsByCategoryFromAPI(id));
-    }, [actions]);
+    }, []);
 
     if (!store.products.length) {
         return <div>Loading...</div>;
@@ -69,11 +70,11 @@ export const Home = () => {
     // Renderizar producto con validación de precio
     const renderProduct = (product) => {
         const price = product.price && !isNaN(product.price) ? product.price.toFixed(2) : "N/A"; // Verifica que el precio sea válido
-
+        const imagen = imagenes.find(img => img.id === product.id)
         return (
             <Col key={product.id} md={4} className="mb-4">
                 <Card className="h-100">
-                    <Card.Img className="zoom-image card-img-top" variant="top" src={product.imageUrl || ""} alt={product.name} />
+                    <Card.Img className="zoom-image card-img-top" variant="top" src={imagen?.url || ""} alt={product.name} />
                     <Card.Body className="d-flex flex-column">
                         <Card.Title>{product.name}</Card.Title>
                         <Card.Text>${price}</Card.Text> {/* Muestra el precio o "N/A" si no es válido */}

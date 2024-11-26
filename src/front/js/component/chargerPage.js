@@ -12,7 +12,7 @@ const ChargerPage = () => {
 
   useEffect(() => {
     actions.getProductsByCategoryFromAPI(6); 
-  }, [actions]); //Al utilizar postman veo que la categoria Auriculares y Accesorios corresponde a la categoria con id=6
+  }, []); //Al utilizar postman veo que la categoria Auriculares y Accesorios corresponde a la categoria con id=6
 
   if (!store.products.length) {
     return <div>Loading...</div>;

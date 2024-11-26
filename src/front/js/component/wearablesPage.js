@@ -11,7 +11,7 @@ const WearablesPage = () => {
 
   useEffect(() => {
     actions.getProductsByCategoryFromAPI(5); 
-  }, [actions]); //Al utilizar postman veo que la categoria Auriculares y Accesorios corresponde a la categoria con id=5
+  }, []); //Al utilizar postman veo que la categoria Auriculares y Accesorios corresponde a la categoria con id=5
 
   if (!store.products.length) {
     return <div>Loading...</div>;
