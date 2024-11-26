@@ -22,7 +22,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             ]
         },
         actions: {
-            // Función para obtener productos por categoría desde la API
             getProductsByCategoryFromAPI: async (categoryId) => {
                 try {
                     const response = await fetch(
@@ -47,8 +46,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            
-            // Agregar producto a favoritos
             addToFavorites: (product) => {
                 const store = getStore();
                 const updatedFavorites = [...store.favorites, product];
@@ -56,9 +53,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
             },
 
-            
-            
-            // Eliminar producto de favoritos
             removeFromFavorites: (productId) => {
                 const store = getStore();
                 const updatedFavorites = store.favorites.filter(
@@ -68,7 +62,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
             },
 
-            // Eliminar producto de favoritos
             removeFromCart: (productId) => {
                 const store = getStore();
                 const updatedCart = store.cart.filter(
@@ -78,13 +71,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.setItem("cart", JSON.stringify(updatedCart));
             },
 
-            // Limpiar favoritos
             clearFavorites: () => {
                 setStore({ favorites: [] });
                 localStorage.removeItem("favorites");
             },
 
-            // Limpiar favoritos
             clearCart: () => {
                 setStore({ cart: [] });
                 localStorage.removeItem("cart");

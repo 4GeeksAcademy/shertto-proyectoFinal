@@ -12,7 +12,7 @@ const SmartPage = () => {
 
   useEffect(() => {
     actions.getProductsByCategoryFromAPI(7); 
-  }, [actions]); //Al utilizar postman veo que la categoria Auriculares y Accesorios corresponde a la categoria con id=7
+  }, []); //Al utilizar postman veo que la categoria Auriculares y Accesorios corresponde a la categoria con id=7
 
   if (!store.products.length) {
     return <div>Loading...</div>;

@@ -1,10 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { Context } from "../store/appContext"; 
 import "../../styles/earphonedetails.css";
+import { imagenes } from '../../img/imagenes';
 
 const EarphoneDetails = ({ product, onImageClick }) => {
   const [quantity, setQuantity] = useState(1);
   const { actions } = useContext(Context)
+  const imagen = imagenes.find(img => img.id === product.id)
 
   // Función para manejar el clic en el ícono de favoritos
   const handleAddToFavorites = () => {
@@ -19,7 +21,7 @@ const EarphoneDetails = ({ product, onImageClick }) => {
     <div className="product-card">
       <div className="product-image-container">
         <img 
-          src={product.image} 
+          src= {imagen?.url}
           alt={product.name} 
           className="product-image" 
           onClick={() => onImageClick(product)} // Llama a la función con el producto como argumento
