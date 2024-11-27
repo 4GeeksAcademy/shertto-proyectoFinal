@@ -4,14 +4,19 @@ import "../../styles/cart.css";
 import { useNavigate } from "react-router-dom";
 "useclient";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { imagenes } from "../../img/imagenes"; 
 
 export const Cart = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate(); // Hook para redirigir al usuario
     const [loading, setLoading] = useState(false); // Para mostrar un indicador de carga
 
+    const getProductImage = (productId) => {
+        const imagen = imagenes.find(img => img.id === productId);
+        return imagen ? imagen.url : ''; // Devolvemos la URL de la imagen si existe
+    }
+
     useEffect(() => {
-        // Obtener el carrito desde el backend al cargar el componente
         actions.getCartFromAPI();
     }, []);
 
@@ -59,6 +64,7 @@ export const Cart = () => {
                     <div className="cart-products">
                         <h2>Productos</h2>
                         <ul className="cart-items">
+
                             {store.cart.map((product, index) => (
                                 <li key={index} className="cart-item">
                                     <div className="cart-item-container">
@@ -95,8 +101,21 @@ export const Cart = () => {
                 <h3>Total: ${totalAmount}</h3>
             </div>
 
-            {store.cart.length > 0 && (
-                <>
+
+                                        </div>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+
+                        <button
+                            onClick={actions.clearCart}
+                            className="clear-cart-button"
+                        >
+                            Limpiar carrito
+                        </button>
+                    </div>
+
 
                     {/* Contenedor de PayPal dentro del carrito */}
                     <div className="paypal-button-container">
@@ -105,10 +124,13 @@ export const Cart = () => {
                                 style={{ color: "blue", label: "pay" }} />
                         </PayPalScriptProvider>
 
+
                     </div>
                 </>
             )}
         </div>
     );
-}
+
+};
+
 

@@ -15,7 +15,6 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile.js";
 
 import { Navbar } from "./component/navbar";
-import CarouselTextBanner from './component/carousel-text-banner.js';
 import { Footer } from "./component/footer";
 import { Cart } from "./component/Cart.js";
 import {Favorites} from "./component/Favorites.js"
@@ -51,7 +50,6 @@ const Layout = () => {
         <div>
             <ScrollToTop>
                 <Navbar />
-                <CarouselTextBanner />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/cart" element={<Cart />} />
@@ -75,7 +73,6 @@ const Layout = () => {
                     <Route path="/order-summary" element={<OrderSummary />} />
                     <Route path="/termsOfService" element={<TermsOfService />} />
                     <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
-
                 </Routes>
                 <Footer />
             </ScrollToTop>

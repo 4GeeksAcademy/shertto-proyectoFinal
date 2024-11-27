@@ -1,54 +1,64 @@
-/*
-    home.css: This website contains selectors only used in home.css
-
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+/* Estilo principal */
 .home {
-    margin-top: 80px;
+    margin-top: 0;
     padding: 20px;
+    overflow-x: hidden; /* Evitar desbordamientos horizontales */
 }
 
+/* Imágenes con efecto zoom */
 .zoom-image {
-	transition: transform 0.3s ease; /* Hace que el cambio sea suave */
+    transition: transform 0.3s ease;
 }
 
 .zoom-image:hover {
-	transform: scale(1.15); /* Aumenta la escala al 110% al pasar el cursor */
+    transform: scale(1.15);
 }
 
 p {
     text-align: center;
 }
 
+
 .card {
     display: flex;
     flex-direction: column;
-    height: 100%; 
+    height: 100%;
 }
 
 .card-body {
-    flex-grow: 1; 
+    flex-grow: 1;
 }
 
 .card-img-top {
     object-fit: contain;
-    height: 200px; 
+    height: 200px;
 }
 
-/* Estilo básico para las flechas */
+.featured-carousel img {
+    object-fit: contain; /* Ajusta la imagen para que no se recorte, se adapta al contenedor */
+    width: 100%; 
+    height: 300px; 
+}
+
+
 .featured-carousel .carousel-control-prev-icon,
 .featured-carousel .carousel-control-next-icon {
     background-color: black;
-    border-radius: 50%; 
-    width: 40px; 
-    height: 40px;
+    border-radius: 50%;
+    width: 30px; 
+    height: 30px; 
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
+
+.featured-carousel {
+    margin-top: 100px; 
+    margin-bottom: 20px;
+}
+
 
 .countdown-container {
     display: flex;
@@ -56,7 +66,6 @@ p {
     align-items: center;
     gap: 1rem;
     margin: 20px 0;
-    font-family: Arial, sans-serif;
 }
 
 .countdown-box {
@@ -80,20 +89,13 @@ p {
     text-transform: uppercase;
 }
 
-.home {
-    overflow-x: hidden; /* Evita el scroll horizontal */
-}
-
-.row {
-    margin: 0; /* Elimina los márgenes entre filas que pueden generar desbordamiento */
-}
-
-
-.favorite-icon {
+/* Estilo para favoritos y carrito */
+.favorite-icon,
+.cart-icon {
     width: 30px;
     height: 30px;
-    border: 2px solid rgb(0, 0, 0); /* Borde negro */
-    border-radius: 50%; /* Forma circular */
+    border: 2px solid #000;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,42 +103,21 @@ p {
     transition: all 0.3s ease;
 }
 
-.favorite-icon:hover {
-    border-color: darkorchid; /* Cambia el borde a morado al pasar el ratón */
-}
-
-.favorite-icon i {
-    color: #333; /* Color del ícono */
-    font-size: 18px;
-}
-
-/* Estilo para el ícono de carrito */
-   .cart-icon {
-    width: 30px;
-    height: 30px;
-    border: 2px solid #000000; /* Borde negro */
-    border-radius: 50%; /* Forma circular */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
+.favorite-icon:hover,
 .cart-icon:hover {
-    border-color: darkorchid; /* Cambia el borde a morado al pasar el ratón */
+    border-color: darkorchid;
 }
 
-.cart-icon i {
-    color: #333; /* Color del ícono */
-    font-size: 18px;
+.favorite-icon.active,
+.cart-icon.active {
+    background-color: darkorchid;
+    border-color: darkorchid;
+    color: white;
 }
 
-.favorite-icon.active, .cart-icon.active {
-    background-color: darkorchid; /* Fondo relleno */
-    border-color: darkorchid; /* Borde morado */
+/* Prevenir márgenes en filas que puedan desbordarse */
+.row {
+    margin: 0;
 }
 
-.favorite-icon.active i, .cart-icon.active i {
-    color: white; /* Ícono blanco */
-}
+    
