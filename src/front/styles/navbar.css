@@ -1,121 +1,103 @@
-.navbar-routes {
-  display: flex;
-  justify-content: center; /* Centrado de las categorías */
-  align-items: center;
-  background-color: rgb(14, 14, 14); /* Fondo negro */
-  padding-top : 70px; 
-  position: fixed; 
-  top: 6vh; 
-  width: 100%; 
-  z-index: 999; 
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Agrega un sutil sombreado */
-}
-
-.navbar-link {
-  color: white; 
-  text-decoration: none; 
-  padding: 8px 15px; 
-  margin: 0 5px; 
-  font-size: 1em; 
-  font-weight: 500; 
-  transition: color 0.3s ease; /* Transición suave para hover */
-}
-
-.navbar-link:hover {
-  color: darkorchid;
-}
-
-/* Estilo para el navbar principal */
+/* Estilo para la barra de navegación principal */
 .navbar {
-  position: fixed;
-  height: 40px; 
-  background-color: #0e0e0e; 
-  display: flex;
-  justify-content: flex-end; 
-  align-items: center; 
-  padding: 0 20px; 
-  position: fixed; /* Fijar el navbar en la parte superior */
   top: 0;
   left: 0;
-  width: 100%; 
-  z-index: 1000; /* Por encima de otros elementos */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para diferenciarlo del contenido */
-}
-
-
-/* Logo */
-.logo {
-  height: 40px; 
-  width: auto;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-/* Contenedor de búsqueda */
-.search-container {
+  width: 100%;
+  height: 80px;
+  background-color: #0e0e0e;
+  z-index: 1000;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  flex-grow: 1; /* El buscador ocupa el espacio restante */
+  padding: 0 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden; /* Evitar que desborde horizontalmente */
+}
+
+/* Ajuste del logo */
+.logo {
+  height: 70px;
+  width: 80px;
+}
+
+/* Contenedor del buscador */
+.search-container {
+  flex: 1;
+  display: flex;
+  justify-content: center; /* Centra el formulario */
+  align-items: center;
 }
 
 .search-form {
+  display: flex; /* Alinea los elementos en fila */
+  align-items: center; /* Centra verticalmente los elementos */
+  width: 50%; /* Tamaño del buscador */
+}
+
+.search-form input {
+  width: 70%;
+  margin: auto;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px; /* Bordes redondeados (solo izquierda) */
+}
+
+.search-form button {
+  padding: 8px 12px;
+  background-color: #6c63ff; /* Color del botón */
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0; /* Bordes redondeados (solo derecha) */
+  cursor: pointer;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.form-control {
-  width: 250px; 
-  border-radius: 20px; 
+.search-form button:hover {
+  background-color: #574fd1; /* Efecto hover */
 }
 
-.btn-outline-light {
-  border-color: white;
+/* Estilo de los íconos */
+.nav-item .nav-link {
+  margin-right: 15px;
   color: white;
-  margin-left: 10px; 
-  border-radius: 50%; 
-  padding: 5px 10px; 
-}
-
-/* Iconos del navbar */
-.nav-item {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-
-}
-
-.nav-item a {
-  color: white;
-  font-size: 20px; 
+  font-size: 26px;
   transition: color 0.3s ease;
-  z-index: 1000
 }
 
-
-/* Animación de rebote para el carrito y favoritos*/
-@keyframes bounce {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(2);
-  }
-  100% {
-    transform: scale(1);
-  }
+.nav-item .nav-link:hover {
+  color: #6c63ff;
 }
 
-.cart-icon.bounce {
-  animation: bounce 0.5s ease; /* Efecto de rebote para el carrito */
-  visibility: visible;
+/* Barra de categorías debajo del navbar */
+.navbar-routes {
+  width: 100%;
+  background-color: #0e0e0e;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Efecto de rebote para los favoritos */
-.favorites-icon.bounce {
-  animation: bounce 0.5s ease; /* Efecto de rebote para favoritos */
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
 }
+
+.navbar-link:hover {
+  color: #6c63ff;
+}
+
+/* Ajuste del margen superior del contenido principal */
+body {
+  overflow-x: hidden; /* Evitar desbordamientos horizontales */
+}
+
 
 
 
