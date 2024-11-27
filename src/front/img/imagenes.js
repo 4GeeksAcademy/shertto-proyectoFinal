@@ -43,4 +43,41 @@ export const imagenes = [
         id: 40,
         url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732656103/6-removebg-preview_gpsbb1.png"
     },
+    {
+        id: 47,
+        url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732664941/71C3lbbeLsL._AC_SL1000_-removebg-preview_ref0hw.png"
+    },
+    {
+        id: 48,
+        url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732665064/61dABznFitL._AC_UL165_SR165_165_-removebg-preview_orb4x9.png"
+    },
+    {
+        id: 49,
+        url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732665136/71_5dhkUm6L._AC_UL165_SR165_165_-removebg-preview_ybqnar.png"
+    },
+    {
+        id: 50,
+        url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732665230/712h86wwZzL._AC_UY218_-removebg-preview_escrck.png"
+    },
+    {
+        id: 51,
+        url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732665300/71x6kWrOGTL._AC_UY218_-removebg-preview_i0ltlz.png"
+    },
+    {
+        id: 57,
+        url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732665404/51S5xYlNKgL._AC_UL320_-removebg-preview_rpuvx5.png"
+    },
+    {
+        id: 58,
+        url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732665515/51ikMaS08HL._AC_UY218_-removebg-preview_piluhh.png"
+    },
+    {
+        id: 59,
+        url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732665577/51ixaMkmvpL._AC_UY218_-removebg-preview_mvusgi.png"
+    },
+    {
+        id: 60,
+        url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732665708/61HC_XQ7Y7L._AC_UL320_-removebg-preview_lhcmnn.png"
+    },
+    
 ]
