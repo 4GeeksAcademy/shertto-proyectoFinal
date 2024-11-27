@@ -35,10 +35,7 @@ export const imagenes = [
         id: 15,
         url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732654773/3-removebg-preview_swji3i.png"
     },
-    {
-        id: 34,
-        url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732655154/5-removebg-preview_fiqron.png"
-    },
+   
     {
         id: 40,
         url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732656103/6-removebg-preview_gpsbb1.png"
@@ -198,6 +195,7 @@ export const imagenes = [
         id: 67,
         url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732714957/5-removebg-preview_gbdntf.png"
     },
+   
     
 ]
 

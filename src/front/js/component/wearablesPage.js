@@ -3,6 +3,7 @@ import EarphoneDetails from "./earphoneDetails"
 import "../../styles/productpage.css"; 
 import OffCanvasDetails from "./offcanvasdetails"; 
 import { Context } from "../store/appContext"; 
+import { imagenes } from "../../img/imagenes";
 
 
 const WearablesPage = () => {

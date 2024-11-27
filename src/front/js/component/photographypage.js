@@ -9,6 +9,7 @@ import { Context } from "../store/appContext";
 const PhotographyPage = () => {
   const { actions, store } = useContext(Context); 
   const [selectedProduct, setSelectedProduct] = useState(null); // Para manejar el producto seleccionado
+  
 
   useEffect(() => {
     actions.getProductsByCategoryFromAPI(3); 
@@ -34,6 +35,7 @@ const PhotographyPage = () => {
     <div className="product-page">
       <h1 className="title">Fotografía y videocamarás</h1>
       <div className="product-list">
+        
         {store.products.map((product) => (
             <EarphoneDetails
             key={product.id}

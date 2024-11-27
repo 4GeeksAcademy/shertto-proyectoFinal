@@ -4,7 +4,7 @@ import EarphoneDetails from "./earphoneDetails"
 import "../../styles/productpage.css"; // Asegúrate de tener estilos personalizados
 import OffCanvasDetails from "./offcanvasdetails"; // Nuevo componente
 import { Context } from "../store/appContext"; 
-
+import { imagenes } from "../../img/imagenes";
 
 const SmartPage = () => {
   const { actions, store } = useContext(Context); 
