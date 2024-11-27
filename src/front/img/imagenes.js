@@ -29,14 +29,14 @@ export const imagenes = [
     },
     {
         id: 12,
-        url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732654565/2_con_fondo-removebg-preview_vavptx.png"
+        url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732707959/1-removebg-preview_cgfwnq.png"
     },
     {
         id: 15,
         url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732654773/3-removebg-preview_swji3i.png"
     },
     {
-        id: 33,
+        id: 34,
         url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732655154/5-removebg-preview_fiqron.png"
     },
     {
@@ -78,6 +78,18 @@ export const imagenes = [
     {
         id: 60,
         url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732665708/61HC_XQ7Y7L._AC_UL320_-removebg-preview_lhcmnn.png"
+    },
+    {
+        id: 65,
+        url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732713820/2-removebg-preview_hlz2gq.png"
+    },
+    {
+        id: 66,
+        url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732713948/3-removebg-preview_kai9ps.png"
+    },
+    {
+        id: 67,
+        url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732714957/5-removebg-preview_gbdntf.png"
     },
     
 ]
