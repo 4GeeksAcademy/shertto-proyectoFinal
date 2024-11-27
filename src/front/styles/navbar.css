@@ -1,4 +1,33 @@
-/* Estilo para la barra de navegación principal */
+
+.navbar-routes {
+  display: flex;
+  justify-content: center; /* Centrado de las categorías */
+  align-items: center;
+  background-color: rgb(14, 14, 14); /* Fondo negro */
+  padding-top : 20px; 
+  position: fixed; 
+  top: 6vh; 
+  width: 100%; 
+  z-index: 999; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Agrega un sutil sombreado */
+}
+
+.navbar-link {
+  color: white; 
+  text-decoration: none; 
+  padding: 8px 15px; 
+  margin: 0 5px; 
+  font-size: 1em; 
+  font-weight: 500; 
+  transition: color 0.3s ease; /* Transición suave para hover */
+}
+
+.navbar-link:hover {
+  color: darkorchid;
+}
+
+/* Estilo para el navbar principal */
+
 .navbar {
   top: 0;
   left: 0;
@@ -26,6 +55,11 @@
   display: flex;
   justify-content: center; /* Centra el formulario */
   align-items: center;
+
+  justify-content: center;
+  flex-grow: 1; /* El buscador ocupa el espacio restante */
+  margin-top: 20px
+
 }
 
 .search-form {

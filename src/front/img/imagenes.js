@@ -44,6 +44,61 @@ export const imagenes = [
         url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732656103/6-removebg-preview_gpsbb1.png"
     },
 
+    {
+        id: 34,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732662246/61hlrhiwF8L._AC_UL320_-removebg-preview_ppubng.png"
+    },
+    {
+        id: 35,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732665529/71gvTy-_sUL._AC_UL320_-removebg-preview_xenset.png"
+    },
+    {
+        id: 36,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732665715/61hE9oco1yL._AC_UL320_-removebg-preview_gkacoh.png"
+    },
+    {
+        id: 37,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732665799/61sfmKVb6TL._AC_UL320_-removebg-preview_u1in3n.png"
+    },
+    {
+        id: 38,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732665913/714shrCWD4L._AC_UL320_-removebg-preview_d8ahrw.png"
+    },
+    {
+        id: 39,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732666046/612DHAaVqSL._AC_UL320_-removebg-preview_whyfey.png"
+    },
+    
+    {
+        id: 41,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732666557/611CPNLp--L._AC_UL320_-removebg-preview_usdjye.png"
+    },
+    {
+        id: 42,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732666664/61QD8dxh6IL._AC_UL320_-removebg-preview_hlzfxc.png"
+    },
+    {
+        id: 43,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732666714/519UP2oFcEL._AC_UL320_-removebg-preview_qq7afh.png"
+    },
+    {
+        id: 44,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732666780/61oCK9Bg-PL._AC_UL320_-removebg-preview_logge0.png"
+    },
+    {
+        id: 45,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732666933/51oe28KXG2L._AC_UL320_-removebg-preview_kokaib.png"
+    },
+    {
+        id: 46,
+        url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732667007/71AiVWZXdYL._AC_UL320_-removebg-preview_fmtvcg.png"
+    },
+    
+]
+
+
+
+
 
     //fotografia 
     {
@@ -151,3 +206,4 @@ export const imagenes = [
     
 
 ]
+
