@@ -3,11 +3,10 @@ import { Carousel } from 'react-bootstrap';
 
 const CarouselTextBanner = () => {
     return (
-        <Carousel interval={2000}>
+        <Carousel interval={2000} className="carousel-banner">
             <Carousel.Item>
                 <div style={{
                     height: '70px',
-                    overflow: 'hidden',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -67,5 +66,6 @@ const CarouselTextBanner = () => {
 };
 
 export default CarouselTextBanner;
+
 
 

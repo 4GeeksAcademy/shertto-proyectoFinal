@@ -93,11 +93,6 @@ export const imagenes = [
         id: 46,
         url: "https://res.cloudinary.com/drubwdzyn/image/upload/v1732667007/71AiVWZXdYL._AC_UL320_-removebg-preview_fmtvcg.png"
     },
-    
-]
-
-
-
 
 
     //fotografia 
@@ -204,6 +199,5 @@ export const imagenes = [
         url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732714957/5-removebg-preview_gbdntf.png"
     },
     
-
 ]
 

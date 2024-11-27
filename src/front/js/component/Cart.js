@@ -64,50 +64,34 @@ export const Cart = () => {
                     <div className="cart-products">
                         <h2>Productos</h2>
                         <ul className="cart-items">
-
-                            {store.cart.map((product, index) => (
-                                <li key={index} className="cart-item">
-                                    <div className="cart-item-container">
-                                        <img
-                                            src={product.imageUrl}
-                                            alt={product.name}
-                                            className="cart-item-image"
-                                        />
-                                        <div className="cart-item-details">
-                                            <span>{product.name}</span>
-                                            <span>
-                                                ${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}
-                                            </span>
-                                            <span>Cantidad: {product.quantity}</span>
-                                        </div>
-                                        <button
-                                            onClick={() => actions.removeFromCart(product.id)}
-                                            className="remove-button"
-                                        >
-                                            X
-                                        </button>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <button onClick={actions.clearCart} className="clear-cart-button">
-                        Limpiar carrito
-                    </button>
-                </>
-            )}
-            <div className="total-container">
-                <h3>Total: ${totalAmount}</h3>
-            </div>
-
-
+                            {store.cart.map((product, index) => {
+                                const productImage = getProductImage(product.id); 
+                                return (
+                                    <li key={index} className="cart-item">
+                                        <div className="cart-item-container">
+                                            <img
+                                                src={productImage} // Usamos la imagen del producto
+                                                alt={product.name}
+                                                className="cart-item-image"
+                                            />
+                                            <div className="cart-item-details">
+                                                <span>{product.name}</span>
+                                                <span>${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}</span>
+                                                <span>Cantidad: {product.quantity}</span>
+                                                {/* Mostrar la descripción del producto */}
+                                                <p className="product-description">{product.description}</p>
+                                            </div>
+                                            <button
+                                                onClick={() => actions.removeFromCart(product.id)}
+                                                className="remove-button"
+                                            >
+                                                X
+                                            </button>
                                         </div>
                                     </li>
                                 );
                             })}
                         </ul>
-
                         <button
                             onClick={actions.clearCart}
                             className="clear-cart-button"
@@ -116,21 +100,32 @@ export const Cart = () => {
                         </button>
                     </div>
 
-
-                    {/* Contenedor de PayPal dentro del carrito */}
-                    <div className="paypal-button-container">
-                        <PayPalScriptProvider>
-                            <PayPalButtons
-                                style={{ color: "blue", label: "pay" }} />
-                        </PayPalScriptProvider>
-
-
+                    {/* Contenedor del total y botones */}
+                    <div className="cart-summary">
+                        <div className="total-container">
+                            <h3>Total: ${totalAmount}</h3>
+                        </div>
+                        <button
+                            onClick={handleCreateOrder}
+                            className="checkout-button"
+                            disabled={loading}
+                        >
+                            {loading ? "Procesando..." : "Realizar compra"}
+                        </button>
+                        <div className="paypal-button-container">
+                            <PayPalScriptProvider
+                                options={{
+                                    clientId: "ATJCaAknFuveCgSzJhOyy5ZOLviAuWxXEPP518QPV60mJIxZkh8OJTaKnC3icv5jweOWBROONxqQGzTh",
+                                }}
+                            >
+                                <PayPalButtons style={{ color: "blue", label: "pay" }} />
+                            </PayPalScriptProvider>
+                        </div>
                     </div>
                 </>
             )}
         </div>
     );
-
 };
 
 

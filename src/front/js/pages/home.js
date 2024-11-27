@@ -6,6 +6,7 @@ import "../../styles/home.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Link } from "react-router-dom";
 import { imagenes } from "../../img/imagenes"; 
+import CarouselTextBanner from "../component/carousel-text-banner";
 
 export const Home = () => {
     const { actions, store } = useContext(Context);
@@ -67,23 +68,20 @@ export const Home = () => {
         },
     ];
 
-    // Renderizar producto con validación de precio
     const renderProduct = (product) => {
-
-        const isFavorite = store.favorites.some((fav) => fav.id === product.id); // Comprueba si está en favoritos
-        const isInCart = store.cart.some((item) => item.id === product.id); // Comprueba si está en el carrito
+        const isFavorite = store.favorites.some((fav) => fav.id === product.id);
+        const isInCart = store.cart.some((item) => item.id === product.id);
 
         const toggleFavorite = () => {
-            actions.addToFavorites(product); // Acción para añadir/quitar favoritos
+            actions.addToFavorites(product);
         };
 
         const toggleCart = () => {
-            actions.addToCart(product); // Acción para añadir/quitar carrito
+            actions.addToCart(product);
         };
 
-
-        const price = product.price && !isNaN(product.price) ? product.price.toFixed(2) : "N/A"; // Verifica que el precio sea válido
-        const imagen = imagenes.find(img => img.id === product.id)
+        const price = product.price && !isNaN(product.price) ? product.price.toFixed(2) : "N/A";
+        const imagen = imagenes.find(img => img.id === product.id);
 
         return (
             <Col key={product.id} md={4} className="mb-4">
@@ -91,19 +89,12 @@ export const Home = () => {
                     <Card.Img className="zoom-image card-img-top" variant="top" src={imagen?.url || ""} alt={product.name} />
                     <Card.Body className="d-flex flex-column">
                         <Card.Title>{product.name}</Card.Title>
-                        <Card.Text>${product.price && !isNaN(product.price) ? product.price.toFixed(2) : "N/A"}</Card.Text>
-
+                        <Card.Text>${price}</Card.Text>
                         <div className="d-flex justify-content-center gap-3 mt-auto">
-                            <div
-                                className={`cart-icon ${isInCart ? "active" : ""}`}
-                                onClick={toggleCart}
-                            >
+                            <div className={`cart-icon ${isInCart ? "active" : ""}`} onClick={toggleCart}>
                                 <i className="fas fa-shopping-cart"></i>
                             </div>
-                            <div
-                                className={`favorite-icon ${isFavorite ? "active" : ""}`}
-                                onClick={toggleFavorite}
-                            >
+                            <div className={`favorite-icon ${isFavorite ? "active" : ""}`} onClick={toggleFavorite}>
                                 <i className="fas fa-heart"></i>
                             </div>
                         </div>
@@ -113,7 +104,6 @@ export const Home = () => {
         );
     };
 
-    // Renderizar categorías
     const renderCategory = (category) => (
         <Col key={category.id} md={3} className="category-item text-center">
             <Link to={category.path} className="text-decoration-none text-dark">
@@ -125,6 +115,8 @@ export const Home = () => {
 
     return (
         <div className="home">
+            <CarouselTextBanner />
+
             <section className="categories mt-4">
                 <Row className="justify-content-center">
                     {categories.map(renderCategory)}
@@ -134,9 +126,7 @@ export const Home = () => {
             <section className="featured-products mt-4">
                 <h2 className="text-center">Ofertas destacadas</h2>
                 <p>Del 21 de Noviembre al 2 de Diciembre de 2024</p>
-
                 <CountdownTimer targetDate="2024-12-02T23:59:59" />
-
                 <Carousel controls={true} indicators={false} interval={null} className="featured-carousel">
                     {Array.from({ length: Math.ceil(featuredProducts.length / 3) }).map((_, index) => {
                         const productsToShow = featuredProducts.slice(index * 3, (index + 1) * 3);
