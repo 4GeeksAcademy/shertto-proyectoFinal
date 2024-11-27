@@ -50,7 +50,6 @@ const Profile = () => {
             <strong>Usuario_id:</strong> {store.user?.id || "No disponible"}
           </p>
   
-        
           <p style={{ color: "#555" }}>
             <strong>Email:</strong> {store.user?.email || "No disponible"}
           </p>

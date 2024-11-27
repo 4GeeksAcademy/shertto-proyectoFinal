@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/cart.css";
 import { useNavigate } from "react-router-dom";
@@ -69,7 +69,9 @@ export const Cart = () => {
                                         />
                                         <div className="cart-item-details">
                                             <span>{product.name}</span>
-                                            <span>${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}</span>
+                                            <span>
+                                                ${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}
+                                            </span>
                                             <span>Cantidad: {product.quantity}</span>
                                         </div>
                                         <button
@@ -79,14 +81,11 @@ export const Cart = () => {
                                             X
                                         </button>
                                     </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
-                                    <button onClick={() => actions.removeFromCart(product.id)} className="remove-button">
-                                        X
-                                    </button>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
                     <button onClick={actions.clearCart} className="clear-cart-button">
                         Limpiar carrito
                     </button>
@@ -102,8 +101,8 @@ export const Cart = () => {
                     {/* Contenedor de PayPal dentro del carrito */}
                     <div className="paypal-button-container">
                         <PayPalScriptProvider>
-                            <PayPalButtons 
-                            style= {{color: "blue", label: "pay"}}/>
+                            <PayPalButtons
+                                style={{ color: "blue", label: "pay" }} />
                         </PayPalScriptProvider>
 
                     </div>
