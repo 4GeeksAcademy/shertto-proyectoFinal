@@ -69,7 +69,13 @@ export const Cart = () => {
                                         />
                                         <div className="cart-item-details">
                                             <span>{product.name}</span>
+
                                             <span>${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}</span>
+
+                                            <span>
+                                                ${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}
+                                            </span>
+
                                             <span>Cantidad: {product.quantity}</span>
                                         </div>
                                         <button
@@ -82,6 +88,7 @@ export const Cart = () => {
                                 </li>
                             ))}
                         </ul>
+
                         <button
                             onClick={actions.clearCart}
                             className="clear-cart-button"
@@ -111,9 +118,12 @@ export const Cart = () => {
                                 <PayPalButtons style={{ color: "blue", label: "pay" }} />
                             </PayPalScriptProvider>
                         </div>
+
                     </div>
                 </>
             )}
         </div>
     );
+
 }
+

@@ -43,6 +43,63 @@ export const imagenes = [
         id: 40,
         url: "https://res.cloudinary.com/dsgltzpu7/image/upload/v1732656103/6-removebg-preview_gpsbb1.png"
     },
+
+
+    //fotografia 
+    {
+       
+        id: 16,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731871466/61RShX43PjL._AC_SL1500_-removebg-preview_eg5qfm.png"     
+    },
+    {
+        id: 17,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731871486/41UjpaXYdZL._AC_-removebg-preview_hflitt.png" 
+    },
+    {
+        id: 18,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731871485/81C9A0E_8TL._AC_SL1500_-removebg-preview_xjuzvj.png" 
+    },
+    {
+        
+        id: 19,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731871485/81s6vB6opOL._AC_SL1500_-removebg-preview_hghu0m.png" 
+    },
+    { 
+        id: 20,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731871485/71aIMj1B7WL._AC_SL1500_-removebg-preview_nw8ptw.png" 
+    },
+    {
+        id: 22,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731871485/615yHHnpQZL._AC_SL1500_-removebg-preview_shckzr.png" 
+    },
+    // gaming
+    {
+        id: 23,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731873911/71d6N1gOzkL._AC_SL1500_-removebg-preview_e46tc8.png"
+
+    },
+    {
+        id: 24,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731873911/71YAEZ-lj0L._AC_SL1500_-removebg-preview_neojgw.png"
+    },
+    {
+        id: 25,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731873911/71h3MKywDCL._AC_SL1500_-removebg-preview_qnzpth.png"
+    },
+    {
+        id: 26,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731873910/71w8v6OMJKL._AC_SL1500_-removebg-preview_jt8rks.png"
+     },
+    {  
+        id: 27,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731873911/71gz1a4X3EL._AC_SL1500_-removebg-preview_keqm5e.png"
+    },
+    {   
+        id: 28,
+        url: "https://res.cloudinary.com/dese5jn5f/image/upload/v1731873911/71LKZ32h0-L._AC_SL1500_-removebg-preview_qlucza.png"
+    },
+ 
+
     {
         id: 47,
         url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732664941/71C3lbbeLsL._AC_SL1000_-removebg-preview_ref0hw.png"
@@ -80,4 +137,5 @@ export const imagenes = [
         url: "https://res.cloudinary.com/dgv9wfxzp/image/upload/v1732665708/61HC_XQ7Y7L._AC_UL320_-removebg-preview_lhcmnn.png"
     },
     
+
 ]
