@@ -64,6 +64,7 @@ export const Cart = () => {
                     <div className="cart-products">
                         <h2>Productos</h2>
                         <ul className="cart-items">
+
                             {store.cart.map((product, index) => {
                                 const productImage = getProductImage(product.id); 
                                 return (
@@ -87,11 +88,13 @@ export const Cart = () => {
                                             >
                                                 X
                                             </button>
+
                                         </div>
                                     </li>
                                 );
                             })}
                         </ul>
+
                         <button
                             onClick={actions.clearCart}
                             className="clear-cart-button"
@@ -121,11 +124,13 @@ export const Cart = () => {
                                 <PayPalButtons style={{ color: "blue", label: "pay" }} />
                             </PayPalScriptProvider>
                         </div>
+
                     </div>
                 </>
             )}
         </div>
     );
+
 };
 
 
