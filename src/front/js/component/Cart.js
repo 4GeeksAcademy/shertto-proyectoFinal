@@ -1,17 +1,22 @@
-import React, { useContext, useState, useEffect} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/cart.css";
 import { useNavigate } from "react-router-dom";
 "useclient";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { imagenes } from "../../img/imagenes"; 
 
 export const Cart = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate(); // Hook para redirigir al usuario
     const [loading, setLoading] = useState(false); // Para mostrar un indicador de carga
 
+    const getProductImage = (productId) => {
+        const imagen = imagenes.find(img => img.id === productId);
+        return imagen ? imagen.url : ''; // Devolvemos la URL de la imagen si existe
+    }
+
     useEffect(() => {
-        // Obtener el carrito desde el backend al cargar el componente
         actions.getCartFromAPI();
     }, []);
 
@@ -59,34 +64,35 @@ export const Cart = () => {
                     <div className="cart-products">
                         <h2>Productos</h2>
                         <ul className="cart-items">
-                            {store.cart.map((product, index) => (
-                                <li key={index} className="cart-item">
-                                    <div className="cart-item-container">
-                                        <img
-                                            src={product.imageUrl}
-                                            alt={product.name}
-                                            className="cart-item-image"
-                                        />
-                                        <div className="cart-item-details">
-                                            <span>{product.name}</span>
 
-                                            <span>${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}</span>
+                            {store.cart.map((product, index) => {
+                                const productImage = getProductImage(product.id); 
+                                return (
+                                    <li key={index} className="cart-item">
+                                        <div className="cart-item-container">
+                                            <img
+                                                src={productImage} // Usamos la imagen del producto
+                                                alt={product.name}
+                                                className="cart-item-image"
+                                            />
+                                            <div className="cart-item-details">
+                                                <span>{product.name}</span>
+                                                <span>${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}</span>
+                                                <span>Cantidad: {product.quantity}</span>
+                                                {/* Mostrar la descripción del producto */}
+                                                <p className="product-description">{product.description}</p>
+                                            </div>
+                                            <button
+                                                onClick={() => actions.removeFromCart(product.id)}
+                                                className="remove-button"
+                                            >
+                                                X
+                                            </button>
 
-                                            <span>
-                                                ${product.price && !isNaN(product.price) ? product.price.toFixed(2) : 'N/A'}
-                                            </span>
-
-                                            <span>Cantidad: {product.quantity}</span>
                                         </div>
-                                        <button
-                                            onClick={() => actions.removeFromCart(product.id)}
-                                            className="remove-button"
-                                        >
-                                            X
-                                        </button>
-                                    </div>
-                                </li>
-                            ))}
+                                    </li>
+                                );
+                            })}
                         </ul>
 
                         <button
@@ -96,7 +102,7 @@ export const Cart = () => {
                             Limpiar carrito
                         </button>
                     </div>
-    
+
                     {/* Contenedor del total y botones */}
                     <div className="cart-summary">
                         <div className="total-container">
@@ -125,5 +131,6 @@ export const Cart = () => {
         </div>
     );
 
-}
+};
+
 
